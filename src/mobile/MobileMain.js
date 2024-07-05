@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import GitHubCalendar from 'react-github-calendar';
 import styles from './Todolist.module.css';
+import calendarStyles from './GitHubCalendar.module.css'; // 추가된 부분
 
 const selectMonth = contributions => {
     const currentYear = new Date().getFullYear();
@@ -24,7 +25,6 @@ function MobileMain(props) {
     const today = new Date();
     const formattedDate = today.toISOString().split('T')[0];
 
-
     const daysOfWeek = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
     const dayName = daysOfWeek[today.getDay()];
 
@@ -40,20 +40,22 @@ function MobileMain(props) {
     return (
         <div>
             {/* 깃허브 캘린더 */}
-            <GitHubCalendar 
-                colorScheme="light"
-                username="hanjunnn" 
-                blockSize={18}
-                transformData={selectMonth} 
-                hideColorLegend
-                hideTotalCount
-            />
+            <div className={calendarStyles.calendarContainer}>
+                <GitHubCalendar 
+                    colorScheme="light"
+                    username="hanjunnn" 
+                    blockSize={18}
+                    transformData={selectMonth} 
+                    hideColorLegend
+                    hideTotalCount
+                />
+            </div>
             <br/>
             {/* 일정 목록 */}
             <div className={styles.container}>
                 <div className={styles.header}>
-                <span>{dayName}</span>
-                <span className={styles.date}>{formattedDate}</span>
+                    <span>{dayName}</span>
+                    <span className={styles.date}>{formattedDate}</span>
                 </div>
                 <div id="tasks">
                     {tasks.map((task, index) => (
