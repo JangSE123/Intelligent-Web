@@ -38,7 +38,7 @@ function MobileMain(props) {
     }, []);
 
     return (
-        <div>
+        <div style={{marginTop:"90px"}}>
             {/* 깃허브 캘린더 */}
             <div className={calendarStyles.calendarContainer}>
                 <GitHubCalendar 
