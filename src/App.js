@@ -10,6 +10,7 @@ function App() {
       <BrowserView>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         <Header/>
 =======
 =======
@@ -29,6 +30,9 @@ function App() {
 >>>>>>> 09b5dc5 (Header 추가)
 >>>>>>> 8ab0aa7 (Header 추가)
 >>>>>>> 4688eb9 (Header 추가)
+=======
+        <Header/>
+>>>>>>> 4b32d48 (메인페이지 fix)
         <DesktopMain />
       </BrowserView>
       <MobileView>
