@@ -1,19 +1,18 @@
 import { BrowserView, MobileView } from 'react-device-detect'
-import DesktopMain from './browser/DesktopMain';
-import MobileMain from './mobile/MobileMain';
-import Header from './browser/BrowserHeader';
+import MobileApp from './mobile/MobileApp';
+import DesktopApp from './browser/DesktopApp';
 
 
 function App() {
   return (
     <>
       <BrowserView>
-        <Header/>
-        <DesktopMain />
+        <DesktopApp />
       </BrowserView>
       <MobileView>
-        <MobileMain />
+        <MobileApp />
       </MobileView>
+      {/* <MakePlan /> */}
     </>
   );
 }

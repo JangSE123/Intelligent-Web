@@ -1,26 +1,61 @@
 .main {
     position: relative;
-    overflow: hidden;
+    width: 100%;
+    height: calc(100vh - 110px); /* 헤더 높이만큼 조정 */
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    top: 110px; /* 헤더 높이만큼 내림 */
 }
 
+/* Each scrollable section */
+.section {
+    width: 100%;
+    height: calc(100vh - 110px);
+    scroll-snap-align: start;
+}
+
+/* Image container */
 .image {
-    height: 100vh;
-    background: url('./a.jpg') center center/cover no-repeat;
-    transition: height 0.5s ease;
-}
-  
-.content {
-    height: 100vh;
-    background-color: #f0f0f0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-size: 2rem;
-    transition: opacity 0.5s ease;
-    opacity: 1;
+    width: 100%;
+    height: calc(100vh - 110px);
+    background: url('./a.jpg') center/cover no-repeat; /* Replace with your image path */
+    transition: height 0.5s ease-in-out;
 }
 
-.show {
-    opacity: 0;
+/* Content container */
+.content {
+    padding: 20px;
+    background-color: white;
+    height: calc(100vh - 150px); /* Full viewport height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Next sections */
+.nextSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 20px;
+    height: calc(100vh - 150px);
+    padding-bottom: 0px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.nextSection:nth-child(even) {
+    background-color: #efefef;
+}
+
+/* Additional styles */
+h1, h2 {
+    font-size: 2rem;
+    color: #333;
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: #666;
 }

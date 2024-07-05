@@ -1,12 +1,16 @@
+li {
+    list-style-type: none;
+}
+
 .topbar {
-    width: 100%;
-    height: 100px;
+    width: 100vw;
+    height: 110px;
     background-color: #4CAF50;
     color: white;
     text-align: center;
     display: flex;
     flex-direction: row;
-    transition: height 0.3s ease;
+    transition: height 0.5s ease;
     position: fixed;
     z-index: 1000;
 }
@@ -17,18 +21,15 @@
     font-size: 200%;
     font-weight: bold;
     margin-right: 20vw;
-    
-}
-li{
-    list-style-type: none;
 
 }
+
 .content {
     display: flex;
     justify-content: center;
 }
 
-ul {
+.content ul {
     display: flex;
     justify-content: space-between;
     text-align: center;
@@ -39,7 +40,8 @@ ul {
 .list {
     position: relative;
     cursor: pointer;
-    margin-right: 200px;
+    width: 150px;
+    margin-right: 100px;
     font-weight: bold;
     font-size: 200%;
 }
@@ -47,12 +49,12 @@ ul {
 .submenu {
     justify-content: center; 
     align-items: center;
-    display: block;
+    flex-direction: column;
     list-style-type: none;
     width: 100%; /* Make submenu full width of parent */
     text-align: center; /* Align submenu text to the left */
     opacity: 0; /* Initially hidden */
-    transition: opacity 0.3s ease; /* Smooth transition for opacity change */
+    transition: opacity 0.5s ease; /* Smooth transition for opacity change */
 }
 
 .topbar:hover .submenu {
@@ -60,9 +62,11 @@ ul {
 }
 
 .sub{
+    display: flex;
     position: relative;
+    flex-direction: column;
     font-size: 1.2rem;
-    margin-top: 50px;
+    margin-top: 15px;
     text-align: center;
 }
 .topbar:hover {
