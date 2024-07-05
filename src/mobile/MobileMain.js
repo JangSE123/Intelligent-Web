@@ -3,7 +3,9 @@ import React from 'react';
 function MobileMain(props) {
     return (
         <div>
-            MobileMain.js
+            {Array.from({ length: 100 }, (_, i) => (
+                <p key={i}>test</p>
+            ))}
         </div>
     );
 }
