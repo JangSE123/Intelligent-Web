@@ -8,7 +8,15 @@ function App() {
   return (
     <>
       <BrowserView>
+<<<<<<< HEAD
         <Header/>
+=======
+<<<<<<< HEAD
+        <Header />
+=======
+        <Header/>
+>>>>>>> c20677a (feat(main))
+>>>>>>> 78896dc (feat(main))
         <DesktopMain />
       </BrowserView>
       <MobileView>
