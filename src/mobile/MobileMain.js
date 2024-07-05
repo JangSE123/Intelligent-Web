@@ -1,11 +1,11 @@
 import React from 'react';
-import MobileHeader from './MobileHeader';
 
 function MobileMain(props) {
     return (
         <div>
-            <MobileHeader/>
-            MobileMain.js
+            {Array.from({ length: 100 }, (_, i) => (
+                <p key={i}>test</p>
+            ))}
         </div>
     );
 }
