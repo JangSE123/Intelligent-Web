@@ -2,6 +2,7 @@ import { BrowserView, MobileView } from 'react-device-detect'
 import DesktopMain from './browser/DesktopMain';
 import MobileMain from './mobile/MobileMain';
 import MakePlan from './mobile/MakePlan';
+import MobileApp from './mobile/MobileApp';
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
         <DesktopMain />
       </BrowserView>
       <MobileView>
-        <MobileMain />
+        <MobileApp />
       </MobileView>
       {/* <MakePlan /> */}
     </>
