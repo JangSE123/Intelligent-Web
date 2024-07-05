@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect } from 'react';
 import styles from './DesktopMain.module.css';
 
@@ -22,8 +23,13 @@ function DesktopMain() {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
+=======
+import React from 'react';
+import styles from './DesktopMain.module.css';
+>>>>>>> 8874dd3 (Header 추가)
 
     return (
+<<<<<<< HEAD
         <div className={styles.main}>
             <div className={styles.section}>
                 <div className={styles.image} />
@@ -45,6 +51,12 @@ function DesktopMain() {
                     <p>여기에 추가적인 내용이 들어갑니다.</p>
                 </section>
             </div>
+=======
+        <div className={styles.DesktopMain}>
+           <div className={styles.main}>
+            
+           </div>
+>>>>>>> 8874dd3 (Header 추가)
         </div>
     );
 }

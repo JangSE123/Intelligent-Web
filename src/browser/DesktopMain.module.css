@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Main container */
 .main {
     position: relative;
@@ -58,3 +59,12 @@ h2 {
     font-size: 1.5rem;
     color: #666;
 }
+=======
+.main{
+    width: 98%;
+    height: 98vh;
+    margin: 4% 1%;
+    background-color: bisque;
+    position: fixed;
+}
+>>>>>>> 8874dd3 (Header 추가)
