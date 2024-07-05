@@ -1,25 +1,24 @@
-/* Main container */
 .main {
     position: relative;
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 110px); /* 헤더 높이만큼 조정 */
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
+    top: 110px; /* 헤더 높이만큼 내림 */
 }
 
 /* Each scrollable section */
 .section {
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 110px);
     scroll-snap-align: start;
 }
 
 /* Image container */
 .image {
     width: 100%;
-    padding-top: 110px;
-    height: 100vh;
+    height: calc(100vh - 110px);
     background: url('./a.jpg') center/cover no-repeat; /* Replace with your image path */
     transition: height 0.5s ease-in-out;
 }
@@ -28,7 +27,7 @@
 .content {
     padding: 20px;
     background-color: white;
-    height: 100vh; /* Full viewport height */
+    height: calc(100vh - 150px); /* Full viewport height */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,8 +39,9 @@
     justify-content: center;
     align-items: center;
     background-color: #f9f9f9;
-    padding: 40px;
-    height: 100%;
+    padding: 20px;
+    height: calc(100vh - 150px);
+    padding-bottom: 0px;
     transition: background-color 0.3s ease-in-out;
 }
 
