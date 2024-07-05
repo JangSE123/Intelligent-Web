@@ -2,14 +2,20 @@ import { BrowserView, MobileView } from 'react-device-detect'
 import DesktopMain from './browser/DesktopMain';
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import MobileMain from './mobile/MobileMain';
 import Header from './browser/BrowserHeader';
 =======
 import MobileApp from './mobile/MobileApp';
 >>>>>>> e8c3b60 (고병현)
 =======
+=======
+>>>>>>> 8874dd3 (Header 추가)
 import MobileApp from './mobile/MobileApp';
 =======
+=======
+import Header from './browser/BrowserHeader';
+>>>>>>> 09b5dc5 (Header 추가)
 import MobileMain from './mobile/MobileMain';
 
 >>>>>>> e99a4de (.)
@@ -23,7 +29,11 @@ function App() {
   return (
     <>
       <BrowserView>
+<<<<<<< HEAD
         <Header/>
+=======
+        <Header />
+>>>>>>> 8874dd3 (Header 추가)
         <DesktopMain />
       </BrowserView>
       <MobileView>
