@@ -17,6 +17,7 @@ import MobileApp from './mobile/MobileApp';
 import Header from './browser/BrowserHeader';
 >>>>>>> 09b5dc5 (Header 추가)
 import MobileMain from './mobile/MobileMain';
+import Header from './browser/BrowserHeader';
 
 >>>>>>> e99a4de (.)
 >>>>>>> cbf3914 (.)
@@ -29,6 +30,7 @@ function App() {
   return (
     <>
       <BrowserView>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -56,11 +58,22 @@ function App() {
         <Header/>
 >>>>>>> 4b32d48 (메인페이지 fix)
 =======
+=======
+>>>>>>> acdd4b8 (feat(main))
         <Header/>
 =======
         <Header />
 >>>>>>> 8874dd3 (Header 추가)
+<<<<<<< HEAD
 >>>>>>> 1586e8b (Header 추가)
+=======
+=======
+        <Header />
+=======
+        <Header/>
+>>>>>>> c20677a (feat(main))
+>>>>>>> 33ac7f4 (feat(main))
+>>>>>>> acdd4b8 (feat(main))
         <DesktopMain />
       </BrowserView>
       <MobileView>

@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Main container */
 .main {
     position: relative;
@@ -60,11 +61,44 @@ h2 {
     color: #666;
 }
 =======
+=======
+>>>>>>> 33ac7f4 (feat(main))
 .main{
     width: 98%;
     height: 98vh;
     margin: 4% 1%;
     background-color: bisque;
     position: fixed;
+<<<<<<< HEAD
 }
 >>>>>>> 8874dd3 (Header 추가)
+=======
+=======
+.main {
+    position: relative;
+    overflow: hidden;
+}
+
+.image {
+    height: 100vh;
+    background: url('./a.jpg') center center/cover no-repeat;
+    transition: height 0.5s ease;
+}
+  
+.content {
+    height: 100vh;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 2rem;
+    transition: opacity 0.5s ease;
+    opacity: 1;
+}
+
+.show {
+    opacity: 0;
+>>>>>>> c20677a (feat(main))
+}
+>>>>>>> 33ac7f4 (feat(main))
