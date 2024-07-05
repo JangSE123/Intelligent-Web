@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 .main{
     width: 98%;
     height: 98vh;
@@ -6,6 +7,8 @@
     background-color: bisque;
     position: fixed;
 =======
+=======
+>>>>>>> 8ab0aa7 (Header 추가)
 .main {
     position: relative;
     overflow: hidden;
@@ -31,5 +34,16 @@
 
 .show {
     opacity: 0;
+<<<<<<< HEAD
 >>>>>>> c20677a (feat(main))
+=======
+=======
+.main{
+    width: 98%;
+    height: 98vh;
+    margin: 4% 1%;
+    background-color: bisque;
+    position: fixed;
+>>>>>>> 09b5dc5 (Header 추가)
+>>>>>>> 8ab0aa7 (Header 추가)
 }

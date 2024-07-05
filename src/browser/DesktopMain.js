@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React from 'react';
 import styles from './DesktopMain.module.css';
 
@@ -9,6 +10,8 @@ function DesktopMain(props) {
             
            </div>
 =======
+=======
+>>>>>>> 8ab0aa7 (Header 추가)
 import React, { useState } from 'react'
 import styles from './DesktopMain.module.css'
 // import image1 from './a.jpg'
@@ -37,7 +40,21 @@ function DesktopMain() {
         <div className={`${styles.content} ${scrollPosition > 0 ? styles.show : ''}}`}>
             {}
             <h1>메인 내용</h1>
+<<<<<<< HEAD
 >>>>>>> c20677a (feat(main))
+=======
+=======
+import React from 'react';
+import styles from './DesktopMain.module.css';
+
+function DesktopMain(props) {
+    return (
+        <div className={styles.DesktopMain}>
+           <div className={styles.main}>
+            
+           </div>
+>>>>>>> 09b5dc5 (Header 추가)
+>>>>>>> 8ab0aa7 (Header 추가)
         </div>
     </div>
   )
