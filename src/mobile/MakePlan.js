@@ -38,6 +38,7 @@ const MakePlan = () => {
   }, [answers]);
 
   return (
+    <div>
     <div className={styles.chatContainer}>
       <div className={styles.bubblesContainer}>
         {answers.map((qa, index) => (
@@ -59,6 +60,8 @@ const MakePlan = () => {
         </div>
       )}
     </div>
+    </div>
+
   );
 };
 
