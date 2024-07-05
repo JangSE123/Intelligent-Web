@@ -1,12 +1,12 @@
 import { BrowserView, MobileView } from 'react-device-detect'
-import DesktopMain from './browser/DesktopMain';
 import MobileApp from './mobile/MobileApp';
+import DesktopApp from './browser/DesktopApp';
 
 function App() {
   return (
     <>
       <BrowserView>
-        <DesktopMain />
+        <DesktopApp />
       </BrowserView>
       <MobileView>
         <MobileApp />
