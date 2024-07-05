@@ -11,6 +11,7 @@ function App() {
       <MobileView>
         <MobileApp />
       </MobileView>
+      {/* <MakePlan /> */}
     </>
   );
 }
