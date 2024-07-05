@@ -1,9 +1,12 @@
 import React from 'react';
+import styles from './DesktopMain.module.css';
 
 function DesktopMain(props) {
     return (
-        <div>
-            DesktopMain.js
+        <div className={styles.DesktopMain}>
+           <div className={styles.main}>
+            
+           </div>
         </div>
     );
 }

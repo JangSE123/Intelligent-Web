@@ -1,0 +1,70 @@
+.topbar {
+    width: 100%;
+    height: 100px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    transition: height 0.3s ease;
+    position: fixed;
+    z-index: 1000;
+}
+
+.logo{
+    width: 300px;
+    margin: 30px;
+    font-size: 200%;
+    font-weight: bold;
+    margin-right: 20vw;
+    
+}
+li{
+    list-style-type: none;
+
+}
+.content {
+    display: flex;
+    justify-content: center;
+}
+
+ul {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    padding: 0;
+    margin-top: 30px;
+}
+
+.list {
+    position: relative;
+    cursor: pointer;
+    margin-right: 200px;
+    font-weight: bold;
+    font-size: 200%;
+}
+
+.submenu {
+    justify-content: center; 
+    align-items: center;
+    display: block;
+    list-style-type: none;
+    width: 100%; /* Make submenu full width of parent */
+    text-align: center; /* Align submenu text to the left */
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Smooth transition for opacity change */
+}
+
+.topbar:hover .submenu {
+    opacity: 1; /* Fade in submenu */
+}
+
+.sub{
+    position: relative;
+    font-size: 1.2rem;
+    margin-top: 50px;
+    text-align: center;
+}
+.topbar:hover {
+    height: 230px; /* Expand topbar height on hover */
+}
