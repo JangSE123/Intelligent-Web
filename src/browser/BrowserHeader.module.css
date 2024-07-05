@@ -1,4 +1,5 @@
-.topbar {
+/* Main top bar container */
+.bh-topbar {
     width: 100%;
     height: 100px;
     background-color: #4CAF50;
@@ -11,24 +12,28 @@
     z-index: 1000;
 }
 
-.logo{
+/* Logo styling */
+.bh-logo {
     width: 300px;
     margin: 30px;
     font-size: 200%;
     font-weight: bold;
     margin-right: 20vw;
-
 }
-li{
+
+/* General list item styling */
+.bh-topbar li {
     list-style-type: none;
-
 }
-.content {
+
+/* Content container styling */
+.bh-content {
     display: flex;
     justify-content: center;
 }
 
-ul {
+/* Menu list styling */
+.bh-menu {
     display: flex;
     justify-content: space-between;
     text-align: center;
@@ -36,7 +41,8 @@ ul {
     margin-top: 30px;
 }
 
-.list {
+/* Individual menu list item styling */
+.bh-list {
     position: relative;
     cursor: pointer;
     margin-right: 200px;
@@ -44,27 +50,33 @@ ul {
     font-size: 200%;
 }
 
-.submenu {
+/* Submenu styling */
+.bh-submenu {
     justify-content: center; 
     align-items: center;
     display: block;
     list-style-type: none;
     width: 100%; /* Make submenu full width of parent */
     text-align: center; /* Align submenu text to the left */
+    padding: 0;
     opacity: 0; /* Initially hidden */
     transition: opacity 0.3s ease; /* Smooth transition for opacity change */
 }
 
-.topbar:hover .submenu {
+/* Show submenu on hover */
+.bh-topbar:hover .bh-submenu {
     opacity: 1; /* Fade in submenu */
 }
 
-.sub{
+/* Submenu item styling */
+.bh-sub {
     position: relative;
     font-size: 1.2rem;
     margin-top: 50px;
     text-align: center;
 }
-.topbar:hover {
+
+/* Top bar expansion on hover */
+.bh-topbar:hover {
     height: 230px; /* Expand topbar height on hover */
 }

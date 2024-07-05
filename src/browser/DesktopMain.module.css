@@ -36,6 +36,7 @@
 /* Next sections */
 .nextSection {
     display: flex;
+    flex-direction: column; /* To stack the calendar and to-do list vertically */
     justify-content: center;
     align-items: center;
     background-color: #f9f9f9;
@@ -48,6 +49,56 @@
     background-color: #efefef;
 }
 
+/* Calendar and to-do list container */
+.calendarContainer {
+    display: flex;
+    flex-direction: row; /* Place calendar and to-do list side by side */
+    gap: 20px;
+}
+
+.calendarContainer .react-calendar {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.todoList {
+    width: 30vw;
+    height: 20vh;
+    font-size: 1.5rem;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    min-width: 250px;
+}
+
+.todoList h3 {
+    margin-top: 0;
+    font-size: 1.25rem;
+    color: #333;
+}
+
+.todoList ul {
+    width: 100%;
+    list-style-type: none;
+    padding: 0;
+}
+
+.todoContent {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+    display: inline-flex;
+}
+
+.todoList li:last-child {
+    border-bottom: none;
+}
+
+.todoList p {
+    color: #666;
+}
+
 /* Additional styles */
 h1, h2 {
     font-size: 2rem;
@@ -57,4 +108,21 @@ h1, h2 {
 h2 {
     font-size: 1.5rem;
     color: #666;
+}
+
+/* Custom styles for Calendar */
+.react-calendar__tile--now {
+    background: #ffffcc !important;
+}
+
+.sunday {
+    color: red !important;
+}
+
+.saturday {
+    color: blue !important;
+}
+
+.react-calendar__month-view__days__day--weekend {
+    color: inherit;
 }
