@@ -9,14 +9,26 @@ function App() {
     <>
       <BrowserView>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <Header/>
 =======
+=======
+>>>>>>> 4688eb9 (Header 추가)
 <<<<<<< HEAD
         <Header />
 =======
         <Header/>
 >>>>>>> c20677a (feat(main))
+<<<<<<< HEAD
 >>>>>>> 78896dc (feat(main))
+=======
+=======
+        <Header/>
+=======
+        <Header />
+>>>>>>> 09b5dc5 (Header 추가)
+>>>>>>> 8ab0aa7 (Header 추가)
+>>>>>>> 4688eb9 (Header 추가)
         <DesktopMain />
       </BrowserView>
       <MobileView>
