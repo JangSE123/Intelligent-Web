@@ -1,0 +1,6 @@
+.body {
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    margin-top: 110px;
+}
