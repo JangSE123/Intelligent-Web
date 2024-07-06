@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './BrowserHeader'
 import DesktopMain from './DesktopMain'
-import PlannerChat from './PlannerChat'; // Example component, adjust import
+import PlannerChat from './Chat'; // Example component, adjust import
 import Calendar from './Calendar';
 import Develop from './Develop';
 import GitConnection from './GitConnection';

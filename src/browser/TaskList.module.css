@@ -1,17 +1,11 @@
-.body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background-color: #f5f5f5;
-}
-
+/* TaskList.module.css */
 .container {
-    width: 100%; 
-    max-width: 800px; 
-    margin: 0 auto; 
-    padding: 20px; 
-    border: 1px solid #ccc; 
-    border-radius: 8px; 
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
 }
 
 .header {
@@ -21,6 +15,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-radius: 30px;
 }
 
 .date {
@@ -33,7 +28,7 @@
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid #ccc;
-    height: 50px; /* 고정 높이 설정 */
+    height: 50px;
 }
 
 .task:last-child {
@@ -56,4 +51,10 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
+}
+
+/* 추가된 strikethrough 스타일 */
+.strikethrough {
+    text-decoration: line-through;
+    color: grey; /* 텍스트 색상도 변경 (선택사항) */
 }

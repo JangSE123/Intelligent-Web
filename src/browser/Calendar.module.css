@@ -2,7 +2,6 @@
     background-color: white;
     padding: 5px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .calendar-container h2 {
@@ -35,7 +34,20 @@
     color: white;
 }
 
+.today {
+    border: 2px solid #ff9800; /* Orange border to highlight today's date */
+    background-color: lightgrey;
+}
+
 .selected-date {
     margin-top: 10px;
     font-size: 20px;
+}
+
+.calendarH2{
+    margin: 0;
+}
+
+.selectedPTag{
+    margin: 0;
 }
