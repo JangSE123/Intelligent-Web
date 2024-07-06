@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import styles from "./DesktopMain.module.css";
+import MainContent from "./MainContent";
 
 function DesktopMain() {
   useEffect(() => {
@@ -30,7 +31,7 @@ function DesktopMain() {
         </div>
         <div className={styles.section}>
           <div className={styles.content}>
-            <h1>메인 내용</h1>
+            <MainContent />
           </div>
         </div>
         <div className={styles.section}>
