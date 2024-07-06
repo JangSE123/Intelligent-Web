@@ -39,6 +39,7 @@ function MobileMain(props) {
 
     return (
         <div style={{marginTop:"90px"}}>
+            <h2>ㅇㅇ의 정원</h2>
             {/* 깃허브 캘린더 */}
             <div className={calendarStyles.calendarContainer}>
                 <GitHubCalendar 
@@ -51,6 +52,7 @@ function MobileMain(props) {
                 />
             </div>
             <br/>
+            <h2>오늘의 일정</h2>
             {/* 일정 목록 */}
             <div className={styles.container}>
                 <div className={styles.header}>
