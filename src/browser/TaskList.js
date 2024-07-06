@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import styles from './TaskList.module.css'; // 이 부분에서 styles를 import
+import React, { useState, useEffect } from 'react';
+import styles from './TaskList.module.css'; // CSS 모듈 임포트
 
 function TaskList() {
     const [tasks, setTasks] = useState([]);
@@ -10,25 +10,39 @@ function TaskList() {
     const dayName = daysOfWeek[today.getDay()];
 
     useEffect(() => {
-        // 예제 데이터, 실제로는 데이터베이스와 연동 필요
+        // 예제 데이터 설정 (실제 데이터베이스 연동 필요)
         const exampleTasks = [
-            { name: 'Python 변수 타입 공부하기', status: true },
-            { name: 'JAVA 접근제어자 공부하기', status: false }
+            { id: 1, name: 'Python 변수 타입 공부하기', status: true },
+            { id: 2, name: 'JAVA 접근제어자 공부하기', status: false }
         ];
         setTasks(exampleTasks);
     }, []);
 
+    const toggleTaskStatus = (id) => {
+        setTasks(prevTasks => 
+            prevTasks.map(task => 
+                task.id === id ? { ...task, status: !task.status } : task
+            )
+        );
+    };
+
     return (
-        <div className={styles.container}> {/* styles.container와 같이 사용 */}
+        <div className={styles.container}>
             <div className={styles.header}>
                 <span>{dayName}</span>
                 <span className={styles.date}>{formattedDate}</span>
             </div>
             <div id="tasks">
-                {tasks.map((task, index) => (
-                    <div key={index} className={styles.task}>
-                        <div className={task.status ? styles.green : styles.red}></div>
-                        <span>{task.name}</span>
+                {tasks.map((task) => (
+                    <div key={task.id} className={styles.task}>
+                        <div
+                            className={task.status ? styles.green : styles.red}
+                            onClick={() => toggleTaskStatus(task.id)}
+                            style={{ cursor: 'pointer' }}
+                        ></div>
+                        <span className={task.status ? styles.strikethrough : ''}>
+                            {task.name}
+                        </span>
                     </div>
                 ))}
             </div>
