@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Calendar.css'; // CSS 파일 import
+import styles from './Calendar.module.css'; 
 
 function Calendar(props) {
     const [selectedDate, setSelectedDate] = useState(null);
@@ -8,18 +8,16 @@ function Calendar(props) {
         setSelectedDate(date);
     };
 
-    // 달력 UI를 생성하는 함수
     const renderCalendar = () => {
-        // 간단한 예시로 현재 월의 달력을 생성
-        const daysInMonth = 31; // 간단하게 31일로 설정
+        const daysInMonth = 31; // 임의의 값으로 설정
         const days = [];
 
         for (let i = 1; i <= daysInMonth; i++) {
-            const date = new Date(2024, 6, i); // 여기서는 2024년 7월의 달력 예시로 설정
+            const date = new Date(2024, 6, i); // 년, 월, 일 설정 (월은 0부터 시작)
             days.push(
                 <div
                     key={i}
-                    className={`calendar-day ${selectedDate && selectedDate.getDate() === i ? 'selected' : ''}`}
+                    className={`${styles['calendar-day']} ${selectedDate && selectedDate.getDate() === i ? styles.selected : ''}`}
                     onClick={() => handleDateClick(date)}
                 >
                     {i}
@@ -31,12 +29,12 @@ function Calendar(props) {
     };
 
     return (
-        <div className='calendar-container'>
+        <div className={styles['calendar-container']}>
             <h2>달력</h2>
-            <div className='calendar-grid'>
+            <div className={styles['calendar-grid']}>
                 {renderCalendar()}
             </div>
-            <div className='selected-date'>
+            <div className={styles['selected-date']}>
                 {selectedDate && (
                     <p>선택된 날짜: {selectedDate.toLocaleDateString()}</p>
                 )}
