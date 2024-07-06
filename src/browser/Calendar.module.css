@@ -57,7 +57,7 @@
 }
 
 .selected {
-    background-color: #17e945;
+    background-color: #4CAF50;
     color: white;
 }
 
@@ -84,4 +84,16 @@
 
 .calendarH2{
     margin: 0;
+}
+.date_btn {
+    background-color: #4CAF50;
+    border: 0;
+    color: white;
+    margin-left: 3px;
+    margin-right: 3px;
+    border-radius: 5px;
+}
+
+.date_btn:hover {
+    background-color: #50c254;
 }

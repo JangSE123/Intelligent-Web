@@ -38,7 +38,7 @@
 .login-container button {
     width: 100%;
     padding: 10px;
-    background-color: #41db2d;
+    background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 3px;
@@ -47,7 +47,7 @@
 }
 
 .login-container button:hover {
-    background-color: #41db2d;
+    background-color: #50c254;
 }
 
 .error {

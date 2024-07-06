@@ -117,8 +117,8 @@ function Calendar() {
         <div className={styles['calendar-container']}>
             {/* <h2 className={styles.calendarH2}>{formatDate(today)}</h2> Display today's date */}
             <div className={styles['controls']}>
-                <button onClick={goToPreviousYear}>{'<<'}</button>
-                <button onClick={goToPreviousMonth}>{'<'}</button>
+                <button className={styles['date_btn']} onClick={goToPreviousYear}>{'<<'}</button>
+                <button className={styles['date_btn']} onClick={goToPreviousMonth}>{'<'}</button>
                 <select
                     value={year}
                     onChange={handleYearChange}
@@ -154,8 +154,8 @@ function Calendar() {
                         </option>
                     ))}
                 </select>
-                <button onClick={goToNextMonth}>{'>'}</button>
-                <button onClick={goToNextYear}>{'>>'}</button>
+                <button className={styles['date_btn']} onClick={goToNextMonth}>{'>'}</button>
+                <button className={styles['date_btn']} onClick={goToNextYear}>{'>>'}</button>
             </div>
             <div className={styles['day-labels']}>
                 {['일', '월', '화', '수', '목', '금', '토'].map((day, index) => (
