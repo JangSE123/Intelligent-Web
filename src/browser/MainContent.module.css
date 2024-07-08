@@ -50,6 +50,33 @@
     background-color: #50c254;
 }
 
+.login-container p{
+    margin: 0px;
+}
+.profile-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 프로필 사진과 사용자 이름 사이의 간격 */
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 프로필 이미지 스타일 수정 */
+.profile-container img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+/* 사용자 이름 스타일 */
+.profile-container p {
+    font-size: 1rem;
+    margin: 0;
+    font-weight: bold; /* 강조 표시 (선택 사항) */
+}
+
 .error {
     color: red;
     margin-top: 5px;
