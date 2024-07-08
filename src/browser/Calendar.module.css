@@ -1,0 +1,99 @@
+.calendar-container {
+    background-color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.calendar-container h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.year-select, .month-select {
+    margin: 0 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.day-labels {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.day-label {
+    padding: 5px 0;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.calendar-day {
+    display: flex;
+    justify-content: center;
+    font-size: 15px;
+    align-items: center;
+    height: 40px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.calendar-day:hover {
+    background-color: #e0e0e0; /* Slightly lighter hover color for better visibility */
+}
+
+.selected {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.today {
+    border: 2px solid #ff9800; /* Orange border to highlight today's date */
+    background-color: lightgrey;
+    color: black; /* Ensure the text color is readable on the background */
+    font-weight: bold; /* Bold the text for emphasis */
+}
+
+.selected-date {
+    margin-top: 10px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.sunday {
+    color: red;
+}
+
+.saturday {
+    color: blue;
+}
+
+.calendarH2{
+    margin: 0;
+}
+.date_btn {
+    background-color: #4CAF50;
+    border: 0;
+    color: white;
+    margin-left: 3px;
+    margin-right: 3px;
+    border-radius: 5px;
+}
+
+.date_btn:hover {
+    background-color: #50c254;
+}
