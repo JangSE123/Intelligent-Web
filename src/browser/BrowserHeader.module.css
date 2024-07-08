@@ -72,3 +72,16 @@ li {
 .topbar:hover {
     height: 230px; /* Expand topbar height on hover */
 }
+
+.sub a, .logo a {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit color from parent element */
+}
+
+.sub a:hover, .logo a:hover {
+    color: inherit; /* Ensure color doesn't change on hover */
+}
+
+.sub a:visited, .logo a:visited {
+    color: inherit; /* Ensure color doesn't change after visiting the link */
+}
