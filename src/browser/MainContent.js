@@ -22,7 +22,7 @@ function MainContent(props) {
     }, []);
 
     const handleLogin = () => {
-        window.location.href = "http://localhost:5000/login/github";
+        window.location.href = "http://localhost:5001/login/github";
     };
 
     const handleLogout = () => {
