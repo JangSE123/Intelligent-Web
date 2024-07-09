@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 import styles from "./DesktopMain.module.css";
 import MainContent from "./MainContent";
 
-function DesktopMain() {
+function DesktopMain(props) {
+  const userData = props.userData;
+  const setUserData = props.setUserData;
+
   useEffect(() => {
     // Function to handle scroll snapping effect
     const handleScroll = () => {
@@ -31,7 +34,7 @@ function DesktopMain() {
         </div>
         <div className={styles.section}>
           <div className={styles.content}>
-            <MainContent />
+            <MainContent userData={userData} setUserData={setUserData}/>
           </div>
         </div>
         <div className={styles.section}>
