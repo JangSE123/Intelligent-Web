@@ -33,7 +33,7 @@ function GitConnection({ userData, setUserData }) {
 
     const fetchCommits = async (owner, repo) => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/github/repos/${owner}/${repo}/commits`, { withCredentials: true });
+            const response = await axios.get(`http://localhost:5001/api/github/repos/${owner}/${repo}/commits`, { withCredentials: true });
             setCommits(response.data);
             setSelectedRepo(repo);
             setCommitDetails(null);
@@ -44,7 +44,7 @@ function GitConnection({ userData, setUserData }) {
 
     const fetchCommitDetails = async (owner, repo, sha) => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/github/repos/${owner}/${repo}/commits/${sha}`, { withCredentials: true });
+            const response = await axios.get(`http://localhost:5001/api/github/repos/${owner}/${repo}/commits/${sha}`, { withCredentials: true });
             setCommitDetails(response.data);
         } catch (error) {
             console.error('Error fetching commit details:', error);
