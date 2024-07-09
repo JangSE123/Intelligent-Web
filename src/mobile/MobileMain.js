@@ -37,8 +37,8 @@ function MobileMain(props) {
     }, []);
 
     return (
-        <div style={{ marginTop: "90px" }}>
-            <h2 style={{ marginLeft: "10%" }}>ㅇㅇ의 잔디</h2>
+        <div style={{marginTop:"90px"}}>
+            {/* 깃허브 캘린더 */}
             <div className={calendarStyles.calendarContainer}>
                 <GitHubCalendar
                     colorScheme="light"
@@ -49,8 +49,8 @@ function MobileMain(props) {
                     hideTotalCount
                 />
             </div>
-            <br />
-            <h2 style={{ marginLeft: "10%" }}>오늘의 일정</h2>
+            <br/>
+            {/* 일정 목록 */}
             <div className={styles.container}>
                 <div className={styles.header}>
                     <span>{dayName}</span>

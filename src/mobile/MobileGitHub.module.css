@@ -1,0 +1,68 @@
+.github-body {
+    margin-top: 40px;
+    padding: 20px;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .user-info img {
+    border-radius: 50%;
+    margin-right: 10px;
+    width: 50px;
+    height: 50px;
+  }
+  
+  .repos-container, .commits-container, .commit-details-container {
+    margin-bottom: 20px;
+  }
+  
+  .repos-container {
+    
+  }
+
+
+
+  h2 {
+    margin-bottom: 10px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  li a {
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  li a:hover {
+    text-decoration: underline;
+  }
+  
+  .commit-details-container pre {
+    background: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+  }
+  
+  .commit-details-container strong {
+    display: block;
+    margin-top: 10px;
+  }
+  
+  .commit-details-container ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
