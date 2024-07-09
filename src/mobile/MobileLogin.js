@@ -21,14 +21,13 @@ function MobileLogin({ userData, setUserData }) {
     }, []);
 
     const handleLogin = () => {
-        window.location.href = "http://localhost:5000/login/github";
+        window.location.href = "http://localhost:5001/login/github";
     };
 
     const handleLogout = () => {
         setUserData(null);
         sessionStorage.removeItem("github_user_login");
         sessionStorage.removeItem("github_user_avatar_url");
-        window.location.href = "http://localhost:5000/logout";
     };
 
     return (
