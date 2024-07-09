@@ -24,7 +24,7 @@ function GitConnection({ userData, setUserData }) {
 
     const fetchRepositories = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/github/repos', { withCredentials: true });
+            const response = await axios.get('http://localhost:5001/api/github/repos', { withCredentials: true });
             setRepositories(response.data);
         } catch (error) {
             console.error('Error fetching repositories:', error);
