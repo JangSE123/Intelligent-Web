@@ -13,7 +13,7 @@ const App = () => {
   return (
     <>
       <BrowserView>
-        <DesktopApp />
+        <DesktopApp userData={userData} setUserData={setUserData}/>
       </BrowserView>
       <MobileView>
         <MobileApp userData={userData} setUserData={setUserData} user={user} setUser={setUser} accessToken={accessToken} setAccessToken={setAccessToken}/>

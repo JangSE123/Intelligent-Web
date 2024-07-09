@@ -10,16 +10,18 @@ import HelpDocs from './HelpDocs';
 import GrassCustom from './GrassCustom';
 
 
-export default function DesktopApp() {
+export default function DesktopApp(props) {
+  const userData = props.userData;
+  const setUserData = props.setUserData;
   return (
     <Router>
         <Header />
         <Routes>
-          <Route path="/" element={<DesktopMain />} />
+          <Route path="/" element={<DesktopMain userData={userData} setUserData={setUserData}/>} />
           <Route path="/planner-chat" element={<PlannerChat/>} />
           <Route path="/calendar" element={<Calendar/>} />
           <Route path="/develop" element={<Develop/>} />
-          <Route path="/git-connection" element={<GitConnection/>} />
+          <Route path="/git-connection" element={<GitConnection userData={userData} setUserData={setUserData}/>} />
           <Route path="/help-docs" element={<HelpDocs/>} />
           <Route path="/grass-custom" element={<GrassCustom/>} />
         </Routes>

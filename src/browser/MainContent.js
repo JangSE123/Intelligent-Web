@@ -5,61 +5,31 @@ import TaskList from "./TaskList"; // TaskList 컴포넌트 import
 import GitHubCalendar from 'react-github-calendar';
 
 function MainContent(props) {
-    const [accessToken, setAccessToken] = useState(null);
-    const [userData, setUserData] = useState(null);
+
+    const userData = props.userData;
+    const setUserData = props.setUserData;
 
     useEffect(() => {
-        // Parse query parameters from URL
         const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('access_token');
-        const login = urlParams.get('login');
-        const avatarUrl = urlParams.get('avatar_url');
+        const login = urlParams.get("login");
+        const avatarUrl = urlParams.get("avatar_url");
 
-        if (token) {
-            console.log('Access Token:', token);
-            console.log('Login:', login);
-            console.log('Avatar URL:', avatarUrl);
-
-            setAccessToken(token);
+        if (login && avatarUrl) {
             setUserData({ login, avatar_url: avatarUrl });
-
-            // Optionally, store token in session storage to persist state across sessions
-            sessionStorage.setItem('github_access_token', token);
-        } else {
-            // Check if token is stored in session storage
-            const storedToken = sessionStorage.getItem('github_access_token');
-            if (storedToken) {
-                // Fetch user data using stored token
-                fetchUserData(storedToken);
-            }
+            sessionStorage.setItem("github_user_login", login);
+            sessionStorage.setItem("github_user_avatar_url", avatarUrl);
         }
     }, []);
 
-    const fetchUserData = async (token) => {
-        try {
-            const response = await fetch('https://api.github.com/user', {
-                headers: {
-                    Authorization: `token ${token}`
-                }
-            });
-            const data = await response.json();
-            setAccessToken(token);
-            setUserData({ login: data.login, avatar_url: data.avatar_url });
-        } catch (error) {
-            console.error('Error fetching user data:', error);
-        }
-    };
-
     const handleLogin = () => {
-        // Redirect to Express server's GitHub login route
-        window.location.href = 'http://localhost:3000/login/github';
+        window.location.href = "http://localhost:5000/login/github";
     };
 
     const handleLogout = () => {
-        setAccessToken(null);
         setUserData(null);
-        sessionStorage.removeItem('github_access_token');
-        window.location.href = '/'; // Redirect to home to clear URL params
+        sessionStorage.removeItem("github_user_login");
+        sessionStorage.removeItem("github_user_avatar_url");
+        window.location.href = "http://localhost:3000";
     };
 
     const selectMonth = contributions => {
@@ -84,7 +54,7 @@ function MainContent(props) {
             <div className={styles.container}>
                 <div className={styles.sidebar}>
                     <div className={styles["login-container"]}>
-                        {!accessToken ? (
+                        {!userData ? (
                             <button onClick={handleLogin}>Login with GitHub</button>
                         ) : (
                             <>
