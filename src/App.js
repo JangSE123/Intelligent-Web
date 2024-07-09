@@ -1,20 +1,26 @@
 import { BrowserView, MobileView } from 'react-device-detect'
 import MobileApp from './mobile/MobileApp';
 import DesktopApp from './browser/DesktopApp';
+import MobileLogin from './mobile/MobileLogin';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
+const App = () => {
+  const [user, setUser] = useState(null);
+  const [userData, setUserData] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
 
-function App() {
   return (
     <>
       <BrowserView>
         <DesktopApp />
       </BrowserView>
       <MobileView>
-        <MobileApp />
+        <MobileApp userData={userData} setUserData={setUserData} user={user} setUser={setUser} accessToken={accessToken} setAccessToken={setAccessToken}/>
+        {/* <MobileLogin/> */}
       </MobileView>
-      {/* <MakePlan /> */}
     </>
   );
-}
+};
 
 export default App;
