@@ -1,5 +1,3 @@
-//HelpDocs.js
-
 import React, { useState } from 'react';
 import styles from './HelpDocs.module.css';
 
@@ -75,7 +73,7 @@ export default function HelpDocs() {
                 <p><strong>3단계: VS Code와 GitHub 연동</strong></p>
                 <ol>
                   <li>VS Code를 엽니다.</li>
-                  <li>View >>> Terminal**을 클릭하여 터미널을 엽니다.</li>
+                  <li>**View > Terminal**을 클릭하여 터미널을 엽니다.</li>
                   <li>아래 명령어를 사용하여 GitHub 레포지토리를 클론(clone)합니다.</li>
                 </ol>
                 <pre>
