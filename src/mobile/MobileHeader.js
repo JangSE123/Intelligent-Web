@@ -1,26 +1,28 @@
+// MobileHeader.js
 import React from 'react';
 import styles from './MobileHeader.module.css';
+import { Link } from 'react-router-dom';
 
-function MobileHeader({ isMenuOpen, toggleMenu, onNavigate }) {
+function MobileHeader({ userData, isMenuOpen, toggleMenu }) {
     return (
-        <>
-            <header className={styles.header}>
-                <p onClick={() => onNavigate('home')}>Code Garden</p>
-                <div className={`${styles.burger} ${isMenuOpen ? styles.open : ''}`} onClick={toggleMenu}>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-            </header>
+        <header className={styles.header}>
+            <p>Code Garden</p>
+            <div className={`${styles.burger} ${isMenuOpen ? styles.open : ''}`} onClick={toggleMenu}>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+
             <nav className={`${styles.navbar} ${isMenuOpen ? styles.show : styles.hide}`}>
                 <ul>
-                    <li onClick={() => onNavigate('git')}>Git</li>
-                    <li onClick={() => onNavigate('planner')}>Planner</li>
-                    <li onClick={() => onNavigate('help')}>Help</li>
-                    <li onClick={() => onNavigate('mypage')}>MyPage</li>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/github">GitHub</Link></li>
+                    <li><Link to="/planner">Planner</Link></li>
+                    <li><Link to="/help">Help</Link></li>
+                    <li><Link to="/mypage">MyPage</Link></li>
                 </ul>
             </nav>
-        </>
+        </header>
     );
 }
 

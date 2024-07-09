@@ -9,6 +9,7 @@
     height: 60px;
     z-index: 1000;
     box-sizing: border-box;
+    box-shadow: 1px 1px #3c753e;
 }
 
 .header p {
