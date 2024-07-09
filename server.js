@@ -5,12 +5,12 @@ const session = require('express-session');
 const cors = require('cors');
 
 const app = express();
-const port = 5000;
+const port = 5001;
 
 const clientID = process.env.GITHUB_CLIENT_ID;
 const clientSecret = process.env.GITHUB_CLIENT_SECRET;
 const sessionSecret = process.env.SESSION_SECRET;
-const redirectURI = 'http://localhost:5000/api/auth/oauth/github/callback'; // Authorization callback URL
+const redirectURI = 'http://localhost:5001/api/auth/oauth/github/callback'; // Authorization callback URL
 
 app.use(cors({
   origin: 'http://localhost:3000', // 허용할 도메인
