@@ -52,7 +52,7 @@ function MainContent(props) {
 
     const handleLogin = () => {
         // Redirect to Express server's GitHub login route
-        window.location.href = 'http://localhost:3000/login/github';
+        window.location.href = 'http://localhost:5001/login/github';
     };
 
     const handleLogout = () => {
