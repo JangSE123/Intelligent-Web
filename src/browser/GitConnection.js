@@ -54,6 +54,7 @@ function GitConnection({ userData, setUserData }) {
         { withCredentials: true }
       );
       setCommitDetails(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error("Error fetching commit details:", error);
     }
