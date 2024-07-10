@@ -176,6 +176,9 @@ app.post('/api/user/updateNickname', async (req, res) => {
 });
 
 app.post('/api/savePlan', async (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).send('Unauthorized');
+  }
   const { title, start_date, days } = req.body;
   const gitId = req.session.user.login;
   
