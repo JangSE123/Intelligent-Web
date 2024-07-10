@@ -18,7 +18,7 @@ export default function DesktopApp(props) {
         <Header />
         <Routes>
           <Route path="/" element={<DesktopMain userData={userData} setUserData={setUserData}/>} />
-          <Route path="/planner-chat" element={<PlannerChat/>} />
+          <Route path="/planner-chat" element={<PlannerChat userData={userData} setUserData={setUserData}/>} />
           <Route path="/calendar" element={<Calendar/>} />
           <Route path="/develop" element={<Develop/>} />
           <Route path="/git-connection" element={<GitConnection userData={userData} setUserData={setUserData}/>} />

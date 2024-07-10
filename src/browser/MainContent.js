@@ -20,7 +20,6 @@ function MainContent(props) {
             sessionStorage.setItem("github_user_avatar_url", avatarUrl);
         }
     }, []);
-
     const handleLogin = () => {
         window.location.href = "http://localhost:5001/login/github";
     };

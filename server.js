@@ -1,9 +1,9 @@
-require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
 const session = require('express-session');
 const cors = require('cors');
 const mysql = require('mysql2');
+require('dotenv').config();
 
 const app = express();
 const port = 5001;
@@ -18,16 +18,20 @@ const DBPw = process.env.PASSWORD;
 const DB = process.env.DATABASE;
 
 app.use(cors({
-  origin: 'http://localhost:3000', // 허용할 도메인
-  credentials: true // 쿠키를 전달하려면 true로 설정
+  origin: 'http://localhost:3000', // Allow requests from this domain
+  credentials: true // Allow cookies to be sent
 }));
 
 app.use(session({
   secret: sessionSecret,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false } // In production, use secure: true
+  cookie: { secure: false } // Use secure: true in production
 }));
+
+// Body Parser 미들웨어 추가
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const dbConfig = {
   host: DBHost,
@@ -38,7 +42,7 @@ const dbConfig = {
 
 const dbConnection = mysql.createConnection(dbConfig);
 
-// MySQL 연결
+// Connect to MySQL
 dbConnection.connect((err) => {
   if (err) {
     console.error('Error connecting to database:', err);
@@ -56,7 +60,6 @@ app.get('/login/github', (req, res) => {
 
 // GitHub OAuth 콜백 처리
 app.get('/api/auth/oauth/github/callback', async (req, res) => {
-  console.log('/api/auth/oauth/github/callback called');
   const code = req.query.code;
   console.log('GitHub code received:', code);
 
@@ -73,8 +76,6 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
       }
     });
 
-    console.log('Token response:', tokenResponse.data);
-
     if (tokenResponse.data.error) {
       throw new Error(`Error exchanging token: ${tokenResponse.data.error_description}`);
     }
@@ -82,7 +83,7 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
     const accessToken = tokenResponse.data.access_token;
     console.log('Access token received:', accessToken);
 
-    // Use access token to fetch user data from GitHub API
+    // Fetch user data from GitHub API
     const userResponse = await axios.get('https://api.github.com/user', {
       headers: {
         Authorization: `token ${accessToken}`
@@ -98,9 +99,7 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
 
     // Check if the user already exists in the database
     const selectQuery = `SELECT * FROM User WHERE GitID = ?`;
-    const selectValues = [userData.login];
-
-    dbConnection.query(selectQuery, selectValues, async (err, results) => {
+    dbConnection.query(selectQuery, [userData.login], async (err, results) => {
       if (err) {
         console.error('Error querying database:', err);
         throw err;
@@ -114,19 +113,16 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
         // Store user data in session
         req.session.user = {
           login: existingUser.GitID,
-          avatar_url: existingUser.AvatarURL, // Assuming you have this column in your User table
-          nickname: existingUser.Nickname // Include existing nickname
-          // Add more fields as needed
+          avatar_url: existingUser.AvatarURL,
+          nickname: existingUser.Nickname
         };
 
         // Redirect to React app with token as query parameter
-        res.redirect(`http://localhost:3000?login=${existingUser.GitID}&avatar_url=${existingUser.AvatarURL}`);
+        res.redirect(`http://localhost:3000?login=${userData.login}&avatar_url=${userData.avatar_url}`);
       } else {
         // User does not exist in database, insert new user data into database
-        const insertQuery = `INSERT INTO User (GitID, Nickname) VALUES (?, ?)`;
-        const insertValues = [userData.login, userData.login]; // Use GitHub login as default Nickname
-
-        dbConnection.query(insertQuery, insertValues, (err, result) => {
+        const insertQuery = `INSERT INTO User (GitID, Nickname, AvatarURL) VALUES (?, ?, ?)`;
+        dbConnection.query(insertQuery, [userData.login, userData.login, userData.avatar_url], (err, result) => {
           if (err) {
             console.error('Error inserting user data into database:', err);
             throw err;
@@ -138,8 +134,7 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
           req.session.user = {
             login: userData.login,
             avatar_url: userData.avatar_url,
-            nickname: userData.login // Set default nickname to GitHub login
-            // Add more fields as needed
+            nickname: userData.login // Default nickname to GitHub login
           };
 
           // Redirect to React app with token as query parameter
@@ -149,22 +144,19 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error authenticating with GitHub:', error.message);
-    console.error(error);
+    console.error('Error exchanging code for token:', error.message);
     res.status(500).send('Authentication failed');
   }
 });
 
-// 페이지에서 Nickname 업데이트 요청 처리
+// Update nickname request handler
 app.post('/api/user/updateNickname', async (req, res) => {
   const { nickname } = req.body;
   const { login } = req.session.user;
 
   try {
     const updateQuery = `UPDATE User SET Nickname = ? WHERE GitID = ?`;
-    const updateValues = [nickname, login];
-
-    dbConnection.query(updateQuery, updateValues, (err, result) => {
+    dbConnection.query(updateQuery, [nickname, login], (err, result) => {
       if (err) {
         console.error('Error updating nickname in database:', err);
         throw err;
@@ -183,16 +175,49 @@ app.post('/api/user/updateNickname', async (req, res) => {
   }
 });
 
+app.post('/api/savePlan', async (req, res) => {
+  const { title, start_date, days } = req.body;
+  const gitId = req.session.user.login;
+  
+  // Insert Plan data
+  const insertPlanQuery = `INSERT INTO Plan (GitID, Title, start_date, PlanStatus) VALUES (?, ?, ?, ?)`;
+  const insertPlanValues = [gitId, title, start_date, false];
 
+
+  dbConnection.query(insertPlanQuery, insertPlanValues, (err, planResult) => {
+    if (err) {
+      console.error('Error inserting plan data:', err);
+      return res.status(500).send('Failed to save plan');
+    }
+
+    const planNo = planResult.insertId;
+
+    // Insert Activity data
+    const insertActivityQuery = `INSERT INTO PlanDetail (PlanNo, ActDay, ActDate, topics, Activities, ActStatus) VALUES ?`;
+    const activityValues = days.map(day => [planNo, day.day, day.date, day.topics, day.activities, false]);
+
+    dbConnection.query(insertActivityQuery, [activityValues], (err, activityResult) => {
+      if (err) {
+        console.error('Error inserting activity data:', err);
+        return res.status(500).send('Failed to save activities');
+      }
+
+      res.status(200).send('Plan and activities saved successfully');
+    });
+  });
+});
+
+
+// Handle GitHub API requests for user repos
 app.get('/api/github/repos', async (req, res) => {
-  if (!req.session.accessToken) {
+  if (!req.session.user) {
     return res.status(401).send('Unauthorized');
   }
 
   try {
     const reposResponse = await axios.get('https://api.github.com/user/repos', {
       headers: {
-        Authorization: `token ${req.session.accessToken}`
+        Authorization: `token ${req.session.user.accessToken}`
       }
     });
 
@@ -207,19 +232,18 @@ app.get('/api/github/repos', async (req, res) => {
   }
 });
 
+// Handle GitHub API requests for repo commits
 app.get('/api/github/repos/:owner/:repo/commits', async (req, res) => {
   const { owner, repo } = req.params;
 
-  console.log(`Fetching commits for ${owner}/${repo}`);
-
-  if (!req.session.accessToken) {
+  if (!req.session.user) {
     return res.status(401).send('Unauthorized');
   }
 
   try {
     const commitsResponse = await axios.get(`https://api.github.com/repos/${owner}/${repo}/commits`, {
       headers: {
-        Authorization: `token ${req.session.accessToken}`
+        Authorization: `token ${req.session.user.accessToken}`
       },
       params: {
         per_page: 5
@@ -237,49 +261,33 @@ app.get('/api/github/repos/:owner/:repo/commits', async (req, res) => {
   }
 });
 
+// Handle GitHub API requests for specific commit
 app.get('/api/github/repos/:owner/:repo/commits/:sha', async (req, res) => {
   const { owner, repo, sha } = req.params;
 
-  console.log(`Fetching commit ${sha} for ${owner}/${repo}`);
-
-  if (!req.session.accessToken) {
+  if (!req.session.user) {
     return res.status(401).send('Unauthorized');
   }
 
   try {
     const commitResponse = await axios.get(`https://api.github.com/repos/${owner}/${repo}/commits/${sha}`, {
       headers: {
-        Authorization: `token ${req.session.accessToken}`
+        Authorization: `token ${req.session.user.accessToken}`
       }
     });
 
     if (commitResponse.status !== 200) {
-      throw new Error(`Failed to fetch commit details: ${commitResponse.status}`);
+      throw new Error(`Failed to fetch commit: ${commitResponse.status}`);
     }
 
     res.json(commitResponse.data);
   } catch (error) {
-    console.error('Error fetching commit details:', error.message);
-    res.status(500).send('Failed to fetch commit details');
+    console.error('Error fetching commit:', error.message);
+    res.status(500).send('Failed to fetch commit');
   }
 });
 
-app.get('/logout', (req, res) => {
-  console.log('Logging out user:', req.session.user);
-
-  // Destroy the session
-  req.session.destroy((err) => {
-    if (err) {
-      console.error('Failed to destroy session:', err);
-      return res.status(500).send('Failed to log out');
-    }
-
-    // Redirect to home page or GitHub logout page
-    res.redirect('/');
-  });
-});
-
 app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });
 
