@@ -11,6 +11,7 @@ export default function Chat(props) {
     const [parsedResponse, setParsedResponse] = useState(null);
     const userData = props.userData;
     const setUserData = props.setUserData;
+    const access_token = '너 API';
 
     const chatEndRef = useRef(null);
     console.log("Chat.js userData: ", userData);
@@ -54,7 +55,7 @@ export default function Chat(props) {
                 ]
             }, {
                 headers: {
-                    'Authorization': '',
+                    'Authorization': `Bearer ${access_token}`,
                     'Content-Type': 'application/json'
                 }
             });
