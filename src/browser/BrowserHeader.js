@@ -18,7 +18,7 @@ const Header = () => {
                                     <Link to = "/planner-chat">Planner Chat</Link>
                                 </li>
                                 <li className={styles.sub}>
-                                    <Link to="/calendar">Calendar</Link>
+                                    <Link to="/planner_calendar">Calendar</Link>
                                 </li>
                             </ul>
                         </li>
