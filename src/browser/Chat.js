@@ -11,6 +11,7 @@ export default function Chat() {
     const [parsedResponse, setParsedResponse] = useState(null);
 
     const chatEndRef = useRef(null);
+    const GptApi = process.env.GPTAPI;
 
     const questions = [
         "공부할 언어를 선택해주세요",
@@ -50,7 +51,7 @@ export default function Chat() {
                 ]
             }, {
                 headers: {
-                    'Authorization': `your-api-key`,
+                    'Authorization': GptApi,
                     'Content-Type': 'application/json'
                 }
             });
