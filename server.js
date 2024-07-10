@@ -82,6 +82,9 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
     const accessToken = tokenResponse.data.access_token;
     console.log('Access token received:', accessToken);
 
+    // Store access token in session
+    req.session.accessToken = accessToken;
+
     // Use access token to fetch user data from GitHub API
     const userResponse = await axios.get('https://api.github.com/user', {
       headers: {
@@ -120,7 +123,7 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
         };
 
         // Redirect to React app with token as query parameter
-        res.redirect(`http://localhost:3000?login=${existingUser.GitID}&avatar_url=${existingUser.AvatarURL}`);
+        res.redirect(`http://localhost:3000?login=${userData.GitID}&avatar_url=${userData.avatar_url}`);
       } else {
         // User does not exist in database, insert new user data into database
         const insertQuery = `INSERT INTO User (GitID, Nickname) VALUES (?, ?)`;
