@@ -83,6 +83,9 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
     const accessToken = tokenResponse.data.access_token;
     console.log('Access token received:', accessToken);
 
+    // Store access token in session
+    req.session.accessToken = accessToken;
+
     // Fetch user data from GitHub API
     const userResponse = await axios.get('https://api.github.com/user', {
       headers: {
@@ -113,12 +116,12 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
         // Store user data in session
         req.session.user = {
           login: existingUser.GitID,
-          avatar_url: existingUser.AvatarURL,
-          nickname: existingUser.Nickname
+          nickname: existingUser.Nickname,
+          AvatarURL: existingUser.AvatarURL
         };
 
         // Redirect to React app with token as query parameter
-        res.redirect(`http://localhost:3000?login=${userData.login}&avatar_url=${userData.avatar_url}`);
+        res.redirect(`http://localhost:3000?login=${existingUser.GitID}&avatar_url=${existingUser.AvatarURL}`);
       } else {
         // User does not exist in database, insert new user data into database
         const insertQuery = `INSERT INTO User (GitID, Nickname, AvatarURL) VALUES (?, ?, ?)`;
@@ -133,8 +136,8 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
           // Store user data in session
           req.session.user = {
             login: userData.login,
-            avatar_url: userData.avatar_url,
-            nickname: userData.login // Default nickname to GitHub login
+            nickname: userData.login,
+            avatar_url: userData.avatar_url
           };
 
           // Redirect to React app with token as query parameter
@@ -181,7 +184,7 @@ app.post('/api/savePlan', async (req, res) => {
   }
   const { title, start_date, days } = req.body;
   const gitId = req.session.user.login;
-  
+
   // Insert Plan data
   const insertPlanQuery = `INSERT INTO Plan (GitID, Title, start_date, PlanStatus) VALUES (?, ?, ?, ?)`;
   const insertPlanValues = [gitId, title, start_date, false];
