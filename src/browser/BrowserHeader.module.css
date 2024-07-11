@@ -48,15 +48,23 @@ li {
 }
 
 .submenu {
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
     flex-direction: column;
     list-style-type: none;
-    width: 100%; /* Make submenu full width of parent */
-    text-align: center; /* Align submenu text to the left */
-    display: none; /* Initially hidden */
-    transition: opacity 0.5s ease; /* Smooth transition for opacity change */
+    width: 100%; 
+    text-align: center; 
+    opacity: 0; 
+    visibility: hidden; 
+    transition: opacity 1.5s ease; 
 }
+
+.topbar:hover .submenu {
+    opacity: 1; 
+    visibility: visible; 
+    transition-delay: 0s;
+}
+
 
 .topbar:hover .submenu .sub{
     display: block;
@@ -73,18 +81,18 @@ li {
 }
 
 .topbar:hover {
-    height: 230px; /* Expand topbar height on hover */
+    height: 230px; 
 }
 
 .sub a, .logo a {
-    text-decoration: none; /* Remove underline */
-    color: inherit; /* Inherit color from parent element */
+    text-decoration: none; 
+    color: inherit; 
 }
 
 .sub a:hover, .logo a:hover {
-    color: inherit; /* Ensure color doesn't change on hover */
+    color: inherit; 
 }
 
 .sub a:visited, .logo a:visited {
-    color: inherit; /* Ensure color doesn't change after visiting the link */
+    color: inherit; 
 }
