@@ -54,22 +54,24 @@ li {
     list-style-type: none;
     width: 100%; /* Make submenu full width of parent */
     text-align: center; /* Align submenu text to the left */
-    opacity: 0; /* Initially hidden */
+    display: none; /* Initially hidden */
     transition: opacity 0.5s ease; /* Smooth transition for opacity change */
 }
 
-.topbar:hover .submenu {
-    opacity: 1; /* Fade in submenu */
+.topbar:hover .submenu .sub{
+    display: block;
+    opacity: 1;
+    
 }
-
 .sub{
-    display: flex;
+    display: none;
     position: relative;
     flex-direction: column;
     font-size: 1.2rem;
     margin-top: 15px;
     text-align: center;
 }
+
 .topbar:hover {
     height: 230px; /* Expand topbar height on hover */
 }
