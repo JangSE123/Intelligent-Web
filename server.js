@@ -47,7 +47,7 @@ const dbConnection = mysql.createConnection(dbConfig);
 dbConnection.connect((err) => {
   if (err) {
     console.error('Error connecting to database:', err);
-    return;
+    process.exit(1);
   }
   console.log('Connected to MySQL database');
 });
@@ -65,7 +65,6 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
   console.log('GitHub code received:', code);
 
   try {
-    // Exchange code for access token
     const tokenResponse = await axios.post('https://github.com/login/oauth/access_token', {
       client_id: clientID,
       client_secret: clientSecret,
@@ -84,10 +83,8 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
     const accessToken = tokenResponse.data.access_token;
     console.log('Access token received:', accessToken);
 
-    // Store access token in session
     req.session.accessToken = accessToken;
 
-    // Fetch user data from GitHub API
     const userResponse = await axios.get('https://api.github.com/user', {
       headers: {
         Authorization: `token ${accessToken}`
@@ -101,7 +98,6 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
     const userData = userResponse.data;
     console.log('User data received:', userData);
 
-    // Check if the user already exists in the database
     const selectQuery = `SELECT * FROM User WHERE GitID = ?`;
     dbConnection.query(selectQuery, [userData.login], async (err, results) => {
       if (err) {
@@ -110,21 +106,17 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
       }
 
       if (results.length > 0) {
-        // User exists in database, retrieve user data from database
         const existingUser = results[0];
         console.log('Existing user found in database:', existingUser);
 
-        // Store user data in session
         req.session.user = {
           login: existingUser.GitID,
           nickname: existingUser.Nickname,
           AvatarURL: existingUser.AvatarURL
         };
 
-        // Redirect to React app with token as query parameter
         res.redirect(`http://localhost:3000?login=${existingUser.GitID}&avatar_url=${existingUser.AvatarURL}`);
       } else {
-        // User does not exist in database, insert new user data into database
         const insertQuery = `INSERT INTO User (GitID, Nickname, AvatarURL) VALUES (?, ?, ?)`;
         dbConnection.query(insertQuery, [userData.login, userData.login, userData.avatar_url], (err, result) => {
           if (err) {
@@ -134,14 +126,12 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
 
           console.log('User data inserted into database:', result);
 
-          // Store user data in session
           req.session.user = {
             login: userData.login,
             nickname: userData.login,
             avatar_url: userData.avatar_url
           };
 
-          // Redirect to React app with token as query parameter
           res.redirect(`http://localhost:3000?login=${userData.login}&avatar_url=${userData.avatar_url}`);
         });
       }
@@ -217,14 +207,17 @@ app.post('/api/savePlan', async (req, res) => {
 
 // Handle GitHub API requests for user repos
 app.get('/api/github/repos', async (req, res) => {
-  if (!req.session.user) {
+  if (!req.session.user || !req.session.accessToken) {
     return res.status(401).send('Unauthorized');
   }
 
   try {
+    console.log('Fetching repositories for user:', req.session.user.login);
+    console.log('Access Token:', req.session.accessToken);
+
     const reposResponse = await axios.get('https://api.github.com/user/repos', {
       headers: {
-        Authorization: `token ${req.session.user.accessToken}`
+        Authorization: `token ${req.session.accessToken}`
       }
     });
 
@@ -243,19 +236,25 @@ app.get('/api/github/repos', async (req, res) => {
 app.get('/api/github/repos/:owner/:repo/commits', async (req, res) => {
   const { owner, repo } = req.params;
 
-  if (!req.session.user) {
+  if (!req.session.user || !req.session.accessToken) {
     return res.status(401).send('Unauthorized');
   }
 
   try {
+    console.log(`Fetching commits for repo: ${owner}/${repo}`);
+    console.log('Access Token:', req.session.accessToken);
+
     const commitsResponse = await axios.get(`https://api.github.com/repos/${owner}/${repo}/commits`, {
       headers: {
-        Authorization: `token ${req.session.user.accessToken}`
+        Authorization: `token ${req.session.accessToken}`
       },
       params: {
         per_page: 5
       }
     });
+
+    console.log('Rate Limit:', commitsResponse.headers['x-ratelimit-limit']);
+    console.log('Rate Limit Remaining:', commitsResponse.headers['x-ratelimit-remaining']);
 
     if (commitsResponse.status !== 200) {
       throw new Error(`Failed to fetch commits: ${commitsResponse.status}`);
