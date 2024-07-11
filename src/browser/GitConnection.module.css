@@ -8,7 +8,7 @@
     max-height: 80%; 
   }
   
-  .Repositories, .CommitList, .CommitDetail {
+  .Repositories, .CommitList, .CommitDetail, .CommitGpt{
     max-height: calc(100vh - 300px); /* 원하는 최대 높이로 설정 */
     overflow: auto; /* 스크롤이 가능하도록 설정 */
   }
@@ -17,7 +17,7 @@
     display: grid;
     grid-template-columns: 250px 350px 900px; /* Changed last column to 1fr for flexibility */
     gap: 10px;
-    height: 1000px; /* Changed to 100% */
+    height: calc(100vh - 200px); /* Changed to 100% */
     padding: 10px;
     box-sizing: border-box;
     overflow: hidden;
@@ -57,6 +57,17 @@
     overflow-y: auto; /* Add this line */
     height: calc(100% - 46px); /* Add this line */
   }
+
+  .CommitGpt {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: #7b7979;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: calc(100% - 46px); /* Add this line */
+    overflow-y: auto; /* Add this line */
+  }
   
   .commitTab {
     border-top: 1px solid black;
@@ -87,16 +98,7 @@
     height: 100%;
   }
   
-  .CommitGpt {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    background-color: #7b7979;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    height: calc(100% - 46px); /* Add this line */
-    overflow-y: auto; /* Add this line */
-  }
+
   
   .ToggleButton {
     cursor: pointer;
