@@ -1,0 +1,107 @@
+.calendar-container {
+    background-color: #f9f9f9; /* Lighter background for better contrast */
+    padding: 20px; /* More padding for spacious look */
+    border-radius: 10px; /* More rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px; /* More space below the controls */
+}
+
+.year-select, .month-select {
+    margin: 0 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1.1rem;
+}
+
+.day-labels {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px; /* More space below the day labels */
+}
+
+.day-label {
+    padding: 10px 0;
+    font-size: 1.1rem; /* Larger font for day labels */
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px; /* Larger gap between days */
+}
+
+.calendar-day {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px; /* Larger height for days */
+    border: 1px solid #ddd;
+    border-radius: 5px; /* Rounded corners for days */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+}
+
+.calendar-day:hover {
+    background-color: #ececec; /* Light grey hover effect */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.selected {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px; /* Match rounded corners */
+}
+
+.today {
+    border: 2px solid #ff9800;
+    background-color: #fff3e0; /* Light orange background */
+    color: black;
+    font-weight: bold;
+    border-radius: 5px; /* Match rounded corners */
+}
+
+.selected-date {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    text-align: center;
+    font-weight: bold; /* Bold the selected date text */
+}
+
+.sunday {
+    color: #d32f2f; /* Darker red for better visibility */
+}
+
+.saturday {
+    color: #1976d2; /* Darker blue for better visibility */
+}
+
+.calendarH2{
+    margin: 0;
+}
+
+.date_btn {
+    background-color: #4CAF50;
+    border: 0;
+    color: white;
+    margin-left: 5px; /* Slightly more space between buttons */
+    margin-right: 5px; /* Slightly more space between buttons */
+    padding: 10px 15px; /* More padding for buttons */
+    border-radius: 5px;
+    font-size: 1rem; /* Larger font size for buttons */
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth background transition */
+}
+
+.date_btn:hover {
+    background-color: #45a049; /* Darker green on hover */
+}

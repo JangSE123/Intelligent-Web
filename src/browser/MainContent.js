@@ -88,7 +88,7 @@ function MainContent(props) {
                     </div>
                 </div>
                 <div className={styles["content-area"]}>
-                    <TaskList />
+                <TaskList login={userData ? userData.login : null} />
                 </div>
                 <div className={styles["Ad-area"]}>광고</div>
             </div>
