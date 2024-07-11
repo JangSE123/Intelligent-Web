@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styles from './TaskList.module.css'; // CSS 모듈 임포트
+import axios from 'axios'; // For making HTTP requests
 
-function TaskList() {
+function TaskList({ login }) {
     const [tasks, setTasks] = useState([]);
     const today = new Date();
     const formattedDate = today.toISOString().split('T')[0];
@@ -10,13 +11,18 @@ function TaskList() {
     const dayName = daysOfWeek[today.getDay()];
 
     useEffect(() => {
-        // 예제 데이터 설정 (실제 데이터베이스 연동 필요)
-        const exampleTasks = [
-            { id: 1, name: 'Python 변수 타입 공부하기', status: true },
-            { id: 2, name: 'JAVA 접근제어자 공부하기', status: false }
-        ];
-        setTasks(exampleTasks);
-    }, []);
+        if (login) {
+            // Fetch tasks from the server
+            axios.get(`http://localhost:5001/api/tasks?login=${login}&date=${formattedDate}`)
+                .then(response => {
+                    setTasks(response.data);
+                    console.log('Tasks fetched successfully:', response.data); 
+                })
+                .catch(error => {
+                    console.error('Error fetching tasks:', error);
+                });
+        }
+    }, [login, formattedDate]);
 
     const toggleTaskStatus = (id) => {
         setTasks(prevTasks => 
