@@ -22,6 +22,7 @@ app.use(cors({
   credentials: true // 쿠키를 전달하려면 true로 설정
 }));
 
+
 app.use(session({
   secret: sessionSecret,
   resave: false,
@@ -56,7 +57,6 @@ app.get('/login/github', (req, res) => {
 
 // GitHub OAuth 콜백 처리
 app.get('/api/auth/oauth/github/callback', async (req, res) => {
-  console.log('/api/auth/oauth/github/callback called');
   const code = req.query.code;
   console.log('GitHub code received:', code);
 
@@ -73,8 +73,6 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
       }
     });
 
-    console.log('Token response:', tokenResponse.data);
-
     if (tokenResponse.data.error) {
       throw new Error(`Error exchanging token: ${tokenResponse.data.error_description}`);
     }
@@ -85,7 +83,7 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
     // Store access token in session
     req.session.accessToken = accessToken;
 
-    // Use access token to fetch user data from GitHub API
+    // Fetch user data from GitHub API
     const userResponse = await axios.get('https://api.github.com/user', {
       headers: {
         Authorization: `token ${accessToken}`
@@ -101,9 +99,7 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
 
     // Check if the user already exists in the database
     const selectQuery = `SELECT * FROM User WHERE GitID = ?`;
-    const selectValues = [userData.login];
-
-    dbConnection.query(selectQuery, selectValues, async (err, results) => {
+    dbConnection.query(selectQuery, [userData.login], async (err, results) => {
       if (err) {
         console.error('Error querying database:', err);
         throw err;
@@ -117,19 +113,16 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
         // Store user data in session
         req.session.user = {
           login: existingUser.GitID,
-          avatar_url: existingUser.AvatarURL, // Assuming you have this column in your User table
-          nickname: existingUser.Nickname // Include existing nickname
-          // Add more fields as needed
+          nickname: existingUser.Nickname,
+          AvatarURL: existingUser.AvatarURL
         };
 
         // Redirect to React app with token as query parameter
-        res.redirect(`http://localhost:3000?login=${userData.GitID}&avatar_url=${userData.avatar_url}`);
+        res.redirect(`http://localhost:3000?login=${existingUser.GitID}&avatar_url=${existingUser.AvatarURL}`);
       } else {
         // User does not exist in database, insert new user data into database
-        const insertQuery = `INSERT INTO User (GitID, Nickname) VALUES (?, ?)`;
-        const insertValues = [userData.login, userData.login]; // Use GitHub login as default Nickname
-
-        dbConnection.query(insertQuery, insertValues, (err, result) => {
+        const insertQuery = `INSERT INTO User (GitID, Nickname, AvatarURL) VALUES (?, ?, ?)`;
+        dbConnection.query(insertQuery, [userData.login, userData.login, userData.avatar_url], (err, result) => {
           if (err) {
             console.error('Error inserting user data into database:', err);
             throw err;
@@ -140,9 +133,8 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
           // Store user data in session
           req.session.user = {
             login: userData.login,
-            avatar_url: userData.avatar_url,
-            nickname: userData.login // Set default nickname to GitHub login
-            // Add more fields as needed
+            nickname: userData.login,
+            avatar_url: userData.avatar_url
           };
 
           // Redirect to React app with token as query parameter
@@ -152,8 +144,7 @@ app.get('/api/auth/oauth/github/callback', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error authenticating with GitHub:', error.message);
-    console.error(error);
+    console.error('Error exchanging code for token:', error.message);
     res.status(500).send('Authentication failed');
   }
 });

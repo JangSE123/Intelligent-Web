@@ -1,3 +1,5 @@
+//GitConnection.js
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./GitConnection.module.css";
@@ -7,7 +9,7 @@ function GitConnection({ userData, setUserData }) {
   const [commits, setCommits] = useState([]);
   const [commitDetails, setCommitDetails] = useState(null);
   const [selectedRepo, setSelectedRepo] = useState(null);
-  const [activeTab, setActiveTab] = useState("commitDetails"); // New state for tab selection
+  const [activeTab, setActiveTab] = useState("commitDetails");
 
   useEffect(() => {
     if (userData) {
@@ -85,7 +87,7 @@ function GitConnection({ userData, setUserData }) {
               )}
             </div>
             <div className={styles.CommitList}>
-              <h3 className={styles.CommitTitle}>Commit {selectedRepo}:</h3>
+              <h3 className={styles.CommitTitle}>Commits {selectedRepo}:</h3>
               {selectedRepo && (
                 <>
                   {commits.length > 0 ? (
@@ -141,14 +143,13 @@ function GitConnection({ userData, setUserData }) {
                   GPT Chat
                 </div>
               </div>
-              <div>
                 <div
                   className={`${styles.CommitDetail} ${
                     activeTab === "commitDetails" ? styles.active : ""
                   }`}
                 >
                   <h3 className={styles.DetailTitle}>Commit Details:</h3>
-                  {commitDetails ? (
+                  {commitDetails && (
                     <div className={styles.DetailContainer}>
                       <p>
                         <strong>Message:</strong> {commitDetails.commit.message}
@@ -182,16 +183,14 @@ function GitConnection({ userData, setUserData }) {
                         ))}
                       </ul>
                     </div>
-                  ): (<h1> Select your Repository and Commit List </h1>)}
+                  )}
                 </div>
-              </div>
               <div
                 className={`${styles.CommitGpt} ${
                   activeTab === "gptChat" ? styles.active : ""
                 }`}
               >
                 <h3 className={styles.DetailTitle}>GPT Chat:</h3>
-                {/* GPT Chat component or content goes here */}
                 <p>GPT Chat content will be displayed here.</p>
               </div>
             </div>
