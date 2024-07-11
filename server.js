@@ -169,6 +169,51 @@ app.post('/api/user/updateNickname', async (req, res) => {
   }
 });
 
+// Endpoint to get session user data
+app.get('/api/session-user', (req, res) => {
+  if (req.session.user) {
+    res.json(req.session.user);
+  } else {
+    res.status(401).send('No user session found');
+  }
+});
+
+// Endpoint for logout
+app.post('/api/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      return res.status(500).send('Failed to logout');
+    }
+    res.send('Logout successful');
+  });
+});
+
+// Update nickname request handler
+app.post('/api/user/updateNickname', async (req, res) => {
+  const { nickname } = req.body;
+  const { login } = req.session.user;
+
+  try {
+    const updateQuery = `UPDATE User SET Nickname = ? WHERE GitID = ?`;
+    dbConnection.query(updateQuery, [nickname, login], (err, result) => {
+      if (err) {
+        console.error('Error updating nickname in database:', err);
+        throw err;
+      }
+
+      console.log('Nickname updated successfully:', result);
+
+      // Update session with new nickname
+      req.session.user.nickname = nickname;
+
+      res.status(200).send('Nickname updated successfully');
+    });
+  } catch (error) {
+    console.error('Error updating nickname:', error.message);
+    res.status(500).send('Failed to update nickname');
+  }
+});
+
 app.post('/api/savePlan', async (req, res) => {
   if (!req.session.user) {
     return res.status(401).send('Unauthorized');
@@ -179,7 +224,6 @@ app.post('/api/savePlan', async (req, res) => {
   // Insert Plan data
   const insertPlanQuery = `INSERT INTO Plan (GitID, Title, start_date, PlanStatus) VALUES (?, ?, ?, ?)`;
   const insertPlanValues = [gitId, title, start_date, false];
-
 
   dbConnection.query(insertPlanQuery, insertPlanValues, (err, planResult) => {
     if (err) {
@@ -324,4 +368,3 @@ WHERE p.GitID = ? And pd.ActDate = ? ;
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
-
