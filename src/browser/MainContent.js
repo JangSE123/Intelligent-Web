@@ -5,24 +5,24 @@ import TaskList from "./TaskList"; // TaskList 컴포넌트 import
 import GitHubCalendar from 'react-github-calendar';
 import axios from 'axios';
 
-function MainContent(props) {
-    const userData = props.userData;
-    const setUserData = props.setUserData;
-
+function MainContent({ userData, setUserData }) {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const login = urlParams.get("login");
-        const avatarUrl = urlParams.get("avatar_url");
+        const fetchSessionUserData = async () => {
+            try {
+                const response = await axios.get('http://localhost:5001/api/session-user', { withCredentials: true });
+                if (response.data) {
+                    setUserData(response.data);
+                }
+            } catch (error) {
+                console.error('Error fetching session user data:', error);
+            }
+        };
 
-        if (login && avatarUrl) {
-            setUserData({ login, avatar_url: avatarUrl });
-            sessionStorage.setItem("github_user_login", login);
-            sessionStorage.setItem("github_user_avatar_url", avatarUrl);
-        }
-    }, []);
+        fetchSessionUserData();
+    }, [setUserData]);
 
     useEffect(() => {
         if (userData && selectedDate) {
@@ -47,10 +47,14 @@ function MainContent(props) {
     };
 
     const handleLogout = () => {
-        setUserData(null);
-        sessionStorage.removeItem("github_user_login");
-        sessionStorage.removeItem("github_user_avatar_url");
-        window.location.href = "http://localhost:3000";
+        axios.post('http://localhost:5001/api/logout', {}, { withCredentials: true })
+            .then(() => {
+                setUserData(null);
+                window.location.href = "http://localhost:3000";
+            })
+            .catch(error => {
+                console.error('Error logging out:', error);
+            });
     };
 
     const selectMonth = contributions => {
@@ -117,5 +121,6 @@ function MainContent(props) {
         </div>
     );
 }
+
 
 export default MainContent;
