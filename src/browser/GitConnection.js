@@ -168,7 +168,7 @@ function GitConnection({ userData, setUserData }) {
                         ).toLocaleString()}
                       </p>
                       <h3>Files Changed:</h3>
-                      <ul>
+                      <ul className={styles.commitDetailsUl}>
                         {commitDetails.files.map((file) => (
                           <li key={file.filename}>
                             <p>
