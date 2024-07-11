@@ -22,6 +22,7 @@ app.use(cors({
   credentials: true // Allow cookies to be sent
 }));
 
+
 app.use(session({
   secret: sessionSecret,
   resave: false,

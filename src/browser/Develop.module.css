@@ -25,7 +25,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.Commit {
+.CommitList {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -35,7 +35,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.CommitCode {
+.CommitDetail {
     display: grid;
     grid-template-rows: 550px 300px;
     gap: 10px;

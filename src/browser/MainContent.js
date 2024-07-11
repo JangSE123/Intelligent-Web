@@ -1,3 +1,4 @@
+//MainContent.js
 import React, { useState, useEffect } from "react";
 import styles from "./MainContent.module.css"; // CSS 모듈 import
 import Calendar from "./Calendar";
