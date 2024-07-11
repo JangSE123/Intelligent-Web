@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Calendar.module.css';
 
-function Calendar() {
-    const [selectedDate, setSelectedDate] = useState(null);
+function Calendar({ login, selectedDate, setSelectedDate }) {
     const today = new Date();
-
-    // Initialize with the current year and month
-    const [year, setYear] = useState(today.getFullYear());
-    const [month, setMonth] = useState(today.getMonth());
+    const [year, setYear] = useState(today.getUTCFullYear());
+    const [month, setMonth] = useState(today.getUTCMonth());
 
     useEffect(() => {
         setSelectedDate(null); // Reset selected date when month or year changes
@@ -17,21 +14,9 @@ function Calendar() {
         setSelectedDate(date);
     };
 
-    const handleYearChange = (event) => {
-        setYear(parseInt(event.target.value, 10));
-    };
-
-    const handleMonthChange = (event) => {
-        setMonth(parseInt(event.target.value, 10));
-    };
-
-    const getDaysInMonth = (year, month) => {
-        return new Date(year, month + 1, 0).getDate(); // Get the number of days in the specified month
-    };
-
     const renderCalendar = () => {
         const daysInMonth = getDaysInMonth(year, month);
-        const firstDayOfMonth = new Date(year, month, 1).getDay();
+        const firstDayOfMonth = new Date(Date.UTC(year, month, 1)).getUTCDay();
         const days = [];
 
         // Add blank cells for days before the 1st of the month
@@ -41,14 +26,14 @@ function Calendar() {
 
         // Add cells for each day of the month
         for (let i = 1; i <= daysInMonth; i++) {
-            const date = new Date(year, month, i);
+            const date = new Date(Date.UTC(year, month, i));
             const isToday =
-                today.getFullYear() === date.getFullYear() &&
-                today.getMonth() === date.getMonth() &&
-                today.getDate() === i;
+                today.getUTCFullYear() === date.getUTCFullYear() &&
+                today.getUTCMonth() === date.getUTCMonth() &&
+                today.getUTCDate() === i;
 
             // Determine if the current date is Sunday or Saturday
-            const dayOfWeek = date.getDay();
+            const dayOfWeek = date.getUTCDay();
             let dayClassName = styles['calendar-day'];
             if (dayOfWeek === 0) {
                 dayClassName += ` ${styles.sunday}`; // Sunday
@@ -63,9 +48,9 @@ function Calendar() {
                         isToday ? styles.today : ''
                     } ${
                         selectedDate &&
-                        selectedDate.getDate() === i &&
-                        selectedDate.getMonth() === month &&
-                        selectedDate.getFullYear() === year
+                        selectedDate.getUTCDate() === i &&
+                        selectedDate.getUTCMonth() === month &&
+                        selectedDate.getUTCFullYear() === year
                             ? styles.selected
                             : ''
                     }`}
@@ -79,12 +64,16 @@ function Calendar() {
         return days;
     };
 
-    // Format today's date as YYYY-MM-DD
-    const formatDate = (date) => {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
+    const getDaysInMonth = (year, month) => {
+        return new Date(Date.UTC(year, month + 1, 0)).getUTCDate(); // Get the number of days in the specified month
+    };
+
+    const handleYearChange = (event) => {
+        setYear(parseInt(event.target.value, 10));
+    };
+
+    const handleMonthChange = (event) => {
+        setMonth(parseInt(event.target.value, 10));
     };
 
     const goToPreviousMonth = () => {
@@ -115,7 +104,6 @@ function Calendar() {
 
     return (
         <div className={styles['calendar-container']}>
-            {/* <h2 className={styles.calendarH2}>{formatDate(today)}</h2> Display today's date */}
             <div className={styles['controls']}>
                 <button className={styles['date_btn']} onClick={goToPreviousYear}>{'<<'}</button>
                 <button className={styles['date_btn']} onClick={goToPreviousMonth}>{'<'}</button>
@@ -125,8 +113,8 @@ function Calendar() {
                     className={styles['year-select']}
                 >
                     {Array.from({ length: 10 }, (_, i) => (
-                        <option key={i} value={today.getFullYear() - 5 + i}>
-                            {today.getFullYear() - 5 + i}
+                        <option key={i} value={today.getUTCFullYear() - 5 + i}>
+                            {today.getUTCFullYear() - 5 + i}
                         </option>
                     ))}
                 </select>

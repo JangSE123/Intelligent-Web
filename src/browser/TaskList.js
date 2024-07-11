@@ -1,28 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import styles from './TaskList.module.css'; // CSS 모듈 임포트
-import axios from 'axios'; // For making HTTP requests
+import React from 'react';
+import styles from './TaskList.module.css';
 
-function TaskList({ login }) {
-    const [tasks, setTasks] = useState([]);
+function TaskList({ tasks, setTasks, selectedDate }) {
     const today = new Date();
-    const formattedDate = today.toISOString().split('T')[0];
-
-    const daysOfWeek = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
-    const dayName = daysOfWeek[today.getDay()];
-
-    useEffect(() => {
-        if (login) {
-            // Fetch tasks from the server
-            axios.get(`http://localhost:5001/api/tasks?login=${login}&date=${formattedDate}`)
-                .then(response => {
-                    setTasks(response.data);
-                    console.log('Tasks fetched successfully:', response.data); 
-                })
-                .catch(error => {
-                    console.error('Error fetching tasks:', error);
-                });
-        }
-    }, [login, formattedDate]);
+    const formattedDate = selectedDate ? selectedDate.toISOString().split('T')[0] : today.toISOString().split('T')[0];
+    const dayName = selectedDate ? 
+        ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'][selectedDate.getUTCDay()] : 
+        ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'][today.getUTCDay()];
 
     const toggleTaskStatus = (id) => {
         setTasks(prevTasks => 

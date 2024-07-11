@@ -3,11 +3,15 @@ import styles from "./MainContent.module.css"; // CSS 모듈 import
 import Calendar from "./Calendar";
 import TaskList from "./TaskList"; // TaskList 컴포넌트 import
 import GitHubCalendar from 'react-github-calendar';
+import axios from 'axios';
 
 function MainContent(props) {
 
     const userData = props.userData;
     const setUserData = props.setUserData;
+
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -20,6 +24,25 @@ function MainContent(props) {
             sessionStorage.setItem("github_user_avatar_url", avatarUrl);
         }
     }, []);
+
+    useEffect(() => {
+        if (userData && selectedDate) {
+            fetchTasks(userData.login, selectedDate);
+        }
+    }, [userData, selectedDate]);
+
+    const fetchTasks = (login, date) => {
+        const formattedDate = date.toISOString().split('T')[0];
+        axios.get(`http://localhost:5001/api/tasks?login=${login}&date=${formattedDate}`)
+            .then(response => {
+                setTasks(response.data);
+                console.log('Tasks fetched successfully:', response.data); 
+            })
+            .catch(error => {
+                console.error('Error fetching tasks:', error);
+            });
+    };
+
     const handleLogin = () => {
         window.location.href = "http://localhost:5001/login/github";
     };
@@ -57,7 +80,6 @@ function MainContent(props) {
                             <button onClick={handleLogin}>Login with GitHub</button>
                         ) : (
                             <>
-                                
                                 {userData && (
                                     <div className={styles["profile-container"]}>
                                         <img src={userData.avatar_url} alt="Avatar" />
@@ -81,11 +103,15 @@ function MainContent(props) {
                         </div>
                     )}
                     <div className={styles.calendar}>
-                        <Calendar />
+                        <Calendar
+                            login={userData ? userData.login : null}
+                            selectedDate={selectedDate}
+                            setSelectedDate={setSelectedDate}
+                        />
                     </div>
                 </div>
                 <div className={styles["content-area"]}>
-                <TaskList login={userData ? userData.login : null} />
+                    <TaskList tasks={tasks} setTasks={setTasks} selectedDate={selectedDate} />
                 </div>
                 <div className={styles["Ad-area"]}>광고</div>
             </div>
