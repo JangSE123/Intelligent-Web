@@ -1,4 +1,3 @@
-//MainContent.js
 import React, { useState, useEffect } from "react";
 import styles from "./MainContent.module.css"; // CSS 모듈 import
 import Calendar from "./Calendar";
@@ -7,7 +6,6 @@ import GitHubCalendar from 'react-github-calendar';
 import axios from 'axios';
 
 function MainContent(props) {
-
     const userData = props.userData;
     const setUserData = props.setUserData;
 
