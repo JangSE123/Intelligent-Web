@@ -1,3 +1,4 @@
+//MainContent.js
 import React, { useState, useEffect } from "react";
 import styles from "./MainContent.module.css"; // CSS 모듈 import
 import Calendar from "./Calendar";
@@ -20,6 +21,8 @@ function MainContent(props) {
             sessionStorage.setItem("github_user_avatar_url", avatarUrl);
         }
     }, []);
+    console.log("MainContent.js userData: ", userData);
+
     const handleLogin = () => {
         window.location.href = "http://localhost:5001/login/github";
     };
