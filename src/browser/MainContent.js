@@ -22,6 +22,7 @@ function MainContent(props) {
         }
     }, []);
     console.log("MainContent.js userData: ", userData);
+
     const handleLogin = () => {
         window.location.href = "http://localhost:5001/login/github";
     };
