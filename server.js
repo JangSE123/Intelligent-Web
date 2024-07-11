@@ -247,9 +247,6 @@ app.get('/api/github/repos/:owner/:repo/commits', async (req, res) => {
     const commitsResponse = await axios.get(`https://api.github.com/repos/${owner}/${repo}/commits`, {
       headers: {
         Authorization: `token ${req.session.accessToken}`
-      },
-      params: {
-        per_page: 5
       }
     });
 
@@ -278,7 +275,7 @@ app.get('/api/github/repos/:owner/:repo/commits/:sha', async (req, res) => {
   try {
     const commitResponse = await axios.get(`https://api.github.com/repos/${owner}/${repo}/commits/${sha}`, {
       headers: {
-        Authorization: `token ${req.session.user.accessToken}`
+        Authorization: `token ${req.session.accessToken}`
       }
     });
 
