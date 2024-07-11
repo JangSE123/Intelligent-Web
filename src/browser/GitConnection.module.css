@@ -3,90 +3,45 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 120px); /* 웹 사이트 크기에 맞추어 높이 설정 */
     margin-top: 120px;
     overflow: hidden; /* 부모 컨테이너가 스크롤 되지 않도록 설정 */
 }
 
 .container {
     display: grid;
-    grid-template-columns: 250px 350px 900px;
-    /* grid-template-rows: max-content; */
+    grid-template-columns: 250px 350px 900px; /* 고정된 열 크기 */
     gap: 10px;
-    height: 80%; /* 전체 높이를 부모 컨테이너에 맞춤 */
-    /* overflow-y: scroll; 내부 요소들이 스크롤 되도록 설정 */
+    height: 80vh; /* 전체 높이를 부모 컨테이너에 맞춤 */
     padding: 10px;
     box-sizing: border-box;
-}
-
-.Repositories,
-.CommitList {
-    margin-top: 46px;
+    overflow: hidden; /* 내부 요소들이 부모 컨테이너를 넘지 않도록 설정 */
 }
 
 .Repositories,
 .CommitList,
-.CommitDetail {
-     /* 내부 요소들이 스크롤 되도록 설정 */
-    max-height: 100%;
-    margin-bottom: 80px;
-}
-
-.Repositories ul,
-.CommitList ul,
-.DetailContainer
-{
-    overflow-y: auto;
-}
-
-.Repositories li,
-.CommitList li {
-    margin-right: 5px;
-}
-
-.Repositories ul::-webkit-scrollbar,
-.CommitList ul::-webkit-scrollbar,
-.DetailContainer::-webkit-scrollbar
-{
-  width: 8px;
-}
-
-.Repositories ul::-webkit-scrollbar-track,
-.CommitList ul::-webkit-scrollbar-track,
-.DetailContainer::-webkit-scrollbar-track
-{
-  background-color: #eee;
-}
-
-
-.Repositories ul::-webkit-scrollbar-thumb,
-.CommitList ul::-webkit-scrollbar-thumb,
-.DetailContainer::-webkit-scrollbar-thumb
-{
-    border-radius: 5px;
-    background-color: #ccc;
-}
-
-.Repositories ul::-webkit-scrollbar-thumb:hover,
-.CommitList ul::-webkit-scrollbar-thumb:hover,
-.DetailContainer::-webkit-scrollbar-thumb:hover
-{
-  background: #aaa;
-}
-
-
-.Repositories {
+.CommitDetail,
+.CommitGpt {
     display: flex;
     flex-direction: column;
-    /* gap: 10px; */
-    padding: 10px;
-    /* max-height: 25rem;
-    min-height: 25rem; */
+    height: 90%;
+    width: 100%; /* 고정된 열 크기와 일치 */
+    max-width: 250px; /* 고정된 열 크기와 일치 */
     background-color: #7b7979;
-    border-radius: 5px;
+    border-radius: 5px; /* 전체에 적용 */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* 스크롤바 숨기기 */
 }
 
+.CommitDetail {
+    width: 100%;
+    max-width: 900px;
+}
+
+.Repositories {
+    margin-top: 44px; /* 필수 margin-top */
+
+}
 
 .repoTab {
     background-color: #ddd;
@@ -99,71 +54,62 @@
     color: black;
 }
 
+.Repositories .content {
+    overflow-y: auto; /* 내부 스크롤 적용 */
+    flex: 1;
+}
+
 .CommitList {
     display: flex;
     flex-direction: column;
-    /* gap: 10px; */
-    padding: 10px;
-    /* max-height: 25rem;
-    min-height: 25rem; */
+    width: 100%; /* 고정된 열 크기와 일치 */
+    max-width: 350px; /* 고정된 열 크기와 일치 */
     background-color: #7b7979;
-    border-radius: 5px;
+    border-radius: 5px; /* 전체에 적용 */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-    transition: display 0.5s ease-in-out;
+    margin-top: 44px; /* 필수 margin-top */
+    overflow: hidden; /* 스크롤바 숨기기 */
 }
 
+.CommitList .content {
+    overflow-y: auto; /* 내부 스크롤 적용 */
+    flex: 1;
+}
 
 .commitTab {
     border-top: 1px solid black;
     border-bottom: 1px solid black;
     background-color: #ddd;
     padding-left: 15px;
-    /* padding: 10px; */
 }
 
 .RepoTitle,
 .CommitTitle,
-.DetailTitle{
+.DetailTitle {
     margin-top: 0;
+    padding-left: 10px;
 }
 
-
-.CommitDetail {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    padding-bottom: 80px;
-    height: 100%;
-    background-color: white;
-    border-radius: 5px;
+.DetailContainer {
     overflow-y: auto;
-    background-color: #7b7979;
-    /* max-height: 25rem;
-    min-height: 25rem; */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.DetailContainer{
-    overflow-y: auto;
+    height: calc(100% - 50px); /* 부모 컨테이너의 높이에 맞춤 */
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 0;
 }
 
 .CommitGpt {
     display: flex;
-    padding: 10px;
-    background-color: white;
-    border-radius: 5px;
+    flex-direction: column;
+    width: 100%; /* 마지막 열이 고정됨 */
+    max-width: 900px; /* 고정된 열 크기와 일치 */
+    background-color: #7b7979;
+    border-radius: 5px; /* 전체에 적용 */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    height: 25rem; /* 지피티 공간의 높이 설정 */
-    overflow-y: auto;
 }
-
-/* Add these new styles to GitConnection.module.css */
 
 .ToggleButton {
     cursor: pointer;
-    /* height: 50px; */
-    /* height: 50; */
     padding: 10px;
     background-color: #ddd;
     border: 1px solid #ccc;
@@ -171,31 +117,69 @@
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     margin-right: 10px;
-    /* margin */
-    transition: background-color 0.5s;
-    transition: margin-top 0.5s;
-    /* transition: border-radius 0.3s; */
-  }
-  
-  .ToggleButton.active {
+    transition: background-color 0.5s, margin-top 0.5s;
+}
+
+.ToggleButton.active {
     background-color: #bbb;
     margin-top: 1px;
+}
 
-  }
-  
-  .ToggleContainer {
+.ToggleContainer {
     display: flex;
     margin-left: 10px;
-    /* margin-bottom: 10px; */
-  }
-  
-  .CommitDetail,
-  .CommitGpt {
-    display: none; /* Hide both sections by default */
-  }
-  
-  .CommitDetail.active,
-  .CommitGpt.active {
-    display: block; /* Show the active section */
-  }
-  
+}
+
+.CommitDetail,
+.CommitGpt {
+    display: none; /* 기본적으로 두 섹션 모두 숨김 */
+}
+
+.CommitDetail.active,
+.CommitGpt.active {
+    display: flex;
+    min-height: 90%;
+    height: 90%;
+}
+
+.Repositories ul,
+.CommitList ul{
+    overflow-y: auto; /* 내부 리스트 요소들이 스크롤 되도록 설정 */
+    height: calc(100% - 44px - 50px); /* 부모 컨테이너의 높이에서 margin-top과 기타 여유 높이를 뺀 값 */
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 0;
+}
+
+.DetailContainer {
+    overflow-y: auto; /* 내부 리스트 요소들이 스크롤 되도록 설정 */
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 0;
+    height: 30%;
+}
+
+.Repositories ul::-webkit-scrollbar,
+.CommitList ul::-webkit-scrollbar,
+.DetailContainer::-webkit-scrollbar {
+    width: 8px;
+}
+
+.Repositories ul::-webkit-scrollbar-track,
+.CommitList ul::-webkit-scrollbar-track,
+.DetailContainer::-webkit-scrollbar-track {
+    background-color: #eee;
+}
+
+.Repositories ul::-webkit-scrollbar-thumb,
+.CommitList ul::-webkit-scrollbar-thumb,
+.DetailContainer::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #ccc;
+}
+
+.Repositories ul::-webkit-scrollbar-thumb:hover,
+.CommitList ul::-webkit-scrollbar-thumb:hover,
+.DetailContainer::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}

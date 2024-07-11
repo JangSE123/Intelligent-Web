@@ -124,59 +124,76 @@ function GitConnection({ userData, setUserData }) {
             </div>
             <div>
               <div className={styles.ToggleContainer}>
-              <div
-                className={`${styles.ToggleButton} ${activeTab === "commitDetails" ? styles.active : ""}`}
-                onClick={() => setActiveTab("commitDetails")}
-              >
-                Commit Details
+                <div
+                  className={`${styles.ToggleButton} ${
+                    activeTab === "commitDetails" ? styles.active : ""
+                  }`}
+                  onClick={() => setActiveTab("commitDetails")}
+                >
+                  Commit Details
+                </div>
+                <div
+                  className={`${styles.ToggleButton} ${
+                    activeTab === "gptChat" ? styles.active : ""
+                  }`}
+                  onClick={() => setActiveTab("gptChat")}
+                >
+                  GPT Chat
+                </div>
+              </div>
+              <div>
+                <div
+                  className={`${styles.CommitDetail} ${
+                    activeTab === "commitDetails" ? styles.active : ""
+                  }`}
+                >
+                  <h3 className={styles.DetailTitle}>Commit Details:</h3>
+                  {commitDetails ? (
+                    <div className={styles.DetailContainer}>
+                      <p>
+                        <strong>Message:</strong> {commitDetails.commit.message}
+                      </p>
+                      <p>
+                        <strong>Author:</strong>{" "}
+                        {commitDetails.commit.author.name} (
+                        {commitDetails.commit.author.email})
+                      </p>
+                      <p>
+                        <strong>Date:</strong>{" "}
+                        {new Date(
+                          commitDetails.commit.author.date
+                        ).toLocaleString()}
+                      </p>
+                      <h3>Files Changed:</h3>
+                      <ul>
+                        {commitDetails.files.map((file) => (
+                          <li key={file.filename}>
+                            <p>
+                              <strong>File:</strong> {file.filename}
+                            </p>
+                            <p>
+                              <strong>Changes:</strong> {file.changes}
+                            </p>
+                            <p>
+                              <strong>Status:</strong> {file.status}
+                            </p>
+                            <pre>{file.patch}</pre>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ): (<h1> Select your Repository and Commit List </h1>)}
+                </div>
               </div>
               <div
-                className={`${styles.ToggleButton} ${activeTab === "gptChat" ? styles.active : ""}`}
-                onClick={() => setActiveTab("gptChat")}
+                className={`${styles.CommitGpt} ${
+                  activeTab === "gptChat" ? styles.active : ""
+                }`}
               >
-                GPT Chat
+                <h3 className={styles.DetailTitle}>GPT Chat:</h3>
+                {/* GPT Chat component or content goes here */}
+                <p>GPT Chat content will be displayed here.</p>
               </div>
-            </div>
-              <div className={`${styles.CommitDetail} ${activeTab === "commitDetails" ? styles.active : ""}`}>
-                <h3 className={styles.DetailTitle}>Commit Details:</h3>
-                {commitDetails && (
-                  <div className={styles.DetailContainer}>
-                    <p>
-                      <strong>Message:</strong> {commitDetails.commit.message}
-                    </p>
-                    <p>
-                      <strong>Author:</strong> {commitDetails.commit.author.name} (
-                      {commitDetails.commit.author.email})
-                    </p>
-                    <p>
-                      <strong>Date:</strong>{" "}
-                      {new Date(commitDetails.commit.author.date).toLocaleString()}
-                    </p>
-                    <h3>Files Changed:</h3>
-                    <ul>
-                      {commitDetails.files.map((file) => (
-                        <li key={file.filename}>
-                          <p>
-                            <strong>File:</strong> {file.filename}
-                          </p>
-                          <p>
-                            <strong>Changes:</strong> {file.changes}
-                          </p>
-                          <p>
-                            <strong>Status:</strong> {file.status}
-                          </p>
-                          <pre>{file.patch}</pre>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className={`${styles.CommitGpt} ${activeTab === "gptChat" ? styles.active : ""}`}>
-              <h3 className={styles.DetailTitle}>GPT Chat:</h3>
-              {/* GPT Chat component or content goes here */}
-              <p>GPT Chat content will be displayed here.</p>
             </div>
           </>
         ) : (
