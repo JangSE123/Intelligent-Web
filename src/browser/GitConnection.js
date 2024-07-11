@@ -32,7 +32,8 @@ function GitConnection({ userData, setUserData }) {
       );
       setRepositories(response.data);
     } catch (error) {
-      console.error("Error fetching repositories:", error);
+      console.error("Error fetching repositories:", error.message);
+      console.error("Full error object:", error);
     }
   };
 
@@ -46,7 +47,8 @@ function GitConnection({ userData, setUserData }) {
       setSelectedRepo(repo);
       setCommitDetails(null);
     } catch (error) {
-      console.error("Error fetching commits:", error);
+      console.error("Error fetching commits:", error.message);
+      console.error("Full error object:", error); // 전체 에러 객체 로그 추가
     }
   };
 
