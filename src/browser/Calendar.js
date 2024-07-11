@@ -7,7 +7,9 @@ function Calendar({ login, selectedDate, setSelectedDate }) {
     const [month, setMonth] = useState(today.getUTCMonth());
 
     useEffect(() => {
-        setSelectedDate(null); // Reset selected date when month or year changes
+        if (!selectedDate) {
+            setSelectedDate(new Date(year, month, today.getDate()));
+        }
     }, [year, month]);
 
     const handleDateClick = (date) => {

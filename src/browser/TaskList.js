@@ -2,11 +2,9 @@ import React from 'react';
 import styles from './TaskList.module.css';
 
 function TaskList({ tasks, setTasks, selectedDate }) {
-    const today = new Date();
-    const formattedDate = selectedDate ? selectedDate.toISOString().split('T')[0] : today.toISOString().split('T')[0];
-    const dayName = selectedDate ? 
-        ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'][selectedDate.getUTCDay()] : 
-        ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'][today.getUTCDay()];
+    const displayDate = selectedDate || new Date();
+    const formattedDate = displayDate.toISOString().split('T')[0];
+    const dayName = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'][displayDate.getDay()];
 
     const toggleTaskStatus = (id) => {
         setTasks(prevTasks => 
