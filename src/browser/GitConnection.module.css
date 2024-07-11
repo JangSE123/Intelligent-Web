@@ -135,7 +135,7 @@
   
   .Repositories li,
   .CommitList li {
-    margin-right: 5px;
+    margin-bottom: 5px;
   }
   
   .Repositories ul::-webkit-scrollbar,
