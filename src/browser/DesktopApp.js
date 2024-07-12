@@ -8,7 +8,7 @@ import Planner_Calendar from './Planner_Calendar';
 import Develop from './Develop';
 import GitConnection from './GitConnection';
 import HelpDocs from './HelpDocs';
-import GrassCustom from './GrassCustom';
+import MyPage from './MyPage';
 import TaskList from './TaskList';
 
 
@@ -27,7 +27,7 @@ export default function DesktopApp(props) {
           <Route path="/develop" element={<Develop/>} />
           <Route path="/git-connection" element={<GitConnection userData={userData} setUserData={setUserData}/>} />
           <Route path="/help-docs" element={<HelpDocs/>} />
-          <Route path="/grass-custom" element={<GrassCustom/>} />
+          <Route path="/my-page" element={<MyPage userData={userData} setUserData={setUserData}/>} />
         </Routes>
     </Router>
   )

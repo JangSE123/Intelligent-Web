@@ -45,7 +45,7 @@ const Header = () => {
                             MyPage
                             <ul className={styles.submenu}>
                                 <li className={styles.sub}>
-                                    <Link to="/grass-custom">Grass Custom</Link>
+                                    <Link to="/my-page">MyPage</Link>
                                 </li>
                             </ul>
                         </li>
