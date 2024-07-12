@@ -1,0 +1,40 @@
+.CheckPlannerMain {
+    padding: 20px;
+    margin: 140px;
+}
+
+.title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.button {
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.repoList, .fileList {
+    list-style-type: none;
+    padding: 0;
+}
+
+.repoItem, .fileItem {
+    margin: 5px 0;
+    cursor: pointer;
+}
+
+.repoItem:hover, .fileItem:hover {
+    text-decoration: underline;
+}
+
+.loading {
+    font-size: 18px;
+    color: #666;
+}
+
+.result {
+    font-size: 18px;
+    margin-top: 20px;
+}
