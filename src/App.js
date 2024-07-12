@@ -7,8 +7,8 @@ import axios from 'axios';
 
 const App = () => {
   const [user, setUser] = useState(null);
-  const [userData, setUserData] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
+  const [userData, setUserData] = useState(null);
 
   return (
     <>

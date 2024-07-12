@@ -9,9 +9,10 @@ export default function Chat(props) {
     const [isLoading, setIsLoading] = useState(false);
     const [gptResponse, setGptResponse] = useState(null);
     const [parsedResponse, setParsedResponse] = useState(null);
+    const [apiKey, setApiKey] = useState(null); // API 키 상태 추가
+
     const userData = props.userData;
     const setUserData = props.setUserData;
-    const access_token = '너 API';
 
     const chatEndRef = useRef(null);
     console.log("Chat.js userData: ", userData);
@@ -26,6 +27,20 @@ export default function Chat(props) {
         2: ["7일", "14일", "21일"],
         3: ["1시간", "2시간", "3시간"],
     };
+
+    useEffect(() => {
+        // 서버에서 API 키를 가져옵니다
+        const fetchApiKey = async () => {
+            try {
+                const response = await axios.get('http://localhost:5001/api/config');
+                setApiKey(response.data.gptApiKey);
+            } catch (error) {
+                console.error("Error fetching API key: ", error);
+            }
+        };
+
+        fetchApiKey();
+    }, []);
 
     const handleAnswer = (answer) => {
         setAnswers([...answers, { question: questions[step - 1], answer }]);
@@ -55,7 +70,7 @@ export default function Chat(props) {
                 ]
             }, {
                 headers: {
-                    'Authorization': `Bearer ${access_token}`,
+                    'Authorization': `${apiKey}`,
                     'Content-Type': 'application/json'
                 }
             });

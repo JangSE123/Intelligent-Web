@@ -1,0 +1,36 @@
+.GptCommitMsg{
+    margin-top: 5px;
+}
+
+.GptCommitAuthor{
+    margin-top: 5px;
+}
+
+.GptCommitChangeContainer{
+    margin-top: 5px;
+}
+
+.GptFileName{
+    margin-top: 5px;
+}
+
+.GptChangeList{
+    margin: 5px;
+    padding-left: 15px;
+    list-style: circle;
+    font-weight: bold; 
+}
+
+.GptFile{
+    padding-inline-start: 10px;
+}
+
+.GptFixList {
+    margin-left: 40px;
+}
+
+.GptFixList li{
+    padding-left: 15px;
+    list-style-type: square;
+    margin-top: 5px;
+}
