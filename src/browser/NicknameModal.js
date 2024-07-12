@@ -17,13 +17,14 @@ const NicknameModal = ({ isOpen, onClose, onSave }) => {
         <h2>Change Nickname</h2>
         <input
           type="text"
+          className={styles.NickNameInput}
           value={newNickname}
           onChange={(e) => setNewNickname(e.target.value)}
           placeholder="Enter new nickname"
         />
         <div className={styles.modalActions}>
-          <button onClick={onClose}>Cancel</button>
-          <button onClick={handleSave}>Save</button>
+            <button className={styles.SaveButton} onClick={handleSave}>Save</button>
+            <button className={styles.CancelButton} onClick={onClose}>Cancel</button>
         </div>
       </div>
     </div>
