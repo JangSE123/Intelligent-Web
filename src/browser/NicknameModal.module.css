@@ -8,40 +8,49 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  
-  .modal {
+}
+
+.modal {
     background: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 300px;
     text-align: center;
-  }
-  
-  .modal input {
-    width: 100%;
+}
+
+.NickNameInput {
+    width: 90%;
     padding: 10px;
     margin-top: 10px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-  }
-  
-  .modalActions {
+}
+
+.modalActions {
     display: flex;
     justify-content: space-between;
-  }
-  
-  .modalActions button {
+}
+
+.SaveButton {
     padding: 10px 20px;
     border: none;
-    background-color: #0056b3;
+    background-color: #44ae5b;
     color: white;
     cursor: pointer;
     border-radius: 5px;
-  }
-  
-  .modalActions button:hover {
+}
+
+.CancelButton {
+    padding: 10px 20px;
+    border: none;
+    background-color: #ff5858;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.modalActions button:hover {
     background-color: #004494;
-  }
+}
