@@ -155,13 +155,6 @@ function Calendar({ login, selectedDate, setSelectedDate }) {
                 ))}
             </div>
             <div className={styles['calendar-grid']}>{renderCalendar()}</div>
-            <div className={styles['selected-date']}>
-                {selectedDate && (
-                    <p className={styles.selectedPTag}>
-                        선택된 날짜: {selectedDate.toLocaleDateString()}
-                    </p>
-                )}
-            </div>
         </div>
     );
 }
