@@ -85,7 +85,7 @@ function MainContent({ userData, setUserData }) {
                             <>
                                 {userData && (
                                     <div className={styles["profile-container"]}>
-                                        <img src={userData.avatar_url} alt="Avatar" />
+                                        <img src={userData.AvatarURL} alt="Avatar" />
                                         <p>{userData.login}</p>
                                     </div>
                                 )}
