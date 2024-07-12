@@ -5,7 +5,6 @@ import DesktopMain from './DesktopMain'
 import PlannerChat from './Chat'; // Example component, adjust import
 import Calendar from './Calendar';
 import Planner_Calendar from './Planner_Calendar';
-import Develop from './Develop';
 import GitConnection from './GitConnection';
 import HelpDocs from './HelpDocs';
 import MyPage from './MyPage';
