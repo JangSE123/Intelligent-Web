@@ -10,6 +10,7 @@ import GitConnection from './GitConnection';
 import HelpDocs from './HelpDocs';
 import MyPage from './MyPage';
 import TaskList from './TaskList';
+import CheckToDo from './CheckToDo';
 
 
 export default function DesktopApp(props) {
@@ -24,7 +25,7 @@ export default function DesktopApp(props) {
           <Route path="/calendar" element={<Calendar/>} />
           <Route path="/tasklist" element={<TaskList/>} />
           <Route path="/planner_calendar" element={<Planner_Calendar/>} />
-          <Route path="/develop" element={<Develop/>} />
+          <Route path="/check-todo" element={<CheckToDo/>} />
           <Route path="/git-connection" element={<GitConnection userData={userData} setUserData={setUserData}/>} />
           <Route path="/help-docs" element={<HelpDocs/>} />
           <Route path="/my-page" element={<MyPage userData={userData} setUserData={setUserData}/>} />
