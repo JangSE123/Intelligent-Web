@@ -6,6 +6,7 @@
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
     top: 110px; /* 헤더 높이만큼 내림 */
+    
 }
 
 /* Each scrollable section */
@@ -26,7 +27,7 @@
 /* Content container */
 .content {
     padding: 20px;
-    background-color: white;
+    background-color: #33853530;
     height: calc(100vh - 150px); /* Full viewport height */
     display: flex;
     justify-content: center;
