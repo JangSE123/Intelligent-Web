@@ -58,7 +58,7 @@
     flex-direction: column;
     padding: 10px;
     padding-right: 2px;
-    background-color: #7b7979;
+    background-color: #e7e7e7;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-top: 46px;
@@ -85,7 +85,7 @@
     flex-direction: column;
     padding: 10px;
     padding-right: 3px;
-    background-color: #7b7979;
+    background-color: #e7e7e7;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-top: 46px;
@@ -103,8 +103,8 @@
 }
 
 .gptButton {
-    background-color: #50c254;
-    color: white;
+    background-color: #c9c9c9;
+    /* color: white; */
     border: none;
     padding: 10px 20px;
     cursor: pointer;
@@ -114,7 +114,7 @@
 }
 
 .gptButton:hover {
-      background-color: #4CAF50;
+      background-color: #a5a5a5;
   }
 
 .CommitList ul {
@@ -126,7 +126,7 @@
     flex-direction: column;
     padding: 10px;
     padding-right: 3px;
-    background-color: #7b7979;
+    background-color: #e7e7e7;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     height: calc(100% - 46px);
@@ -153,7 +153,7 @@
     flex-direction: column;
     padding: 10px;
     padding-right: 3px;
-    background-color: #7b7979;
+    background-color: #e7e7e7;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     height: calc(100% - 46px);
