@@ -147,7 +147,7 @@ app.get("/api/auth/oauth/github/callback", async (req, res) => {
               avatar_url: userData.avatar_url,
             };
 
-            // res.redirect(`http://localhost:3000?login=${userData.login}&avatar_url=${userData.avatar_url}`);
+            res.redirect(`http://localhost:3000?login=${userData.login}&avatar_url=${userData.avatar_url}`);
             res.redirect(`http://localhost:3000`);
           }
         );
@@ -434,8 +434,8 @@ app.post('/api/summarize', async (req, res) => {
           role: "system", 
           content: `너는 웹에서 커밋요약 챗봇이야. 제공받은 커밋을 처음 본 협업자도 너가 한 설명을 보고 바로 알 수 있도록 정확하게 알려줘야돼. 내용을 채울 형식은 
                     다음과 같고 넌 여기서 ()안을 적절한 답으로 바꿔야해.`+`
-                    <p class=GptCommitMsg> <b>커밋내용</b> : (커밋내용) </p> 
-                    <div class=GptCommitAuthor> <b>작성자</b> : (커밋작성자) </div> 
+                    <p class=GptCommitMsg> <b>커밋내용</b> : <br> (커밋내용) </p> 
+                    <div class=GptCommitAuthor> <b>작성자</b> : <br> (커밋작성자) </div> 
                     <div class=GptCommitChangeContainer> <b>변동 사항</b> :
                       <div>
                         <ul class=GptFile>(파일명)
@@ -444,7 +444,7 @@ app.post('/api/summarize', async (req, res) => {
                       </div>
                     </div>
 
-                    <div> <b>총 요약</b> :  (변동 사항 3줄 요약) </div>
+                    <div class=GptTotal> <b>총 요약</b> : <br>  (변동 사항 3줄 요약) </div>
                     `+`너가 요약할 때는 절대로 "몇줄이 추가되고 삭제되었습니다." 라는 말을 쓰면 안되고 제대로 변동된 내용을 요약해야해`
 
         },
