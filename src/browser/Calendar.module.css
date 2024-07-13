@@ -48,7 +48,8 @@
     font-size: 15px;
     align-items: center;
     height: 40px;
-    border: 1px solid #ccc;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease-in-out;
     cursor: pointer;
 }
 
