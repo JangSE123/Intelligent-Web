@@ -25,7 +25,6 @@ export default function DesktopApp(props) {
           <Route path="/tasklist" element={<TaskList/>} />
           <Route path="/planner_calendar" element={<Planner_Calendar/>} />
           <Route path="/check-todo" element={<CheckToDo/>} />
-          <Route path="/test" element={<Develop/>} />
           <Route path="/git-connection" element={<GitConnection userData={userData} setUserData={setUserData}/>} />
           <Route path="/help-docs" element={<HelpDocs/>} />
           <Route path="/my-page" element={<MyPage userData={userData} setUserData={setUserData}/>} />

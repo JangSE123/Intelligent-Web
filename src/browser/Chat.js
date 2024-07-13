@@ -9,7 +9,7 @@ export default function Chat(props) {
     const [isLoading, setIsLoading] = useState(false);
     const [gptResponse, setGptResponse] = useState(null);
     const [parsedResponse, setParsedResponse] = useState(null);
-    const [apiKey, setApiKey] = useState(null); // API 키 상태 추가
+    const [apiKey, setApiKey] = useState(null);
 
     const userData = props.userData;
     const setUserData = props.setUserData;
@@ -19,13 +19,11 @@ export default function Chat(props) {
     const questions = [
         "공부할 언어를 선택해주세요",
         "공부할 기간을 선택해주세요",
-        "하루에 공부할 시간을 선택해주세요"
     ];
 
     const options = {
         1: ["Python", "Java", "C"],
         2: ["7일", "14일", "21일"],
-        3: ["1시간", "2시간", "3시간"],
     };
 
     useEffect(() => {
@@ -62,16 +60,9 @@ export default function Chat(props) {
             const response = await axios.post('https://api.openai.com/v1/chat/completions', {
                 model: "gpt-3.5-turbo-16k",
                 messages: [
-                    { role: "system",
-                        content: `너는 코딩 학습 플래너 제작소야. 사용자가 기간,언어,공부 시간을 제시하면 너는 그거에 맞게 난이도를 초급 수준으로 학습 계획을 짜줘야해.`+
-                        `너는 한글로 학습 타이틀과 세부 계획을 만들어야하고 날짜는 ${currentDate}가 기준이야. DB에 저장할거라서 꼭 JSON형태로 알려줘`+
-                        '다음은 너가 만들 때 꼭 지켜야 할 JSON 구조야. () 안을 너가 만들었던 내용을 넣어.'+
-                        `"title": (), "start_date": (), "days":[ "day": (), "date": (), "topics": (), "activities": ["idx": (), "act": ()]] `+
-                        ` 마지막으로 꼭 지켜야 할 사항을 다시 짚어 줄게 `+ 
-                        ` 1. 제시된 JSON 형태를 무조건 따르고 줄바꿈은 하지 말 것., 2. 날짜를 현재 날짜 기준으로 시작할 것 3. act에는 꼭 하나의 주제만 들어갈 것( 공부 주제가 여러 개라면, act를 하나 더 추가해서 보여주기) 4.답변 생략하지 말고 무조건 끝까지 다 말해 5. JSON외의 답변은 절대 하지 말 것`
-                    },
+                    { role: "system", content: `넌 코딩언어 학습 일정 플랜을 짜주는 AI야. 기간, 언어, 시작날짜를 입력받아서  "title": "(제목)","start_date": "(시작일자)",days: ["day": (몇일차int로), "date": "(날짜)", "topics": "(그날주제)",  "activities":"("내용1","내용2","내용3")"]의 Json 형식으로 값을 반환해 ()의 내용은 너가 체워넣어야해 ` },
                     {
-                        role: "user", content: `기간: ${finalAnswers[1]} , 언어: ${finalAnswers[0]}, 시간: ${finalAnswers[2]} `
+                        role: "user", content: `기간: ${finalAnswers[1]} 언어: ${finalAnswers[0]} 시작날짜 ${currentDate} JSON말고 다른 내용은 반환하지마`
                     }
                 ]
             }, {
@@ -116,9 +107,6 @@ export default function Chat(props) {
         }
     };
     
-    
-
-
     const savePlanData = async (login, parsedData) => {
         const { title, start_date, days } = parsedData;
     
@@ -145,7 +133,6 @@ export default function Chat(props) {
         }
     };
     
-
     useEffect(() => {
         chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
         if (step > questions.length) {
