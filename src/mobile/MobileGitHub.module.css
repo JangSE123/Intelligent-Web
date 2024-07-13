@@ -86,12 +86,8 @@
 
 li a {
   text-decoration: none;
-  color: #007bff;
+  color: #ffffff;
   font-weight: bold;
-}
-
-li a:hover {
-  text-decoration: underline;
 }
 
 .commit-details-container pre {
