@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import styles from "./MobileLogin.module.css";
 
-
 function MobileLogin({ userData, setUserData }) {
 
     useEffect(() => {
@@ -54,8 +53,8 @@ function MobileLogin({ userData, setUserData }) {
                     <>
                         <p>Login success</p>
                         <p>Hello, {userData.login}</p>
-                        <img src={userData.avatar_url} alt="User Avatar" />
-                        <button onClick={handleLogout}>LogOut</button>
+                        <img src={userData.AvatarURL} className={styles.MyAvatar} alt="Avatar" />
+                        <button className={styles["logout-button"]} onClick={handleLogout}>LogOut</button>
                     </>
                 )}
             </div>
