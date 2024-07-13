@@ -1,43 +1,85 @@
 .MainContainer {
+    margin-top: 120px;
+    width: 100%;
+    height: calc(100vh - 240px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.totalContainer{
+    display: flex;
+    gap: 2rem;
+    background-color: beige;
+    padding: 15px;
+    height: 100%;
+    width: 80%;
+    overflow: hidden;
+}
+
+.PathContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    
+}
+
+.RepoContainer {
+    background-color: antiquewhite;
+    border-radius: 5px;
     padding: 20px;
 }
 
-.container {
-    margin: 140px;
+.RepoContainer h2 {
+    margin-top: 0;
 }
 
-.title {
-    font-size: 24px;
-    margin-bottom: 20px;
+.ContentContainer {
+    background-color: antiquewhite;
+    border-radius: 5px;
+    overflow-y: auto;
+    height: 100%;
+    padding: 20px;
+    padding-bottom: 0;
 }
 
-.button {
-    margin-bottom: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
+.ContentContainer h2 {
+    margin-top: 0;
 }
 
-.repoList, .fileList {
-    list-style-type: none;
-    padding: 0;
+.FileContainer {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    width: calc(80% - 2rem);
+    background-color: antiquewhite;
+    padding: 15px;
+    padding-bottom: 0;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-.repoItem, .fileItem {
-    margin: 5px 0;
-    cursor: pointer;
+.FileTitle{
+    display: flex;
+    justify-content: space-between;
 }
 
-.repoItem:hover, .fileItem:hover {
-    text-decoration: underline;
+.FileTitle h2{ 
+    margin-top: 0;
 }
 
-.loading {
-    font-size: 18px;
-    color: #666;
+.FileTitle button{
+    height: 80%;
 }
 
-.result {
-    font-size: 18px;
-    margin-top: 20px;
+.FileDetailContainer{
+    overflow-y: auto;
+    overflow-x: auto;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.FileDetailContainer pre {
+    overflow-x: auto;
+    overflow-y: auto;
 }
