@@ -7,8 +7,8 @@ function TaskList({ tasks, setTasks, selectedDate }) {
     const dayName = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'][displayDate.getDay()];
 
     const toggleTaskStatus = (id) => {
-        setTasks(prevTasks => 
-            prevTasks.map(task => 
+        setTasks(prevTasks =>
+            prevTasks.map(task =>
                 task.id === id ? { ...task, status: !task.status } : task
             )
         );

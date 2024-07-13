@@ -473,41 +473,50 @@ app.post('/api/summarize', async (req, res) => {
   }
 });
 
-// login과 date 기반으로 작업을 가져오는 엔드포인트 추가
+// 로그인 및 기타 라우트는 그대로 두고, tasks 엔드포인트만 수정합니다.
+
 app.get("/api/tasks", (req, res) => {
   const { login, date } = req.query;
 
-  console.log(
-    "Received request for tasks with login:",
-    login,
-    "and date:",
-    date
-  ); // 요청 로그 추가
+  console.log("Received request for tasks with login:", login, "and date:", date);
 
   const query = `
-    SELECT * 
-    FROM Plan p 
-    JOIN PlanDetail pd ON p.PlanNo = pd.PlanNo 
-    WHERE p.GitID = ? And pd.ActDate = ? ;
+      SELECT 
+          p.PlanNo,
+          pd.PlanDetailNo,
+          p.Title,
+          pd.Topics,
+          a.ActivityNo,
+          a.Act,
+          a.ActStatus
+      FROM 
+          Plan p
+      JOIN 
+          PlanDetail pd ON p.PlanNo = pd.PlanNo
+      JOIN 
+          Activity a ON pd.PlanDetailNo = a.PlanDetailNo
+      WHERE 
+          p.GitID = ? AND pd.ActDate = ?;
   `;
 
   dbConnection.query(query, [login, date], (err, results) => {
-    if (err) {
-      console.error("Error fetching tasks:", err);
-      return res.status(500).send("Failed to fetch tasks");
-    }
+      if (err) {
+          console.error("Error fetching tasks:", err);
+          return res.status(500).send("Failed to fetch tasks");
+      }
 
-    console.log("Query results:", results); // 쿼리 결과 로그 추가
+      console.log("Query results:", results);
 
-    const tasks = results.map((task) => ({
-      id: task.id,
-      name: `${task.Title}: ${task.Topics} - ${task.Activities}`,
-      status: task.ActStatus === 1,
-    }));
+      const tasks = results.map((task) => ({
+          id: task.ActivityNo,
+          name: `${task.Title}: ${task.Topics} - ${task.Act}`,
+          status: task.ActStatus === 1,
+      }));
 
-    res.json(tasks);
+      res.json(tasks);
   });
 });
+
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
