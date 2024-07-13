@@ -234,6 +234,7 @@ app.post("/api/savePlan", async (req, res) => {
   if (!req.session.user) {
     return res.status(401).send("Unauthorized");
   }
+
   const { title, start_date, days } = req.body;
   const gitId = req.session.user.login;
 
@@ -249,29 +250,36 @@ app.post("/api/savePlan", async (req, res) => {
 
     const planNo = planResult.insertId;
 
-    // Insert Activity data
-    const insertActivityQuery = `INSERT INTO PlanDetail (PlanNo, ActDay, ActDate, topics, Activities, ActStatus) VALUES ?`;
-    const activityValues = days.map((day) => [
-      planNo,
-      day.day,
-      day.date,
-      day.topics,
-      day.activities,
-      false,
-    ]);
+    // Insert PlanDetail and Activity data
+    const insertPlanDetailQuery = `INSERT INTO PlanDetail (PlanNo, ActDay, ActDate, Topics) VALUES ?`;
+    const insertActivityQuery = `INSERT INTO Activity (PlanDetailNo, Act, ActStatus) VALUES ?`;
 
-    dbConnection.query(
-      insertActivityQuery,
-      [activityValues],
-      (err, activityResult) => {
+    const planDetailValues = days.map((day) => [planNo, day.day, day.date, day.topics]);
+    
+    dbConnection.query(insertPlanDetailQuery, [planDetailValues], (err, planDetailResult) => {
+      if (err) {
+        console.error("Error inserting plan detail data:", err);
+        return res.status(500).send("Failed to save plan details");
+      }
+
+      const planDetailNoList = Array.from({ length: planDetailResult.affectedRows }, (_, i) => planDetailResult.insertId + i);
+      
+      const activityValues = [];
+      days.forEach((day, index) => {
+        day.activities.forEach((activity) => {
+          activityValues.push([planDetailNoList[index], activity, false]);
+        });
+      });
+
+      dbConnection.query(insertActivityQuery, [activityValues], (err, activityResult) => {
         if (err) {
           console.error("Error inserting activity data:", err);
           return res.status(500).send("Failed to save activities");
         }
 
         res.status(200).send("Plan and activities saved successfully");
-      }
-    );
+      });
+    });
   });
 });
 
@@ -478,9 +486,9 @@ app.get("/api/tasks", (req, res) => {
 
   const query = `
     SELECT * 
-FROM Plan p 
-JOIN PlanDetail pd ON p.PlanNo = pd.PlanNo 
-WHERE p.GitID = ? And pd.ActDate = ? ;
+    FROM Plan p 
+    JOIN PlanDetail pd ON p.PlanNo = pd.PlanNo 
+    WHERE p.GitID = ? And pd.ActDate = ? ;
   `;
 
   dbConnection.query(query, [login, date], (err, results) => {
