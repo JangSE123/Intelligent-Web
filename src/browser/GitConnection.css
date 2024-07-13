@@ -12,6 +12,7 @@
 }
 
 .GptCommitChangeContainer{
+    font-family : monospace;
     background-color: #000000bd;
     color: white;
   /* border-radius: 10px; */
@@ -20,7 +21,10 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
 }
-
+.GptCommitChangeContainer b, div{
+    font : monospace;
+    font-size: 13px;
+}
 .GptTotal{
     margin-top: 5px;
     font-size: 20px;
