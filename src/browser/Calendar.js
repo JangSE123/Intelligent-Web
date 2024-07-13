@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Calendar.module.css';
+import { RxCaretLeft, RxDoubleArrowLeft, RxCaretRight, RxDoubleArrowRight } from "react-icons/rx";
 
 function Calendar({ login, selectedDate, setSelectedDate }) {
     const today = new Date();
@@ -107,8 +108,8 @@ function Calendar({ login, selectedDate, setSelectedDate }) {
     return (
         <div className={styles['calendar-container']}>
             <div className={styles['controls']}>
-                <button className={styles['date_btn']} onClick={goToPreviousYear}>{'<<'}</button>
-                <button className={styles['date_btn']} onClick={goToPreviousMonth}>{'<'}</button>
+                <button className={styles['date_btn']} onClick={goToPreviousYear}>{<RxDoubleArrowLeft />}</button>
+                <button className={styles['date_btn']} onClick={goToPreviousMonth}>{<RxCaretLeft />}</button>
                 <select
                     value={year}
                     onChange={handleYearChange}
@@ -144,8 +145,8 @@ function Calendar({ login, selectedDate, setSelectedDate }) {
                         </option>
                     ))}
                 </select>
-                <button className={styles['date_btn']} onClick={goToNextMonth}>{'>'}</button>
-                <button className={styles['date_btn']} onClick={goToNextYear}>{'>>'}</button>
+                <button className={styles['date_btn']} onClick={goToNextMonth}>{<RxCaretRight/>}</button>
+                <button className={styles['date_btn']} onClick={goToNextYear}>{<RxDoubleArrowRight/>}</button>
             </div>
             <div className={styles['day-labels']}>
                 {['일', '월', '화', '수', '목', '금', '토'].map((day, index) => (

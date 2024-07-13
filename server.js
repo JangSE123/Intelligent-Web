@@ -3,6 +3,7 @@ const axios = require("axios");
 const session = require("express-session");
 const cors = require("cors");
 const mysql = require("mysql2");
+const cron = require("node-cron");
 require("dotenv").config();
 
 const app = express();
@@ -516,8 +517,61 @@ app.get("/api/tasks", (req, res) => {
       res.json(tasks);
   });
 });
+//일정 오늘로 업데이트 하는 엔드포인트
+app.put('/api/update-plan-details', (req, res) => {
+  // Find query execution
+  const findQuery = `
+    SELECT A.ActivityNo, A.PlanDetailNo, A.Act
+    FROM Activity A
+    JOIN PlanDetail PD ON A.PlanDetailNo = PD.PlanDetailNo
+    WHERE A.ActStatus = 0
+    AND PD.ActDate < CURDATE()
+  `;
 
+  // Use dbConnection instead of connection
+  dbConnection.query(findQuery, (error, results, fields) => {
+    if (error) {
+      console.error('Error executing find query:', error);
+      res.status(500).send('Error fetching data');
+      return;
+    }
 
+    // Execute update query based on the results
+    results.forEach(result => {
+      const updateQuery = `
+        UPDATE Activity A
+        JOIN PlanDetail PD ON A.PlanDetailNo = PD.PlanDetailNo
+        SET A.PlanDetailNo = (
+          SELECT PD2.PlanDetailNo
+          FROM PlanDetail PD2
+          WHERE PD2.PlanNo = PD.PlanNo
+          AND PD2.ActDate = CURDATE()
+        )
+        WHERE A.ActivityNo = ${result.ActivityNo};
+      `;
+
+      // Use dbConnection instead of connection
+      dbConnection.query(updateQuery, (error, updateResult) => {
+        if (error) {
+          console.error('Error executing update query:', error);
+          return;
+        }
+        console.log(`ActivityNo ${result.ActivityNo} updated successfully`);
+      });
+    });
+    res.status(200).send('Plan details updated successfully');
+  });
+});
+//자정마다 실행
+cron.schedule("0 0 * * *", () => {
+  axios.put("http://localhost:5001/api/update-plan-details")
+    .then(() => {
+      console.log("매일 자정에 계획 상세 정보가 업데이트되었습니다");
+    })
+    .catch((error) => {
+      console.error("계획 상세 정보 업데이트 오류:", error.message);
+    });
+});
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });

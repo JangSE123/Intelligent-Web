@@ -48,7 +48,8 @@
     font-size: 15px;
     align-items: center;
     height: 40px;
-    border: 1px solid #ccc;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease-in-out;
     cursor: pointer;
 }
 
@@ -86,14 +87,15 @@
     margin: 0;
 }
 .date_btn {
-    background-color: #4CAF50;
     border: 0;
-    color: white;
+    background-color: white;
     margin-left: 3px;
     margin-right: 3px;
     border-radius: 5px;
+    border: 1px solid lightgrey;
 }
 
 .date_btn:hover {
-    background-color: #50c254;
+    background-color: lightgrey;
+    transition: background-color 0.3s ease-in-out;
 }
