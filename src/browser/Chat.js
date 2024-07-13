@@ -60,7 +60,7 @@ export default function Chat(props) {
             const response = await axios.post('https://api.openai.com/v1/chat/completions', {
                 model: "gpt-3.5-turbo-16k",
                 messages: [
-                    { role: "system", content: `넌 코딩언어 학습 일정 플랜을 짜주는 AI야. 기간, 언어, 시작날짜를 입력받아서  "title": "(제목)","start_date": "(시작일자)",days: ["day": (몇일차int로), "date": "(날짜)", "topics": "(그날주제)",  "activities":"("내용1","내용2","내용3")"]의 Json 형식으로 값을 반환해 ()의 내용은 너가 체워넣어야해 ` },
+                    { role: "system", content: `넌 코딩언어 학습 일정 플랜을 짜주는 AI야. 기간, 언어, 시작날짜를 입력받아서  "title": "(제목)","start_date": "(시작일자)",days: ["day": (몇일차int로), "date": "(날짜)", "topics": "(그날주제)",  "activities":"("내용1","내용2","내용3")"]의 Json 형식으로 값을 반환해 ()의 내용은 너가 체워넣어야해 답변 생략하지마` },
                     {
                         role: "user", content: `기간: ${finalAnswers[1]} 언어: ${finalAnswers[0]} 시작날짜 ${currentDate} JSON말고 다른 내용은 반환하지마`
                     }
