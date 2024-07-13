@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import styles from "./MainContent.module.css"; // CSS 모듈 import
+import styles from "./MainContent.module.css";
 import Calendar from "./Calendar";
-import TaskList from "./TaskList"; // TaskList 컴포넌트 import
+import TaskList from "./TaskList";
 import GitHubCalendar from 'react-github-calendar';
 import axios from 'axios';
 
@@ -35,7 +35,7 @@ function MainContent({ userData, setUserData }) {
         axios.get(`http://localhost:5001/api/tasks?login=${login}&date=${formattedDate}`)
             .then(response => {
                 setTasks(response.data);
-                console.log('Tasks fetched successfully:', response.data); 
+                console.log('Tasks fetched successfully:', response.data);
             })
             .catch(error => {
                 console.error('Error fetching tasks:', error);
@@ -121,6 +121,5 @@ function MainContent({ userData, setUserData }) {
         </div>
     );
 }
-
 
 export default MainContent;
