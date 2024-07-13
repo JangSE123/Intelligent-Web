@@ -160,13 +160,22 @@ function CheckToDo() {
           </div>
         </div>
 
-        <div className={styles.FileContainer}>
-          <div className={styles.FileTitle}>
-            <h2>File Content</h2>
+        <div className={styles.SecondContainer}>
+          <div className={styles.SelectToDoContainer}>
+            <h2>Select Study Plan</h2>
+            <select className={styles.selectToDo} name="" id="">
+                <option value=""> ------------------------ </option>
+            </select>
             <button> 검사받기 </button>
           </div>
-          <div className={styles.FileDetailContainer}>
-            {fileContent && <pre>{fileContent}</pre>}
+          <div className={styles.FileContainer}>
+            <div className={styles.FileTitle}>
+              <h2>File Content</h2>
+              
+            </div>
+            <div className={styles.FileDetailContainer}>
+              {fileContent && <pre>{fileContent}</pre>}
+            </div>
           </div>
         </div>
       </div>
