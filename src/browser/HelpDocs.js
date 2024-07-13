@@ -164,9 +164,9 @@ export default function HelpDocs() {
                 </ul>
               </div>
               <div className={styles.GitConnect}>
-                <h4>GitHub 레포지토리 생성 및 VS Code 연동</h4>
+                <h4>GitHub Repository 생성 및 VS Code 연동</h4>
                 <p>
-                  <strong>1단계: GitHub 레포지토리 생성</strong>
+                  <strong>1단계: GitHub Repository 생성</strong>
                 </p>
                 <ol>
                   <li>GitHub에 로그인합니다.</li>
@@ -175,7 +175,7 @@ export default function HelpDocs() {
                     선택합니다.
                   </li>
                   <li>
-                    레포지토리 이름을 입력하고, **Create repository** 버튼을
+                  Repository 이름을 입력하고, **Create repository** 버튼을
                     클릭합니다.
                   </li>
                 </ol>
@@ -204,20 +204,20 @@ export default function HelpDocs() {
                   <li>VS Code를 엽니다.</li>
                   <li>**View &gt; Terminal**을 클릭하여 터미널을 엽니다.</li>
                   <li>
-                    아래 명령어를 사용하여 GitHub 레포지토리를
+                    아래 명령어를 사용하여 GitHub Repository를
                     클론(clone)합니다.
                   </li>
                 </ol>
                 <pre>
                   <code>
-                    git clone https://github.com/사용자명/레포지토리명.git
+                    git clone https://github.com/사용자명/Repository명.git
                   </code>
                 </pre>
                 <ol start="4">
-                  <li>클론한 레포지토리 디렉토리로 이동합니다.</li>
+                  <li>클론한 Repository 디렉토리로 이동합니다.</li>
                 </ol>
                 <pre>
-                  <code>cd 레포지토리명</code>
+                  <code>cd Repository명</code>
                 </pre>
                 <p>
                   <strong>4단계: 변경 사항 커밋 및 푸시</strong>
@@ -253,7 +253,7 @@ export default function HelpDocs() {
                 </ul>
                 <pre>
                   <code>
-                    git clone https://github.com/사용자명/레포지토리명.git
+                    git clone https://github.com/사용자명/Repository명.git
                   </code>
                 </pre>
                 <ul>
@@ -263,7 +263,7 @@ export default function HelpDocs() {
                   </li>
                 </ul>
                 <pre>
-                  <code>cd 레포지토리명</code>
+                  <code>cd Repository명</code>
                 </pre>
                 <ul>
                   <li>
@@ -307,7 +307,7 @@ export default function HelpDocs() {
                 </pre>
                 <p>
                   이 스크립트를 사용하여 초보자들이 Git과 GitHub의 차이를
-                  이해하고, GitHub 레포지토리를 생성하고 VS Code와 연동하여
+                  이해하고, GitHub Repository를 생성하고 VS Code와 연동하여
                   커밋하고 푸시하는 과정을 쉽게 따라할 수 있습니다. 필요한
                   명령어들에 대한 설명도 포함되어 있어, 단계별로 따라하기에
                   용이합니다.
