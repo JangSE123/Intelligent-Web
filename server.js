@@ -56,6 +56,7 @@ dbConnection.connect((err) => {
   console.log("Connected to MySQL database");
 });
 
+// GitHub Login 처리
 app.get("/login/github", (req, res) => {
   console.log("/login/github called");
   const githubAuthURL = `https://github.com/login/oauth/authorize?client_id=${clientID}&redirect_uri=${redirectURI}`;
@@ -274,7 +275,7 @@ app.post("/api/savePlan", async (req, res) => {
   });
 });
 
-// Handle GitHub API requests for user repos
+// GitHub API로 repository 가져오기
 app.get("/api/github/repos", async (req, res) => {
   if (!req.session.user || !req.session.accessToken) {
     return res.status(401).send("Unauthorized");
@@ -301,7 +302,7 @@ app.get("/api/github/repos", async (req, res) => {
   }
 });
 
-// Handle GitHub API requests for repo commits
+// GitHub API로 commit 리스트 가져오기
 app.get("/api/github/repos/:owner/:repo/commits", async (req, res) => {
   const { owner, repo } = req.params;
 
@@ -322,6 +323,10 @@ app.get("/api/github/repos/:owner/:repo/commits", async (req, res) => {
       }
     );
 
+    const urlTEST = `https://api.github.com/repos/${owner}/${repo}/commits`;
+
+    console.log(urlTEST);
+
     console.log("Rate Limit:", commitsResponse.headers["x-ratelimit-limit"]);
     console.log(
       "Rate Limit Remaining:",
@@ -339,7 +344,7 @@ app.get("/api/github/repos/:owner/:repo/commits", async (req, res) => {
   }
 });
 
-// Handle GitHub API requests for specific commit
+// GitHub API로 commit의 상세 내용 가져오기
 app.get("/api/github/repos/:owner/:repo/commits/:sha", async (req, res) => {
   const { owner, repo, sha } = req.params;
 
@@ -368,11 +373,48 @@ app.get("/api/github/repos/:owner/:repo/commits/:sha", async (req, res) => {
   }
 });
 
+// GitHub API로 리포지토리의 컨텐츠 가져오기
+app.get('/api/repos/:repo/contents', async (req, res) => {
+  const { repo } = req.params;
+  const { path } = req.query;
+  const { login } = req.session.user;
+
+  try {
+      const response = await axios.get(`https://api.github.com/repos/${login}/${repo}/contents/${path || ''}`, {
+          headers: {
+              Authorization: `token ${req.session.accessToken}`
+          }
+      });
+      res.json(response.data);
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+});
+
+// GitHub API로 리포지토리의 폴더내 파일 가져오기
+app.get('/api/repos/:repo/contents/file', async (req, res) => {
+  const { repo } = req.params;
+  const { path } = req.query;
+  const { login } = req.session.user;
+
+  try {
+      const response = await axios.get(`https://api.github.com/repos/${login}/${repo}/contents/${path}`, {
+          headers: {
+              Authorization: `token ${req.session.accessToken}`
+          }
+      });
+      res.json(response.data);
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+});
+
+//GPT API KEY값 .env에서 가져옴.( client 에서 사용할 수 있도록 엔드 포인트 제공)
 app.get('/api/config', (req, res) => {
   res.json({ gptApiKey: GPTAPI });
 });
 
-/* GPT API */
+/* GPT로 커밋 내용 요약 엔드 포인트 */
 app.post('/api/summarize', async (req, res) => {
   const { commitDetails } = req.body;
 
@@ -396,7 +438,7 @@ app.post('/api/summarize', async (req, res) => {
 
                     <div class=GptTotal> <b>총 요약</b> : <br>  (변동 사항 3줄 요약) </div>
                     `+`너가 요약할 때는 절대로 "몇줄이 추가되고 삭제되었습니다." 라는 말을 쓰면 안되고 제대로 변동된 내용을 요약해야해`
-                    
+
         },
         {
           role: "user", 
@@ -422,10 +464,6 @@ app.post('/api/summarize', async (req, res) => {
     res.status(500).send('Failed to summarize commit details');
   }
 });
-
-
-
-
 
 // login과 date 기반으로 작업을 가져오는 엔드포인트 추가
 app.get("/api/tasks", (req, res) => {
