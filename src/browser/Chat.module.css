@@ -21,6 +21,10 @@
     flex-grow: 1;
 }
 
+.planCrafter {
+  font-size: 40px; /* 글씨 크기 */
+  font-weight: bold; /* 글씨 두께 */
+}
 
 .bubbleContainer {
     display: flex;
@@ -35,6 +39,7 @@
     border-radius: 20px;
     align-self: flex-start;
     max-width: 70%;
+    font-size: 30px;
 }
 
 .answerBubble {
@@ -45,6 +50,7 @@
     border-radius: 20px;
     max-width: 70%;
     text-align: right;
+    font-size: 30px;
 }
 
 .rightAlign {
@@ -58,6 +64,7 @@
   flex-wrap: wrap; /* Allow buttons to wrap to the next line if needed */
   gap: 10px; /* Add some spacing between buttons */
   margin: 20px 0;
+  font-size: 30px;
 }
 
 /* Individual answer button styling */
@@ -75,4 +82,25 @@
 
 .answer:hover {
   background-color: #45a049;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.loader {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #000000; /* Blue */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
