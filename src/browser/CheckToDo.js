@@ -163,10 +163,10 @@ function CheckToDo() {
         <div className={styles.SecondContainer}>
           <div className={styles.SelectToDoContainer}>
             <h2>Select Study Plan</h2>
-            <select className={styles.selectToDo} name="" id="">
+            <select className={styles.selectToDoBox} name="" id="">
                 <option value=""> ------------------------ </option>
             </select>
-            <button> 검사받기 </button>
+            <button className={styles.sendGPTBtn}> 검사받기 </button>
           </div>
           <div className={styles.FileContainer}>
             <div className={styles.FileTitle}>
