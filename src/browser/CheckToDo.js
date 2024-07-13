@@ -6,6 +6,7 @@ function CheckToDo() {
     const [contents, setContents] = useState([]);
     const [fileContent, setFileContent] = useState(null);
     const [currentRepo, setCurrentRepo] = useState(null);
+    const [path, setPath] = useState('');
 
     useEffect(() => {
         fetchRepositories();
@@ -32,6 +33,7 @@ function CheckToDo() {
             });
             setContents(response.data);
             setFileContent(null);
+            setPath(path);
         } catch (error) {
             console.error("Error fetching contents:", error);
         }
@@ -49,6 +51,11 @@ function CheckToDo() {
         }
     };
 
+    const goUpDirectory = () => {
+        const newPath = path.split('/').slice(0, -1).join('/');
+        fetchContents(currentRepo, newPath);
+    };
+
     return (
         <div style={{ marginTop: "160px" }}>
             <h1>GitHub Repository Explorer</h1>
@@ -64,6 +71,11 @@ function CheckToDo() {
 
             <div>
                 <h2>Contents</h2>
+                {path && (
+                    <div style={{cursor:"pointer"}} onClick={goUpDirectory}>
+                        📁 ..
+                    </div>
+                )}
                 {contents.map((item) => (
                     <div style={{cursor:"pointer"}} key={item.sha} onClick={() => item.type === 'file' ? fetchFileContent(currentRepo, item.path) : fetchContents(currentRepo, item.path)}>
                         {item.type === 'dir' ? '📁' : '📄'} {item.name}
