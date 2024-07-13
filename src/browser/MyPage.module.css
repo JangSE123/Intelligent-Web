@@ -11,7 +11,7 @@
 .MyPageMain {
     display: grid;
     grid-template-columns: 0.7fr 2fr;
-    grid-template-rows: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 4fr 1fr;
     margin: 0 auto;
     margin-top: 60px;
     width: 100vw;
@@ -33,7 +33,7 @@
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    max-width: 400px;
+    max-width: 350px;
     min-width: 200px;
   }
   
@@ -54,6 +54,9 @@
     font-size: 18px; /* Adjust font size as needed */
   }
   
+  .ProfileInfo p{
+    margin-bottom: 10px;
+  }
   .MyPageProfile button {
     width: 60px;
     color: black;
@@ -139,4 +142,60 @@
     border: 1px solid #ccc;
     border-radius: 10px;
     height: 80%;
+  }
+
+  .TabContent h3{
+    margin-bottom: 80px;
+  }
+  
+  .achievement {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .achievement img {
+    width: 50px; /* Adjust as needed */
+    height: 50px; /* Adjust as needed */
+   
+  }
+  
+  .grayScale {
+    filter: grayscale(100%);
+    transition: filter 0.5s ease;
+  }
+  
+  .progressBarContainer {
+    width: 100%;
+    height: 10px;
+    background-color: #e0e0e0;
+    /* margin: 20px; */
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .progressBar {
+    width: 0;
+    height: 100%;
+    background-color: #76c7c0;
+    
+  }
+  .achievementGrid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+  }
+  
+  .achievementItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    padding-top: 20px;
+    min-width: 150px;
+    min-height: 150px;
+    
   }

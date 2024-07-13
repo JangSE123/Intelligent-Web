@@ -7,6 +7,8 @@ import styles from './MyPage.module.css'; // Import the CSS module
 export default function MyPage({ userData, setUserData }) {
   const [activeTab, setActiveTab] = useState('tab1'); // State to manage active tab
   const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
+  const [progress, setProgress] = useState(Array(10).fill(0)); // State to manage progress bar for each achievement
+  const [AchievementStatus, setAchieveStatus] = useState(1); // State to manage achievement status
 
   useEffect(() => {
     const fetchSessionUserData = async () => {
@@ -52,17 +54,64 @@ export default function MyPage({ userData, setUserData }) {
     });
   };
 
+  useEffect(() => {
+    if (activeTab === 'tab1') {
+      const intervals = progress.map((_, index) => {
+        return setInterval(() => {
+          setProgress(prevProgress => {
+            const newProgress = [...prevProgress];
+            if (newProgress[index] < 100) {
+              newProgress[index] += 10;
+              // Update AchievementStatus based on progress index
+            } else {
+              clearInterval(intervals[index]);
+            }
+            return newProgress;
+          });
+        }, 1000);
+      });
+
+      return () => intervals.forEach(interval => clearInterval(interval));
+    }
+  }, [activeTab, progress]);
+
+  useEffect(() => {
+    progress.forEach((value, index) => {
+      const achievementImg = document.getElementById(`achievementImg-${index}`);
+      if (achievementImg) {
+        if (value === 100) {
+          achievementImg.classList.remove(styles.grayScale);
+        } else {
+          achievementImg.classList.add(styles.grayScale);
+        }
+      }
+    });
+  }, [progress]);
+
   if (!userData) {
     return <p>Loading...</p>;
   }
+
+  const achievementImages = [
+    "https://img.icons8.com/ios-filled/50/000000/star--v1.png",
+    "https://img.icons8.com/ios-filled/50/000000/medal.png",
+    "https://img.icons8.com/ios-filled/50/000000/medal-second-place.png",
+    "https://img.icons8.com/ios-filled/50/000000/trophy.png",
+    "https://img.icons8.com/ios-filled/50/000000/certificate.png",
+    "https://img.icons8.com/ios-filled/50/000000/cup.png",
+    "https://img.icons8.com/ios-filled/50/000000/badge.png",
+    "https://img.icons8.com/ios-filled/50/000000/crown.png",
+    "https://img.icons8.com/ios-filled/50/000000/like.png",
+    "https://img.icons8.com/ios-filled/50/000000/prize.png"
+  ];
 
   return (
     <div className={styles.MyPageMain}>
       <div className={styles.MyPageProfile}>
         <img src={userData.AvatarURL} className={styles.MyAvatar} alt="Avatar" />
         <div className={styles.ProfileInfo}>
-          <p>{userData.nickname}
-            <button onClick={() => setIsModalOpen(true)}>Edit</button></p>
+          <p><b>{userData.nickname}</b>(@{userData.login})</p>
+          <button onClick={() => setIsModalOpen(true)}>Edit</button>
         </div>
       </div>
       <div className={styles.MyInfo}>
@@ -85,12 +134,27 @@ export default function MyPage({ userData, setUserData }) {
           <button className={activeTab === 'tab2' ? styles.activeTab : ''} onClick={() => setActiveTab('tab2')}>Tab 2</button>
         </div>
         <div className={styles.TabContent}>
-          {activeTab === 'tab1' && <div>
-              Content for Tab 1
-            </div>}
-          {activeTab === 'tab2' && <div>
-              Content for Tab 2
-            </div>}
+          {activeTab === 'tab1' && (
+            <div>
+              <div>
+                <h3>Achievements</h3>
+              </div>
+              <div>
+                <div className={styles.achievementGrid}>
+                  {achievementImages.map((imgSrc, index) => (
+                    <div key={index} className={styles.achievementItem}>
+                      <img id={`achievementImg-${index}`} src={imgSrc} alt={`Achievement ${index + 1}`} className={styles.grayScale} />
+                      <p>{AchievementStatus} / {5 * (index + 1)}</p>
+                      <div className={styles.progressBarContainer}>
+                        <div id={`progressBar-${index}`} className={styles.progressBar} style={{ width: `${((AchievementStatus / ((index + 1) * 5)) * 100)}%` }}></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+          {activeTab === 'tab2' && <div>Content for Tab 2</div>}
         </div>
       </div>
 
