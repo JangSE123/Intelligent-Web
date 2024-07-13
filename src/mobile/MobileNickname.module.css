@@ -1,0 +1,60 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+.NickNameInput {
+    width: 90%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.modalActions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.SaveButton {
+    padding: 10px 20px;
+    border: none;
+    background-color: #44ae5b;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.CancelButton {
+    padding: 10px 20px;
+    border: none;
+    background-color: #ff5858;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.SaveButton:hover {
+    background-color: #3fa355;
+}
+
+.CancelButton:hover {
+    background-color: #e95050;
+}
