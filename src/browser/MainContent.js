@@ -86,7 +86,7 @@ function MainContent({ userData, setUserData }) {
                                 {userData && (
                                     <div className={styles["profile-container"]}>
                                         <img src={userData.AvatarURL} alt="Avatar" />
-                                        <p>{userData.login}</p>
+                                        <p>{userData.nickname} <span style={{ fontSize: '0.7em', color: "gray" }}>@{userData.login}</span></p>
                                     </div>
                                 )}
                                 <button onClick={handleLogout}>Logout</button>
