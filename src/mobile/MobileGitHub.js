@@ -8,6 +8,9 @@ function MobileGitHub({ userData, setUserData }) {
     const [commits, setCommits] = useState([]);
     const [commitDetails, setCommitDetails] = useState(null);
     const [selectedRepo, setSelectedRepo] = useState(null);
+    const [gptSummary, setGptSummary] = useState("");
+    const [loadingGPT, setLoadingGPT] = useState(false); // GPT 로딩 상태 추가
+    const [activeTab, setActiveTab] = useState("commitDetails"); // 기본 탭 설정
 
     useEffect(() => {
         if (userData) {
@@ -46,8 +49,35 @@ function MobileGitHub({ userData, setUserData }) {
         try {
             const response = await axios.get(`http://localhost:5001/api/github/repos/${owner}/${repo}/commits/${sha}`, { withCredentials: true });
             setCommitDetails(response.data);
+            setGptSummary(""); // 커밋 상세 정보를 새로 받으면 GPT 요약 초기화
+            setActiveTab("commitDetails"); // Commit Details 탭으로 전환
         } catch (error) {
             console.error('Error fetching commit details:', error);
+        }
+    };
+
+    const summarizeCommitDetails = async () => {
+        if (!commitDetails) return;
+
+        setActiveTab("gptChat"); // GPT 요약 결과를 보기 위해 GPT Chat 탭으로 전환
+        setLoadingGPT(true); // GPT 로딩 시작
+        setCommitDetails(null); // Commit Details 초기화
+
+        const commitDetailsString = JSON.stringify(commitDetails, null, 2);
+
+        try {
+            const response = await axios.post(
+                "http://localhost:5001/api/summarize",
+                {
+                    commitDetails: commitDetailsString,
+                },
+                { withCredentials: true }
+            );
+            setGptSummary(response.data.summary);
+        } catch (error) {
+            console.error("Error summarizing commit details:", error.message);
+        } finally {
+            setLoadingGPT(false); // GPT 로딩 종료
         }
     };
 
@@ -101,28 +131,61 @@ function MobileGitHub({ userData, setUserData }) {
                             <p>Please select a repository to view commits.</p>
                         )}
                     </div>
-                    <div className={styles["commit-details-container"]}>
-                        <h2>GPT:</h2>
-                        {commitDetails ? (
-                            <>
-                                <p><strong>Message:</strong> {commitDetails.commit.message}</p>
-                                <p><strong>Author:</strong> {commitDetails.commit.author.name} ({commitDetails.commit.author.email})</p>
-                                <p><strong>Date:</strong> {new Date(commitDetails.commit.author.date).toLocaleString()}</p>
-                                <h3>Files Changed:</h3>
-                                <ul>
-                                    {commitDetails.files.map(file => (
-                                        <li key={file.filename}>
-                                            <p><strong>File:</strong> {file.filename}</p>
-                                            <p><strong>Changes:</strong> {file.changes}</p>
-                                            <p><strong>Status:</strong> {file.status}</p>
-                                            <pre>{file.patch}</pre>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </>
-                        ) : (
-                            <p>Please select a commit to view details.</p>
-                        )}
+                    <div>
+                        <div className={styles.ToggleContainer}>
+                            <div
+                                className={`${styles.ToggleButton} ${
+                                    activeTab === "gptChat" ? styles.active : ""
+                                }`}
+                                onClick={() => setActiveTab("gptChat")}
+                            >
+                            </div>
+                        </div>
+                        
+                            <div className={styles.DetailHeader}>
+                                {commitDetails && (
+                                    <button
+                                        onClick={summarizeCommitDetails}
+                                        className={styles.gptButton}
+                                    >
+                                        GPT 요약
+                                    </button>
+                                )}
+                            </div>
+                            {commitDetails && (
+                                <div className={styles.DetailContainer}>
+                                    <p>
+                                        <strong>Message:</strong> {commitDetails.commit.message}
+                                    </p>
+                                    <p>
+                                        <strong>Author:</strong>{" "}
+                                        {commitDetails.commit.author.name} (
+                                        {commitDetails.commit.author.email})
+                                    </p>
+                                    <p>
+                                        <strong>Date:</strong>{" "}
+                                        {new Date(
+                                            commitDetails.commit.author.date
+                                        ).toLocaleString()}
+                                    </p>
+                                    
+                                </div>
+                            )}
+                        <div className={`${styles.CommitGpt} 
+                        ${activeTab === "gptChat" ? styles.active : ""}`}>
+                            <h3 className={styles.DetailTitle}>GPT 요약내용:</h3>
+                            {loadingGPT ? ( // 로딩 중일 때 스피너 표시
+                                <div className={styles.spinner}></div>
+                            ) : (
+                                <div>
+                                    {gptSummary ? (
+                                        <div dangerouslySetInnerHTML={{ __html: gptSummary }} />
+                                    ) : (
+                                        <p>요약내용이 여기에 표시됩니다.</p>
+                                    )}
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </>
             ) : (

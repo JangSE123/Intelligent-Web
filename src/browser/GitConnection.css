@@ -1,13 +1,31 @@
 .GptCommitMsg{
     margin-top: 5px;
+    font-size: 20px;
+    padding: 10px;
+
 }
 
 .GptCommitAuthor{
     margin-top: 5px;
+    font-size: 20px;
+    padding: 10px;
 }
 
 .GptCommitChangeContainer{
+    background-color: #000000bd;
+    color: white;
+  /* border-radius: 10px; */
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+
+.GptTotal{
     margin-top: 5px;
+    font-size: 20px;
+    padding: 10px;
+
 }
 
 .GptFileName{
