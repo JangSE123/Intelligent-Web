@@ -1,24 +1,24 @@
-// MobileLogin.js
 import React, { useEffect } from "react";
-import styles from "./MobileLogin.module.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import styles from "./MobileLogin.module.css";
+
 
 function MobileLogin({ userData, setUserData }) {
-    const navigate = useNavigate();
 
     useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const login = urlParams.get("login");
-        const avatarUrl = urlParams.get("avatar_url");
+        const fetchSessionUserData = async () => {
+            try {
+                const response = await axios.get('http://localhost:5001/api/session-user', { withCredentials: true });
+                if (response.data) {
+                    setUserData(response.data);
+                }
+            } catch (error) {
+                console.error('Error fetching session user data:', error);
+            }
+        };
 
-        if (login && avatarUrl) {
-            setUserData({ login, avatar_url: avatarUrl });
-            sessionStorage.setItem("github_user_login", login);
-            sessionStorage.setItem("github_user_avatar_url", avatarUrl);
-            navigate("/github");
-        }
-    }, []);
+        fetchSessionUserData();
+    }, [setUserData]);
 
     const handleLogin = () => {
         window.location.href = "http://localhost:5001/login/github";

@@ -1,5 +1,8 @@
-.CheckPlannerMain {
+.MainContainer {
     padding: 20px;
+}
+
+.container {
     margin: 140px;
 }
 

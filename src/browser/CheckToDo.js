@@ -1,98 +1,84 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import styles from './CheckToDo.module.css';
 
-export default function CheckToDo(props) {
+function CheckToDo() {
     const [repos, setRepos] = useState([]);
-    const [selectedRepo, setSelectedRepo] = useState(null);
-    const [files, setFiles] = useState([]);
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [comparisonResult, setComparisonResult] = useState(null);
-    const [parsedResponse, setParsedResponse] = useState(null); // 학습 계획 데이터
-    const [isLoading, setIsLoading] = useState(false);
-    const [apiKey, setApiKey] = useState(null);
-
-    const userData = props.userData;
+    const [contents, setContents] = useState([]);
+    const [fileContent, setFileContent] = useState(null);
+    const [currentRepo, setCurrentRepo] = useState(null);
 
     useEffect(() => {
-        const fetchApiKey = async () => {
-            try {
-                const response = await axios.get('http://localhost:5001/api/config');
-                setApiKey(response.data.gptApiKey);
-            } catch (error) {
-                console.error("Error fetching API key: ", error);
-            }
-        };
-
-        fetchApiKey();
+        fetchRepositories();
     }, []);
 
-    const fetchRepos = async () => {
+    const fetchRepositories = async () => {
         try {
-            const response = await axios.get('http://localhost:5001/api/github/repos', { withCredentials: true });
+            const response = await axios.get("http://localhost:5001/api/github/repos", {
+                withCredentials: true
+            });
             setRepos(response.data);
         } catch (error) {
-            console.error("Error fetching repositories: ", error);
+            console.error("Error fetching repositories:", error.message);
+            console.error("Full error object:", error);
         }
     };
 
-    const fetchFiles = async (owner, repo) => {
+    const fetchContents = async (repo, path = '') => {
         try {
-            const response = await axios.get(`https://api.github.com/repos/${owner}/${repo}/contents`, {
-                headers: {
-                    Authorization: `token ${userData.access_token}`,
-                },
+            setCurrentRepo(repo);
+            const response = await axios.get(`http://localhost:5001/api/repos/${repo}/contents`, {
+                params: { path },
+                withCredentials: true
             });
-            setFiles(response.data);
-            setSelectedRepo({ owner, repo });
+            setContents(response.data);
+            setFileContent(null);
         } catch (error) {
-            console.error("Error fetching files: ", error);
+            console.error("Error fetching contents:", error);
         }
     };
 
-    const comparePlanWithRepo = async (owner, repo, filePath) => {
-        setIsLoading(true);
+    const fetchFileContent = async (repo, path) => {
         try {
-            const response = await axios.post('http://localhost:5001/api/compare-plan', {
-                repoOwner: owner,
-                repoName: repo,
-                filePath: filePath,
-                userPlan: parsedResponse // 학습 계획 데이터
+            const response = await axios.get(`http://localhost:5001/api/repos/${repo}/contents/file`, {
+                params: { path },
+                withCredentials: true
             });
-            setComparisonResult(response.data.match);
+            setFileContent(atob(response.data.content));
         } catch (error) {
-            console.error("Error comparing plan with repo:", error);
-        } finally {
-            setIsLoading(false);
+            console.error("Error fetching file content:", error);
         }
     };
 
     return (
-        <div className={styles.CheckPlannerMain}>
-            <h1 className={styles.title}>Check Planner</h1>
-            <button className={styles.button} onClick={fetchRepos}>Fetch Repositories</button>
-            <ul className={styles.repoList}>
+        <div style={{ marginTop: "160px" }}>
+            <h1>GitHub Repository Explorer</h1>
+
+            <div>
+                <h2>Repositories</h2>
                 {repos.map((repo) => (
-                    <li className={styles.repoItem} key={repo.id} onClick={() => fetchFiles(repo.owner.login, repo.name)}>
-                        {repo.name}
-                    </li>
+                    <div style={{cursor:"pointer"}} key={repo.id} onClick={() => fetchContents(repo.name)}>
+                        📁 {repo.name}
+                    </div>
                 ))}
-            </ul>
-            {files.length > 0 && (
-                <ul className={styles.fileList}>
-                    {files.map((file) => (
-                        <li className={styles.fileItem} key={file.sha} onClick={() => comparePlanWithRepo(selectedRepo.owner.login, selectedRepo.repo, file.path)}>
-                            {file.name}
-                        </li>
-                    ))}
-                </ul>
-            )}
-            {isLoading && <p className={styles.loading}>Loading...</p>}
-            {comparisonResult !== null && (
-                <div className={styles.result}>
-                    {comparisonResult ? "The file matches the learning plan!" : "The file does not match the learning plan."}
+            </div>
+
+            <div>
+                <h2>Contents</h2>
+                {contents.map((item) => (
+                    <div style={{cursor:"pointer"}} key={item.sha} onClick={() => item.type === 'file' ? fetchFileContent(currentRepo, item.path) : fetchContents(currentRepo, item.path)}>
+                        {item.type === 'dir' ? '📁' : '📄'} {item.name}
+                    </div>
+                ))}
+            </div>
+
+            {fileContent && (
+                <div>
+                    <h2>File Content</h2>
+                    <pre>{fileContent}</pre>
                 </div>
             )}
         </div>
     );
 }
+
+export default CheckToDo;

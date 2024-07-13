@@ -26,7 +26,10 @@ const Header = () => {
                             Git
                             <ul className={styles.submenu}>
                                 <li className={styles.sub}>
-                                    <Link to="/develop">Develop</Link>
+                                    <Link to="/check-todo">CheckToDo</Link>
+                                </li>
+                                <li className={styles.sub}>
+                                    <Link to="/test">TEST_PAGE</Link>
                                 </li>
                                 <li className={styles.sub}>
                                     <Link to="/git-connection">Git Connection</Link>
