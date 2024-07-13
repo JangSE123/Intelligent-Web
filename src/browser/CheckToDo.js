@@ -162,7 +162,7 @@ function CheckToDo() {
 
         <div className={styles.SecondContainer}>
           <div className={styles.SelectToDoContainer}>
-            <h2>Select Study Plan</h2>
+            <h2>Select Plan</h2>
             <select className={styles.selectToDoBox} name="" id="">
                 <option value=""> ------------------------ </option>
             </select>
