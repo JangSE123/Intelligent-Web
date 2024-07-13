@@ -60,12 +60,18 @@ export default function Chat(props) {
         try {
             const currentDate = new Date().toISOString().split('T')[0];
             const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-                model: "gpt-3.5-turbo",
+                model: "gpt-3.5-turbo-16k",
                 messages: [
-                    { role: "system", content: "You are a helpful assistant." },
+                    { role: "system",
+                        content: `너는 코딩 학습 플래너 제작소야. 사용자가 기간,언어,공부 시간을 제시하면 너는 그거에 맞게 난이도를 초급 수준으로 학습 계획을 짜줘야해.`+
+                        `너는 한글로 학습 타이틀과 세부 계획을 만들어야하고 날짜는 ${currentDate}가 기준이야. DB에 저장할거라서 꼭 JSON형태로 알려줘`+
+                        '다음은 너가 만들 때 꼭 지켜야 할 JSON 구조야. () 안을 너가 만들었던 내용을 넣어.'+
+                        `"title": (), "start_date": (), "days":[ "day": (), "date": (), "topics": (), "activities": ["idx": (), "act": ()]] `+
+                        ` 마지막으로 꼭 지켜야 할 사항을 다시 짚어 줄게 `+ 
+                        ` 1. 제시된 JSON 형태를 무조건 따르고 줄바꿈은 하지 말 것., 2. 날짜를 현재 날짜 기준으로 시작할 것 3. act에는 꼭 하나의 주제만 들어갈 것( 공부 주제가 여러 개라면, act를 하나 더 추가해서 보여주기) 4.답변 생략하지 말고 무조건 끝까지 다 말해 5. JSON외의 답변은 절대 하지 말 것`
+                    },
                     {
-                        role: "user", content: `내가 ${finalAnswers[1]} 동안  ${finalAnswers[0]}을(를) 매일 ${finalAnswers[2]} 씩 초급 난이도로 공부할거야  한글로 타이틀과 세부계획을 만들어주고 
-                        date는 ${currentDate}기준 "title": "","start_date": "",days: ["day": , "date": "", "topics": "",  "activities":""] JSON형태로 알려줘. 30일 선택했으면 1일부터 30일까지 빠짐없이 작성하고 시간별 자세한 활동 정해주고 activities 자세히 작성해 JSON말고 다른 내용은 반환하지마`
+                        role: "user", content: `기간: ${finalAnswers[1]} , 언어: ${finalAnswers[0]}, 시간: ${finalAnswers[2]} `
                     }
                 ]
             }, {
