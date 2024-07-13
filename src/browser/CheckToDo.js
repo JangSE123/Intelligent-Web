@@ -191,7 +191,7 @@ function CheckToDo({userData, setUserData}) {
 
         <div className={styles.SecondContainer}>
           <div className={styles.SelectToDoContainer}>
-            <h2>Select Study Plan</h2>
+            <h2>Select Plan</h2>
             <select className={styles.selectToDoBox} name="selectedTask" id="selectedTask" onChange={handleTaskChange}>
               <option value="">Select a task...</option>
               {tasks.map(task => (
