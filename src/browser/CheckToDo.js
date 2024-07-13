@@ -44,13 +44,38 @@ const fileIcon = (
   </svg>
 );
 
-function CheckToDo() {
+function CheckToDo({userData, setUserData}) {
   const [repos, setRepos] = useState([]);
   const [contents, setContents] = useState([]);
   const [fileContent, setFileContent] = useState(null);
   const [currentRepo, setCurrentRepo] = useState(null);
   const [path, setPath] = useState("");
   const [selectedRepo, setSelectedRepo] = useState(null);
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    if (userData) {
+      const today = new Date();
+      fetchTasks(userData.login, today);
+    }
+  }, [userData]);
+
+  const fetchTasks = (login, date) => {
+    const formattedDate = date.toISOString().split('T')[0];
+    axios.get(`http://localhost:5001/api/tasks?login=${login}&date=${formattedDate}`)
+      .then(response => {
+        const filteredTasks = response.data.filter(task => !task.status);
+        setTasks(filteredTasks);
+        console.log('Tasks fetched successfully:', filteredTasks);
+      })
+      .catch(error => {
+        console.error('Error fetching tasks:', error);
+      });
+  };
+
+  useEffect(() => {
+    console.log('Tasks state updated:', tasks);
+  }, [tasks]);
 
   useEffect(() => {
     fetchRepositories();
@@ -109,6 +134,10 @@ function CheckToDo() {
     const newPath = path.split("/").slice(0, -1).join("/");
     fetchContents(currentRepo, newPath);
   };
+  const handleTaskChange = (event) => {
+    const selectedTaskId = event.target.value;
+    // Update state or perform any action based on the selected task ID
+  };
 
   return (
     <div className={styles.MainContainer}>
@@ -163,9 +192,15 @@ function CheckToDo() {
         <div className={styles.SecondContainer}>
           <div className={styles.SelectToDoContainer}>
             <h2>Select Study Plan</h2>
-            <select className={styles.selectToDoBox} name="" id="">
-                <option value=""> ------------------------ </option>
+            <select className={styles.selectToDoBox} name="selectedTask" id="selectedTask" onChange={handleTaskChange}>
+              <option value="">Select a task...</option>
+              {tasks.map(task => (
+                <option key={task.id} value={task.id}>
+                  {task.name}
+                </option>
+              ))}
             </select>
+
             <button className={styles.sendGPTBtn}> 검사받기 </button>
           </div>
           <div className={styles.FileContainer}>
