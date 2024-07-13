@@ -110,7 +110,7 @@ export default function MyPage({ userData, setUserData }) {
       <div className={styles.MyPageProfile}>
         <img src={userData.AvatarURL} className={styles.MyAvatar} alt="Avatar" />
         <div className={styles.ProfileInfo}>
-          <p><b>{userData.nickname}</b>(@{userData.login})</p>
+        <p>{userData.nickname} <span style={{ fontSize: '0.7em', color: "gray" }}>@{userData.login}</span></p>
           <button onClick={() => setIsModalOpen(true)}>Edit</button>
         </div>
       </div>
