@@ -87,14 +87,15 @@
     margin: 0;
 }
 .date_btn {
-    background-color: #4CAF50;
     border: 0;
-    color: white;
+    background-color: white;
     margin-left: 3px;
     margin-right: 3px;
     border-radius: 5px;
+    border: 1px solid lightgrey;
 }
 
 .date_btn:hover {
-    background-color: #50c254;
+    background-color: lightgrey;
+    transition: background-color 0.3s ease-in-out;
 }
