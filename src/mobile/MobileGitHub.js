@@ -109,7 +109,7 @@ function MobileGitHub({ userData, setUserData }) {
                 <>
                     <div className={styles["user-info"]}>
                         <p>Welcome, {userData.login}</p>
-                        <img src={userData.avatar_url} alt="User Avatar" />
+                        <img src={userData.AvatarURL} className={styles.MyAvatar} alt="Avatar" />
                     </div>
                     <div className={styles["repos-container"]}>
                         <h2>Repositories:</h2>
