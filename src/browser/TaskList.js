@@ -6,14 +6,6 @@ function TaskList({ tasks, setTasks, selectedDate }) {
     const formattedDate = displayDate.toISOString().split('T')[0];
     const dayName = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'][displayDate.getDay()];
 
-    const toggleTaskStatus = (id) => {
-        setTasks(prevTasks =>
-            prevTasks.map(task =>
-                task.id === id ? { ...task, status: !task.status } : task
-            )
-        );
-    };
-
     return (
         <div className={styles.container}>
             <div className={styles.header}>
@@ -25,7 +17,6 @@ function TaskList({ tasks, setTasks, selectedDate }) {
                     <div key={task.id} className={styles.task}>
                         <div
                             className={task.status ? styles.green : styles.red}
-                            onClick={() => toggleTaskStatus(task.id)}
                             style={{ cursor: 'pointer' }}
                         ></div>
                         <span className={task.status ? styles.strikethrough : ''}>
