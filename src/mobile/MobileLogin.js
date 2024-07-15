@@ -5,8 +5,7 @@ import MobileTaskList from "./MobileTaskList";
 
 function MobileLogin({ userData, setUserData }) {
     const [tasks, setTasks] = useState([]);
-    const [selectedDate, setSelectedDate] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [selectedDate, setSelectedDate] = useState(new Date()); // Initialize with today's date
 
     useEffect(() => {
         const fetchSessionUserData = async () => {
@@ -46,41 +45,13 @@ function MobileLogin({ userData, setUserData }) {
             try {
                 const response = await axios.get('http://localhost:5001/api/tasks', { withCredentials: true });
                 setTasks(response.data);
-                setLoading(false);
             } catch (error) {
                 console.error('Error fetching tasks:', error);
-                setLoading(false);
             }
         };
 
         fetchTasks();
     }, []);
-    const savePlanData = async (login, parsedData) => {
-        const { title, start_date, days } = parsedData;
-    
-        try {
-            const response = await axios.post('http://localhost:5001/api/savePlan', {
-                login: login,
-                title: title,
-                start_date: start_date,
-                days: days
-            });
-    
-            console.log('Plan saved successfully:', response.data);
-        } catch (error) {
-            if (error.response) {
-                // 서버가 응답한 경우
-                console.error('Error saving plan - server responded:', error.response.data);
-            } else if (error.request) {
-                // 서버가 응답하지 않은 경우
-                console.error('Error saving plan - no response received:', error.request);
-            } else {
-                // 요청을 설정하는 도중에 오류가 발생한 경우
-                console.error('Error saving plan - request setup:', error.message);
-            }
-        }
-    };
-    
 
     const handleLogin = () => {
         window.location.href = "http://localhost:5001/login/github";
@@ -120,11 +91,7 @@ function MobileLogin({ userData, setUserData }) {
                 )}
             </div>
             <div className={styles.MobileTasklist}>
-                {loading ? (
-                    <p>Loading tasks...</p>
-                ) : (
-                    <MobileTaskList tasks={tasks} setTasks={setTasks} selectedDate={selectedDate} />
-                )}
+                <MobileTaskList tasks={tasks} setTasks={setTasks} selectedDate={selectedDate} />
             </div>
         </div>
     );
