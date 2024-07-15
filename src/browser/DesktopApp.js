@@ -4,7 +4,7 @@ import Header from './BrowserHeader'
 import DesktopMain from './DesktopMain'
 import PlannerChat from './Chat'; // Example component, adjust import
 import Calendar from './Calendar';
-import Planner_Calendar from './Planner_Calendar';
+import PlannerCalendar from './Planner_Calendar';
 import GitConnection from './GitConnection';
 import HelpDocs from './HelpDocs';
 import MyPage from './MyPage';
@@ -15,6 +15,7 @@ import CheckToDo from './CheckToDo';
 export default function DesktopApp(props) {
   const userData = props.userData;
   const setUserData = props.setUserData;
+
   return (
     <Router>
         <Header />
@@ -23,7 +24,7 @@ export default function DesktopApp(props) {
           <Route path="/planner-chat" element={<PlannerChat userData={userData} setUserData={setUserData}/>} />
           <Route path="/calendar" element={<Calendar/>} />
           <Route path="/tasklist" element={<TaskList/>} />
-          <Route path="/planner_calendar" element={<Planner_Calendar/>} />
+          <Route path="/planner_calendar" element={<PlannerCalendar userData={userData} setUserData={setUserData}/>} />
           <Route path="/check-todo" element={<CheckToDo userData={userData} setUserData={setUserData}/>} />
           <Route path="/git-connection" element={<GitConnection userData={userData} setUserData={setUserData}/>} />
           <Route path="/help-docs" element={<HelpDocs/>} />
