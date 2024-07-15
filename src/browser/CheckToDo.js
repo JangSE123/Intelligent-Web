@@ -52,6 +52,8 @@ function CheckToDo({userData, setUserData}) {
   const [path, setPath] = useState("");
   const [selectedRepo, setSelectedRepo] = useState(null);
   const [tasks, setTasks] = useState([]);
+  const [selectedTaskId, setSelectedTaskId] = useState(null);
+  const [selectedTaskName, setSelectedTaskName] = useState("");
 
   useEffect(() => {
     if (userData) {
@@ -135,9 +137,26 @@ function CheckToDo({userData, setUserData}) {
     fetchContents(currentRepo, newPath);
   };
   const handleTaskChange = (event) => {
-    const selectedTaskId = event.target.value;
-    // Update state or perform any action based on the selected task ID
+    const [id, name] = event.target.value.split('!');
+    setSelectedTaskId(id);
+    setSelectedTaskName(name);
+    console.log('선택한 작업 ID:', id);
+    console.log('선택한 작업 이름:', name);
   };
+  const handleCheckTask = async () => {
+    try {
+      const response = await axios.post("http://localhost:5001/api/check-task", {
+        id: selectedTaskId,
+        name: selectedTaskName,
+        fileContent,
+      });
+      console.log(response.data);
+      // 원하는 방식으로 결과를 처리하세요.
+    } catch (error) {
+      console.error("Error checking task:", error.response ? error.response.data : error.message);
+    }
+  };
+  
 
   return (
     <div className={styles.MainContainer}>
@@ -191,17 +210,17 @@ function CheckToDo({userData, setUserData}) {
 
         <div className={styles.SecondContainer}>
           <div className={styles.SelectToDoContainer}>
-            <h2>Select Plan</h2>
+            <h2>Select Study Plan</h2>
             <select className={styles.selectToDoBox} name="selectedTask" id="selectedTask" onChange={handleTaskChange}>
               <option value="">Select a task...</option>
               {tasks.map(task => (
-                <option key={task.id} value={task.id}>
+                <option key={task.id} value={`${task.id}!${task.name}`}>
                   {task.name}
                 </option>
               ))}
             </select>
 
-            <button className={styles.sendGPTBtn}> 검사받기 </button>
+            <button className={styles.sendGPTBtn} onClick={handleCheckTask}> 검사받기 </button>
           </div>
           <div className={styles.FileContainer}>
             <div className={styles.FileTitle}>
