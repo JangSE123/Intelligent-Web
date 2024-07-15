@@ -613,11 +613,12 @@ app.post("/api/check-task", async (req, res) => {
             console.error("Error updating database:", err);
             return res.status(500).json({ error: "Database update failed" });
           }
-          res.json({ answer: "True", feedback: gptResponse });
+          console.log(gptResponse)
+          res.json(gptResponse);
         }
       );
     } else {
-      res.json({ answer: "False", feedback: gptResponse });
+      res.json(gptResponse);
     }
   } catch (error) {
     console.error("Error checking task with OpenAI API:", error.response ? error.response.data : error.message);
