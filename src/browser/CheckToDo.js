@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./CheckToDo.module.css";
+import Swal from 'sweetalert2';
+
 
 const defaultFolderIcon = (
   <svg
@@ -52,6 +54,8 @@ function CheckToDo({userData, setUserData}) {
   const [path, setPath] = useState("");
   const [selectedRepo, setSelectedRepo] = useState(null);
   const [tasks, setTasks] = useState([]);
+  const [selectedTaskId, setSelectedTaskId] = useState(null);
+  const [selectedTaskName, setSelectedTaskName] = useState("");
 
   useEffect(() => {
     if (userData) {
@@ -135,9 +139,47 @@ function CheckToDo({userData, setUserData}) {
     fetchContents(currentRepo, newPath);
   };
   const handleTaskChange = (event) => {
-    const selectedTaskId = event.target.value;
-    // Update state or perform any action based on the selected task ID
+    const [id, name] = event.target.value.split('!');
+    setSelectedTaskId(id);
+    setSelectedTaskName(name);
+    console.log('선택한 작업 ID:', id);
+    console.log('선택한 작업 이름:', name);
   };
+  const handleCheckTask = async () => {
+    try {
+      const response = await axios.post("http://localhost:5001/api/check-task", {
+        id: selectedTaskId,
+        name: selectedTaskName,
+        fileContent,
+      });
+  
+      // 서버에서 반환한 응답 데이터 확인
+      const responseData = JSON.parse(response.data);
+      console.log(responseData); // 전체 응답 데이터 확인
+      console.log(responseData.answer); // "True" 또는 "False" 출력
+      console.log(responseData.feedback); // 피드백 문자열 출력
+      if (responseData.answer === true) {
+        Swal.fire({
+          icon: 'success',
+          title: '일치합니다!',
+          html: `<div style="text-align: left;">${responseData.feedback}</div>`,
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: '일치하지 않습니다.',
+          html: `<div style="text-align: left;">${responseData.feedback}</div>`,
+        });
+      }
+      // 필요한 처리 작업 추가
+  
+    } catch (error) {
+      console.error("Error checking task:", error.response ? error.response.data : error.message);
+    }
+  };
+  
+  
+  
 
   return (
     <div className={styles.MainContainer}>
@@ -191,17 +233,17 @@ function CheckToDo({userData, setUserData}) {
 
         <div className={styles.SecondContainer}>
           <div className={styles.SelectToDoContainer}>
-            <h2>Select Plan</h2>
+            <h2>Select Study Plan</h2>
             <select className={styles.selectToDoBox} name="selectedTask" id="selectedTask" onChange={handleTaskChange}>
               <option value="">Select a task...</option>
               {tasks.map(task => (
-                <option key={task.id} value={task.id}>
+                <option key={task.id} value={`${task.id}!${task.name}`}>
                   {task.name}
                 </option>
               ))}
             </select>
 
-            <button className={styles.sendGPTBtn}> 검사받기 </button>
+            <button className={styles.sendGPTBtn} onClick={handleCheckTask}> 검사받기 </button>
           </div>
           <div className={styles.FileContainer}>
             <div className={styles.FileTitle}>

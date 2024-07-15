@@ -572,6 +572,61 @@ cron.schedule("0 0 * * *", () => {
       console.error("계획 상세 정보 업데이트 오류:", error.message);
     });
 });
+
+
+app.post("/api/check-task", async (req, res) => {
+  const { id, name, fileContent } = req.body;
+
+  try {
+    const response = await axios.post(
+      "https://api.openai.com/v1/chat/completions",
+      {
+        model: "gpt-3.5-turbo",
+        messages: [
+          {
+            role: "system",
+            content: `너는 학습 일정과 내용이 일치하는지 검사하는 챗봇이야. 일정과 학습내용을 입력받으면 학습내용에 일정에 관련된 내용이 있으면 answer를 True, 없으면 False로 Json형식으로 대답해주고 한글로 학습내용에 관한 피드백도 해줘. Json 형식은 {"answer" : "",""feedback" : ""} 이렇게 반환 Json말고 다른 내용은 반환하지마.`,
+          },
+          {
+            role: "user",
+            content: `학습일정: ${name}학습내용: ${fileContent}`,
+          },
+        ],
+      },
+      {
+        headers: {
+          Authorization: `${GPTAPI}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const gptResponse = response.data.choices[0].message.content;
+    const isMatch = gptResponse.includes("True");
+
+    if (isMatch) {
+      dbConnection.query(
+        "UPDATE Activity SET ActStatus = 1 WHERE ActivityNo = ?",
+        [id],
+        (err, results) => {
+          if (err) {
+            console.error("Error updating database:", err);
+            return res.status(500).json({ error: "Database update failed" });
+          }
+          console.log(gptResponse)
+          res.json(gptResponse);
+        }
+      );
+    } else {
+      res.json(gptResponse);
+    }
+  } catch (error) {
+    console.error("Error checking task with OpenAI API:", error.response ? error.response.data : error.message);
+    res.status(500).json({ error: "Failed to check task with OpenAI API" });
+  }
+});
+
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
