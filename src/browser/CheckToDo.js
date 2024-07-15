@@ -150,12 +150,16 @@ function CheckToDo({userData, setUserData}) {
         name: selectedTaskName,
         fileContent,
       });
-      console.log(response.data);
-      // 원하는 방식으로 결과를 처리하세요.
+      const { answer, feedback } = response.data;
+      console.log(answer); // Should log "True" or "False"
+      console.log(feedback); // Should log the feedback stringified JSON object
+  
+      // Handle the response as needed
     } catch (error) {
       console.error("Error checking task:", error.response ? error.response.data : error.message);
     }
   };
+  
   
 
   return (
