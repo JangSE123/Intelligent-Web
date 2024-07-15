@@ -15,7 +15,7 @@
   margin: 0 auto;
   display: flex;
   justify-content: center;
-  align-items: center;
+  
 }
 
 
@@ -35,14 +35,23 @@
   padding: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-top: 10px;
+  flex-direction: row-reverse;
+  align-items: flex-end;
+  justify-content: flex-end;
+
 }
 
 .user-info img {
   border-radius: 50%;
-  margin-right: 15px;
-  width: 60px;
-  height: 60px;
-  border: 2px solid #007bff;
+  width: 100px;
+  height: 100px;
+  margin-top: 15px;
+  margin-right: 20px;
+  border: 2px solid #000000;
+}
+
+.user-info {
+  text-align: center; /* 텍스트를 가운데 정렬합니다 */
 }
 
 .user-info p {
@@ -88,6 +97,8 @@ li a {
   color: #ffffff;
   font-weight: bold;
 }
+
+
 
 .commit-details-container pre {
   background: #333;

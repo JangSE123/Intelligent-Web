@@ -39,7 +39,6 @@
   
   .active {
     background-color: #4CAF50;
-    /* color: white; */
   }
   
   .mainContent {
@@ -53,8 +52,15 @@
   .sectionSeparator {
     height: 1px;
     background-color: #ccc;
-    margin: 20px 0;
-    width: 90%;
+    margin-bottom: 15px;
+
+    width: 100%;
+  }
+
+  .GitHubHeader {
+    display: flex;
+    gap: 10px; 
+    margin-bottom: 10px;
   }
 
   .GitHelp{
@@ -67,12 +73,7 @@
     border-radius: 10px;
   }
 
-  .GitConnect pre {
-    background: #f8f8f8;
-    padding: 10px;
-    border-radius: 5px;
-    overflow-x: auto;
-  }
+
 
   .GitHubContent{
     width: 350px;
@@ -106,6 +107,8 @@
 
   li {
     list-style-type: none;
+    white-space: pre-line; /* 줄바꿈과 공백을 유지하면서 줄바꿈 */
+
   }
   
   /* 모바일 대응을 위한 미디어 쿼리 */
