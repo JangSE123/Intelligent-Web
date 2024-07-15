@@ -655,6 +655,36 @@ app.post("/api/check-task", async (req, res) => {
   }
 });
 
+app.get("/plans", (req, res) => {
+  const { login } = req.query;
+  console.log(`Fetching plans for user:`, login);
+
+  const AchievementQuery = `
+    SELECT 
+      (SELECT COUNT(*) FROM Activity A 
+       JOIN PlanDetail PD ON A.PlanDetailNo = PD.PlanDetailNo 
+       JOIN Plan P ON PD.PlanNo = P.PlanNo 
+       WHERE P.GitID = "hanjunnn" AND A.ActStatus = 1) AS ActStatusCount, 
+      (SELECT COUNT(*) FROM Plan 
+       WHERE GitID = "hanjunnn" AND PlanStatus = 1) AS PlanStatusCount`;
+
+  dbConnection.query(AchievementQuery, (err, results) => {
+      if (err) {
+        console.error("Error fetching user tasks:", err);
+        return res.status(500).json({ message: "Database query error", error: err });
+      }
+
+      console.log("Results:", results);
+
+      if (results.length > 0) {
+        res.json(results);
+      } else {
+        res.json({ ActStatusCount: 0, PlanStatusCount: 0 });
+      }
+    }
+  );
+});
+
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
