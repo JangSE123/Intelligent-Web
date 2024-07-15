@@ -52,8 +52,9 @@
   .sectionSeparator {
     height: 1px;
     background-color: #ccc;
-    margin: 20px 0;
-    width: 90%;
+    margin-bottom: 15px;
+
+    width: 100%;
   }
 
   .GitHubHeader {
@@ -72,12 +73,7 @@
     border-radius: 10px;
   }
 
-  .GitConnect pre {
-    background: #f8f8f8;
-    padding: 10px;
-    border-radius: 5px;
-    overflow-x: auto;
-  }
+
 
   .GitHubContent{
     width: 350px;
