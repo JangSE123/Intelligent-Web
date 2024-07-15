@@ -42,6 +42,7 @@
   margin-right: 15px;
   width: 60px;
   height: 60px;
+  margin-top: 50px;
   border: 2px solid #007bff;
 }
 
@@ -88,6 +89,8 @@ li a {
   color: #ffffff;
   font-weight: bold;
 }
+
+
 
 .commit-details-container pre {
   background: #333;

@@ -1,8 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./MobileLogin.module.css";
+import MobileTaskList from "./MobileTaskList";
 
 function MobileLogin({ userData, setUserData }) {
+    const [tasks, setTasks] = useState([]);
+    const [selectedDate, setSelectedDate] = useState(new Date()); // Initialize with today's date
 
     useEffect(() => {
         const fetchSessionUserData = async () => {
@@ -19,6 +22,37 @@ function MobileLogin({ userData, setUserData }) {
         fetchSessionUserData();
     }, [setUserData]);
 
+    useEffect(() => {
+        if (userData && selectedDate) {
+            fetchTasks(userData.login, selectedDate);
+        }
+    }, [userData, selectedDate]);
+
+    const fetchTasks = (login, date) => {
+        const formattedDate = date.toISOString().split('T')[0];
+        axios.get(`http://localhost:5001/api/tasks?login=${login}&date=${formattedDate}`)
+            .then(response => {
+                setTasks(response.data);
+                console.log('Tasks fetched successfully:', response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching tasks:', error);
+            });
+    };
+
+    useEffect(() => {
+        const fetchTasks = async () => {
+            try {
+                const response = await axios.get('http://localhost:5001/api/tasks', { withCredentials: true });
+                setTasks(response.data);
+            } catch (error) {
+                console.error('Error fetching tasks:', error);
+            }
+        };
+
+        fetchTasks();
+    }, []);
+
     const handleLogin = () => {
         window.location.href = "http://localhost:5001/login/github";
     };
@@ -31,7 +65,6 @@ function MobileLogin({ userData, setUserData }) {
 
     return (
         <div className={styles["login-body"]}>
-            <p>Login PAGE</p>
             <div className={styles["login-container"]}>
                 {!userData ? (
                     <>
@@ -51,12 +84,14 @@ function MobileLogin({ userData, setUserData }) {
                     </>
                 ) : (
                     <>
-                        <p>Login success</p>
-                        <p>Hello, {userData.login}</p>
+                        <p>Hello, {userData.nickname}</p>
                         <img src={userData.AvatarURL} className={styles.MyAvatar} alt="Avatar" />
                         <button className={styles["logout-button"]} onClick={handleLogout}>LogOut</button>
                     </>
                 )}
+            </div>
+            <div className={styles.MobileTasklist}>
+                <MobileTaskList tasks={tasks} setTasks={setTasks} selectedDate={selectedDate} />
             </div>
         </div>
     );

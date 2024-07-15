@@ -39,7 +39,6 @@
   
   .active {
     background-color: #4CAF50;
-    /* color: white; */
   }
   
   .mainContent {
@@ -55,6 +54,12 @@
     background-color: #ccc;
     margin: 20px 0;
     width: 90%;
+  }
+
+  .GitHubHeader {
+    display: flex;
+    gap: 10px; 
+    margin-bottom: 10px;
   }
 
   .GitHelp{
@@ -106,6 +111,8 @@
 
   li {
     list-style-type: none;
+    white-space: pre-line; /* 줄바꿈과 공백을 유지하면서 줄바꿈 */
+
   }
   
   /* 모바일 대응을 위한 미디어 쿼리 */
