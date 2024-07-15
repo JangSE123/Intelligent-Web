@@ -29,9 +29,6 @@ const Header = () => {
                                     <Link to="/check-todo">CheckToDo</Link>
                                 </li>
                                 <li className={styles.sub}>
-                                    <Link to="/test">TEST_PAGE</Link>
-                                </li>
-                                <li className={styles.sub}>
                                     <Link to="/git-connection">Git Connection</Link>
                                 </li>
                             </ul>
