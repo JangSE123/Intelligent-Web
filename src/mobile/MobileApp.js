@@ -6,6 +6,7 @@ import MobileGitHub from './MobileGitHub';
 import MakePlan from './MakePlan';
 import MobileMyPage from './MobileMyPage';
 import HelpPage from './HelpPage';
+import MobileTaskList from './MobileTaskList';
 import styles from './MobileApp.module.css';
 
 function MobileApp(props) {
