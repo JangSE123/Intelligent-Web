@@ -22,7 +22,7 @@
 }
 
 .planCrafter {
-  font-size: 40px; /* 글씨 크기 */
+  font-size: 30px; /* 글씨 크기 */
   font-weight: bold; /* 글씨 두께 */
 }
 
@@ -39,7 +39,7 @@
     border-radius: 20px;
     align-self: flex-start;
     max-width: 70%;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .answerBubble {
@@ -50,7 +50,7 @@
     border-radius: 20px;
     max-width: 70%;
     text-align: right;
-    font-size: 30px;
+    font-size: 25px;
 }
 
 .rightAlign {
@@ -64,7 +64,7 @@
   flex-wrap: wrap; /* Allow buttons to wrap to the next line if needed */
   gap: 10px; /* Add some spacing between buttons */
   margin: 20px 0;
-  font-size: 30px;
+  font-size: 25px;
 }
 
 /* Individual answer button styling */
