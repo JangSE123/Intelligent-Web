@@ -32,7 +32,8 @@ function MainContent({ userData, setUserData }) {
 
     const fetchTasks = (login, date) => {
         const formattedDate = date.toISOString().split('T')[0];
-        axios.get(`http://localhost:5001/api/tasks?login=${login}&date=${formattedDate}`)
+        const test = 1;
+        axios.get(`http://localhost:5001/api/tasks?login=${login}&date=${formattedDate} &test=${test}`)
             .then(response => {
                 setTasks(response.data);
                 console.log('Tasks fetched successfully:', response.data);

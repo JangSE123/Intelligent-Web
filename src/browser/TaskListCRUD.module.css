@@ -1,12 +1,36 @@
 /* TaskList.module.css */
 .container {
     width: 100%;
-    max-width: 800px;
+    max-width: 480px;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 30px;
+    background-color: white;
+    overflow-y: auto; /* 수직 스크롤 허용 */
+    max-height: 500px; /* 최대 높이 설정 */
+    scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+}
+
+.container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera에서 스크롤바 숨기기 */
+}
+
+.edtContainer {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 10px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    background-color: white;
+    overflow-y: auto; /* Added to allow scrolling if content overflows */
+    height: auto; /* Set a maximum height to limit container size */
     box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .header {
@@ -38,6 +62,7 @@
 
 .task span {
     margin-left: 10px;
+    cursor: pointer;
 }
 
 .task .buttons {
@@ -65,4 +90,46 @@
 .strikethrough {
     text-decoration: line-through;
     color: grey; /* 텍스트 색상도 변경 (선택사항) */
+}
+
+.save {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 25px; /* Rounded corners */
+    cursor: pointer;
+    font-size: 10px;
+    background-color: #4CAF50; /* Green color */
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.save:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.cancel {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px; /* Rounded corners */
+    cursor: pointer;
+    font-size: 10px;
+    background-color: #f44336; /* Red color */
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.cancel:hover {
+    background-color: #e53935; /* Darker red on hover */
+}
+
+.acttext {
+    width: 70%;
+    padding: 12px; /* Increased padding for more space */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 13px;
+    font-family: 'Freesentation-9Black', sans-serif; /* Apply custom font */
+    margin-right: 10px;
 }
