@@ -6,6 +6,7 @@ import MobileGitHub from './MobileGitHub';
 import MakePlan from './MakePlan';
 import MobileMyPage from './MobileMyPage';
 import HelpPage from './HelpPage';
+import MobileTaskList from './MobileTaskList';
 import styles from './MobileApp.module.css';
 
 function MobileApp(props) {
@@ -34,6 +35,7 @@ function MobileApp(props) {
                         <Route path="/github" element={<MobileGitHub userData={userData} setUserData={setUserData} />} />
                         <Route path="/planner" element={<MakePlan />} />
                         <Route path="/help" element={<HelpPage />} />
+                        <Route path="/MobileTaskList" element={<MobileTaskList />} />
                         <Route path="/mypage" element={<MobileMyPage userData={userData} setUserData={setUserData} />} /> 
                     </Routes>
                 </div>

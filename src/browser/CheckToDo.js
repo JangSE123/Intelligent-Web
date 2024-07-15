@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./CheckToDo.module.css";
+import Swal from 'sweetalert2';
+
 
 const defaultFolderIcon = (
   <svg
@@ -150,15 +152,32 @@ function CheckToDo({userData, setUserData}) {
         name: selectedTaskName,
         fileContent,
       });
-      const { answer, feedback } = response.data;
-      console.log(answer); // Should log "True" or "False"
-      console.log(feedback); // Should log the feedback stringified JSON object
   
-      // Handle the response as needed
+      // 서버에서 반환한 응답 데이터 확인
+      const responseData = JSON.parse(response.data);
+      console.log(responseData); // 전체 응답 데이터 확인
+      console.log(responseData.answer); // "True" 또는 "False" 출력
+      console.log(responseData.feedback); // 피드백 문자열 출력
+      if (responseData.answer === true) {
+        Swal.fire({
+          icon: 'success',
+          title: '일치합니다!',
+          html: `<div style="text-align: left;">${responseData.feedback}</div>`,
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: '일치하지 않습니다.',
+          html: `<div style="text-align: left;">${responseData.feedback}</div>`,
+        });
+      }
+      // 필요한 처리 작업 추가
+  
     } catch (error) {
       console.error("Error checking task:", error.response ? error.response.data : error.message);
     }
   };
+  
   
   
 
