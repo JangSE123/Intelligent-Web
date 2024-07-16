@@ -5,7 +5,7 @@
     /* border: 1px solid #ccc; */
     border-radius: 30px;
     background-color: white;
-    overflow-y: auto; /* 수직 스크롤 허용 */
+    overflow-y: hidden; /* 수직 스크롤 허용 */
 }
 
 .container::-webkit-scrollbar {
@@ -47,6 +47,13 @@
     padding: 10px;
     border-bottom: 1px solid #ccc;
     height: 50px;
+}
+.tasks {
+    overflow-y: auto;
+    height: 80%;
+}
+.tasks::-webkit-scrollbar{
+    display: none;
 }
 
 .task:last-child {
