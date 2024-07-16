@@ -256,7 +256,7 @@ app.post("/api/savePlan", async (req, res) => {
     const insertActivityQuery = `INSERT INTO Activity (PlanDetailNo, Act, ActStatus) VALUES ?`;
 
     const planDetailValues = days.map((day) => [planNo, day.day, day.date, day.topics]);
-    
+
     dbConnection.query(insertPlanDetailQuery, [planDetailValues], (err, planDetailResult) => {
       if (err) {
         console.error("Error inserting plan detail data:", err);
@@ -264,7 +264,7 @@ app.post("/api/savePlan", async (req, res) => {
       }
 
       const planDetailNoList = Array.from({ length: planDetailResult.affectedRows }, (_, i) => planDetailResult.insertId + i);
-      
+
       const activityValues = [];
       days.forEach((day, index) => {
         day.activities.forEach((activity) => {
@@ -389,14 +389,14 @@ app.get('/api/repos/:repo/contents', async (req, res) => {
   const { login } = req.session.user;
 
   try {
-      const response = await axios.get(`https://api.github.com/repos/${login}/${repo}/contents/${path || ''}`, {
-          headers: {
-              Authorization: `token ${req.session.accessToken}`
-          }
-      });
-      res.json(response.data);
+    const response = await axios.get(`https://api.github.com/repos/${login}/${repo}/contents/${path || ''}`, {
+      headers: {
+        Authorization: `token ${req.session.accessToken}`
+      }
+    });
+    res.json(response.data);
   } catch (error) {
-      res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -407,14 +407,14 @@ app.get('/api/repos/:repo/contents/file', async (req, res) => {
   const { login } = req.session.user;
 
   try {
-      const response = await axios.get(`https://api.github.com/repos/${login}/${repo}/contents/${path}`, {
-          headers: {
-              Authorization: `token ${req.session.accessToken}`
-          }
-      });
-      res.json(response.data);
+    const response = await axios.get(`https://api.github.com/repos/${login}/${repo}/contents/${path}`, {
+      headers: {
+        Authorization: `token ${req.session.accessToken}`
+      }
+    });
+    res.json(response.data);
   } catch (error) {
-      res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -431,10 +431,10 @@ app.post('/api/summarize', async (req, res) => {
     const response = await axios.post('https://api.openai.com/v1/chat/completions', {
       model: "gpt-3.5-turbo-16k",
       messages: [
-        { 
-          role: "system", 
+        {
+          role: "system",
           content: `너는 웹에서 커밋요약 챗봇이야. 제공받은 커밋을 처음 본 협업자도 너가 한 설명을 보고 바로 알 수 있도록 정확하게 알려줘야돼. 내용을 채울 형식은 
-                    다음과 같고 넌 여기서 ()안을 적절한 답으로 바꿔야해.`+`
+                    다음과 같고 넌 여기서 ()안을 적절한 답으로 바꿔야해.`+ `
                     <p class=GptCommitMsg> <b>커밋내용</b> : <br> (커밋내용) </p> 
                     <div class=GptCommitAuthor> <b>작성자</b> : <br> (커밋작성자) </div> 
                     <div class=GptCommitChangeContainer> <b>변동 사항</b> :
@@ -446,14 +446,14 @@ app.post('/api/summarize', async (req, res) => {
                     </div>
 
                     <div class=GptTotal> <b>총 요약</b> : <br>  (변동 사항 3줄 요약) </div>
-                    `+`너가 요약할 때는 절대로 "몇줄이 추가되고 삭제되었습니다." 라는 말을 쓰면 안되고 제대로 변동된 내용을 요약해야해`
+                    `+ `너가 요약할 때는 절대로 "몇줄이 추가되고 삭제되었습니다." 라는 말을 쓰면 안되고 제대로 변동된 내용을 요약해야해`
 
         },
         {
-          role: "user", 
+          role: "user",
           content: `${commitDetails}를 확인하고 커밋 내용을 자세히 요약해봐`
           // `너는 ${commitDetails} 이 커밋 디테일을  가지고 커밋 메세지, 작업 내용 or 변경 내용, 중요 참고 코드, 간단한 기능 요약 이렇게 타이틀을 잡고 적어줘. 각 타이틀에 들어가는 내용은 div태그로 구분감을 줘야해. 참고 코드에는 태그를 code태그로 잡아야해.`
-          
+
           // `내가 보기 좋게 <div>,<code>,<ul>,<li> 를 적극 활용해야해. ${commitDetails}의 파일 내부 코드를 검토하고 수정된 내용이 전과 비교해서 어떻게 작동하도록 변경되었는지 2000자 내외로 설명하고 마지막부분엔 커밋에서 중요한 내용을 3줄분량으로 요약. 한문장 끝날 때 마다 줄바꿈 하고 2000자와 3줄 사이의 줄바꿈 2번 html로 반환`
 
           //  `너는 커밋 내용을 전달받아서 커밋 내용을 요약해서한글로 html로 반환하는 역할이야. 마지막엔 커밋에서 중요한 내용을 3줄 요약해야해. 다음은 너가 갖춰서 제공할 틀이야 {}는 너가 적절한 값으로 대체해야해.
@@ -477,9 +477,9 @@ app.post('/api/summarize', async (req, res) => {
 // 로그인 및 기타 라우트는 그대로 두고, tasks 엔드포인트만 수정합니다.
 
 app.get("/api/tasks", (req, res) => {
-  const { login, date } = req.query;
+  const { login, date, test } = req.query;
 
-  console.log("Received request for tasks with login:", login, "and date:", date);
+  console.log("Received request for tasks with login:", login, "and date:", date, "and test:", test);
 
   const query = `
       SELECT 
@@ -501,22 +501,51 @@ app.get("/api/tasks", (req, res) => {
   `;
 
   dbConnection.query(query, [login, date], (err, results) => {
-      if (err) {
-          console.error("Error fetching tasks:", err);
-          return res.status(500).send("Failed to fetch tasks");
-      }
+    if (err) {
+      console.error("Error fetching tasks:", err);
+      return res.status(500).send("Failed to fetch tasks");
+    }
 
-      console.log("Query results:", results);
+    console.log("Query results:", results);
 
-      const tasks = results.map((task) => ({
-          id: task.ActivityNo,
-          name: `${task.Title}: ${task.Topics} - ${task.Act}`,
-          status: task.ActStatus === 1,
+    let tasks = [];
+    if (test === '1') {
+      tasks = results.map((task) => ({
+        id: task.ActivityNo,
+        name: `${task.Title}: ${task.Topics} - ${task.Act}`,
+        status: task.ActStatus === 1,
       }));
-
-      res.json(tasks);
+    } else {
+      tasks = results.map((task) => ({
+        id: task.ActivityNo,
+        name: `${task.Title}: ${task.Topics} - ${task.Act}`,
+        status: task.ActStatus === 1,
+      }));
+    }
+    res.json(tasks);
   });
 });
+
+//Act 수정
+app.put("/api/tasks", (req, res) => {
+  const { id, act } = req.body;
+
+  const query = `
+      UPDATE Activity 
+      SET Act = ?
+      WHERE ActivityNo = ?;
+  `;
+
+  dbConnection.query(query, [act, id], (err, results) => {
+    if (err) {
+      console.error("Error updating task:", err);
+      return res.status(500).send("Failed to update task");
+    }
+
+    res.send("Task updated successfully");
+  });
+});
+
 //일정 오늘로 업데이트 하는 엔드포인트
 app.put('/api/update-plan-details', (req, res) => {
   // Find query execution
@@ -624,6 +653,36 @@ app.post("/api/check-task", async (req, res) => {
     console.error("Error checking task with OpenAI API:", error.response ? error.response.data : error.message);
     res.status(500).json({ error: "Failed to check task with OpenAI API" });
   }
+});
+
+app.get("/plans", (req, res) => {
+  const { login } = req.query;
+  console.log(`Fetching plans for user:`, login);
+
+  const AchievementQuery = `
+    SELECT 
+      (SELECT COUNT(*) FROM Activity A 
+       JOIN PlanDetail PD ON A.PlanDetailNo = PD.PlanDetailNo 
+       JOIN Plan P ON PD.PlanNo = P.PlanNo 
+       WHERE P.GitID = ? AND A.ActStatus = 1) AS ActStatusCount, 
+      (SELECT COUNT(*) FROM Plan 
+       WHERE GitID = ? AND PlanStatus = 1) AS PlanStatusCount`;
+
+  dbConnection.query(AchievementQuery, [login, login], (err, results) => {
+      if (err) {
+        console.error("Error fetching user tasks:", err);
+        return res.status(500).json({ message: "Database query error", error: err });
+      }
+
+      console.log("Results:", results);
+
+      if (results.length > 0) {
+        res.json(results);
+      } else {
+        res.json({ ActStatusCount: 0, PlanStatusCount: 0 });
+      }
+    }
+  );
 });
 
 
