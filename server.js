@@ -634,6 +634,7 @@ app.post("/api/check-task", async (req, res) => {
     const isMatch = gptResponse.includes("True");
 
     if (isMatch) {
+      // Activity의 ActStatus를 업데이트
       dbConnection.query(
         "UPDATE Activity SET ActStatus = 1 WHERE ActivityNo = ?",
         [id],
@@ -642,8 +643,39 @@ app.post("/api/check-task", async (req, res) => {
             console.error("Error updating database:", err);
             return res.status(500).json({ error: "Database update failed" });
           }
-          console.log(gptResponse)
-          res.json(gptResponse);
+
+          // PlanNo를 가져오는 쿼리 (예: Activity 테이블에서 가져오기)
+          dbConnection.query(
+            "SELECT PlanNo FROM PlanDetail WHERE PlanDetailNo = (SELECT PlanDetailNo FROM Activity WHERE ActivityNo = ?)",
+            [id],
+            (err, rows) => {
+              if (err) {
+                console.error("Error retrieving PlanNo:", err);
+                return res.status(500).json({ error: "Failed to retrieve PlanNo" });
+              }
+
+              if (rows.length > 0) {
+                const planNo = rows[0].PlanNo;
+
+                // PlanStatus 업데이트 쿼리
+                dbConnection.query(
+                  "UPDATE Plan SET PlanStatus = TRUE WHERE PlanNo = ? " +
+                  "AND NOT EXISTS (SELECT 1 FROM Activity a JOIN PlanDetail pd ON a.PlanDetailNo = pd.PlanDetailNo WHERE pd.PlanNo = ? AND a.ActStatus = FALSE)",
+                  [planNo, planNo],
+                  (err, results) => {
+                    if (err) {
+                      console.error("Error updating PlanStatus:", err);
+                      return res.status(500).json({ error: "Plan status update failed" });
+                    }
+                    console.log(gptResponse);
+                    res.json(gptResponse);
+                  }
+                );
+              } else {
+                res.status(404).json({ error: "PlanNo not found for the given ActivityNo" });
+              }
+            }
+          );
         }
       );
     } else {
@@ -669,19 +701,19 @@ app.get("/plans", (req, res) => {
        WHERE GitID = ? AND PlanStatus = 1) AS PlanStatusCount`;
 
   dbConnection.query(AchievementQuery, [login, login], (err, results) => {
-      if (err) {
-        console.error("Error fetching user tasks:", err);
-        return res.status(500).json({ message: "Database query error", error: err });
-      }
-
-      console.log("Results:", results);
-
-      if (results.length > 0) {
-        res.json(results);
-      } else {
-        res.json({ ActStatusCount: 0, PlanStatusCount: 0 });
-      }
+    if (err) {
+      console.error("Error fetching user tasks:", err);
+      return res.status(500).json({ message: "Database query error", error: err });
     }
+
+    console.log("Results:", results);
+
+    if (results.length > 0) {
+      res.json(results);
+    } else {
+      res.json({ ActStatusCount: 0, PlanStatusCount: 0 });
+    }
+  }
   );
 });
 
