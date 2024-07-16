@@ -183,8 +183,6 @@ function CheckToDo({userData, setUserData}) {
 
   return (
     <div className={styles.MainContainer}>
-      <h1>GitHub Repository Explorer</h1>
-
       <div className={styles.totalContainer}>
         <div className={styles.PathContainer}>
           <div className={styles.RepoContainer}>
