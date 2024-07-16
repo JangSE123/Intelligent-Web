@@ -6,11 +6,20 @@
     flex-direction: column;
     align-items: center;
 }
-
+.sendGPTBtn{
+    width: 150px;
+    color: white;
+    background-color: #4CAF50;
+    border: 1px solid #4CAF50;
+    padding: 8px 12px;
+    cursor: pointer;
+    margin-left: 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
 .totalContainer{
     display: flex;
     gap: 1rem;
-    background-color: beige;
     border-radius: 15px;
     padding: 15px;
     height: 100%;
@@ -34,7 +43,7 @@
 }
 
 .RepoContainer {
-    background-color: bisque;
+    background-color: white;
     border-radius: 5px;
     padding: 20px;
     width: 80%;
@@ -45,7 +54,7 @@
 }
 
 .ContentContainer {
-    background-color: bisque;
+    background-color: white;
     border-radius: 5px;
     overflow-y: auto;
     height: 100%;
@@ -69,13 +78,13 @@
 .FileDetailContainer::-webkit-scrollbar-thumb,
 .FileDetailContainer pre::-webkit-scrollbar-thumb {
     border-radius: 5px;
-    background-color: burlywood;
+    background-color: rgb(198, 198, 198);
 }
 
 .ContentContainer::-webkit-scrollbar-thumb:hover,
 .FileDetailContainer::-webkit-scrollbar-thumb:hover,
 .FileDetailContainer pre::-webkit-scrollbar-thumb:hover {
-    background: rgb(194, 148, 87);
+    background: (194, 148, 87);
 }
 
 .ContentContainer h2 {
@@ -89,7 +98,7 @@
     width: 100%;
     height: 10%;
     border-radius: 8px;
-    background-color: bisque;
+    background-color: white;
 }
 
 .SelectToDoContainer > h2 {
@@ -107,7 +116,7 @@
     flex: 1 1 auto;
     flex-direction: column;
     width: 100%;
-    background-color: bisque;
+    background-color: white;
     padding-bottom: 0;
     border-radius: 8px;
     overflow: hidden;
