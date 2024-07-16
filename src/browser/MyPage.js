@@ -21,14 +21,13 @@ export default function MyPage({ userData, setUserData }) {
       });
 
       console.log("Fetched user tasks response:", response.data);
-    
-      
-      if (response.data) {
-        const { ActStatusCount } = response.data[0].ActStatusCount;
-        const { PlanStatusCount } = response.data[0].PlanStatusCount;
+
+      if (response.data && response.data.length > 0) {
+        const { ActStatusCount, PlanStatusCount } = response.data[0];
 
         console.log("ActStatusCount:", ActStatusCount);
-        
+        console.log("PlanStatusCount:", PlanStatusCount);
+
         setActStatusCount(ActStatusCount);
         setPlanStatusCount(PlanStatusCount);
       }
@@ -39,6 +38,7 @@ export default function MyPage({ userData, setUserData }) {
 
   fetchUserTasks();
 }, [userData]);
+
 
 
   useEffect(() => {

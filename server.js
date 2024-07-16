@@ -664,11 +664,11 @@ app.get("/plans", (req, res) => {
       (SELECT COUNT(*) FROM Activity A 
        JOIN PlanDetail PD ON A.PlanDetailNo = PD.PlanDetailNo 
        JOIN Plan P ON PD.PlanNo = P.PlanNo 
-       WHERE P.GitID = "hanjunnn" AND A.ActStatus = 1) AS ActStatusCount, 
+       WHERE P.GitID = ? AND A.ActStatus = 1) AS ActStatusCount, 
       (SELECT COUNT(*) FROM Plan 
-       WHERE GitID = "hanjunnn" AND PlanStatus = 1) AS PlanStatusCount`;
+       WHERE GitID = ? AND PlanStatus = 1) AS PlanStatusCount`;
 
-  dbConnection.query(AchievementQuery, (err, results) => {
+  dbConnection.query(AchievementQuery, [login, login], (err, results) => {
       if (err) {
         console.error("Error fetching user tasks:", err);
         return res.status(500).json({ message: "Database query error", error: err });
