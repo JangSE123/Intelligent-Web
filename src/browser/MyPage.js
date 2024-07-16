@@ -179,7 +179,7 @@ export default function MyPage({ userData, setUserData }) {
               </div>
             </div>
           )}
-          {activeTab === 'tab2' && <div>Content for Tab 2</div>}
+          {activeTab === 'tab2' && <div>기능 추가중..</div>}
         </div>
       </div>
 
