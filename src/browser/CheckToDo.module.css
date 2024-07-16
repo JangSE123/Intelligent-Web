@@ -48,6 +48,8 @@
     overflow-y: auto;
     padding: 20px;
     height: 50%;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+
 }
 
 .RepoContainer h2 {
@@ -64,6 +66,8 @@
     overflow-y: auto;
     height: 50%;
     padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+
 }
 
 .RepoContainer::-webkit-scrollbar,
@@ -107,6 +111,8 @@
     height: 10%;
     border-radius: 8px;
     background-color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 박스 쉐도우 추가 */
+
 }
 
 .SelectToDoContainer > h2 {
