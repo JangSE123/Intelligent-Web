@@ -7,7 +7,7 @@ const Header = () => {
         <header>
             <div className={styles.topbar}>
                 <span className={styles.logo}>
-                    <Link to = "/">Code Gardener</Link>
+                    <Link to = "/">Coding Mate</Link>
                 </span>
                 <div className={styles.content}>
                     <ul className={styles.menu}>
@@ -15,7 +15,7 @@ const Header = () => {
                             Planner
                             <ul className={styles.submenu}>
                                 <li className={styles.sub}>
-                                    <Link to = "/planner-chat">Planner Chat</Link>
+                                    <Link to = "/planner-chat">Plan Crafter</Link>
                                 </li>
                                 <li className={styles.sub}>
                                     <Link to="/planner_calendar">Calendar</Link>
@@ -23,13 +23,13 @@ const Header = () => {
                             </ul>
                         </li>
                         <li className={styles.list}>
-                            Git
+                            GitHub
                             <ul className={styles.submenu}>
                                 <li className={styles.sub}>
-                                    <Link to="/check-todo">CheckToDo</Link>
+                                    <Link to="/check-todo">Check To Do</Link>
                                 </li>
                                 <li className={styles.sub}>
-                                    <Link to="/git-connection">Git Connection</Link>
+                                    <Link to="/git-connection">Summarizer</Link>
                                 </li>
                             </ul>
                         </li>
