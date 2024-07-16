@@ -8,34 +8,57 @@
     padding-right: 20px;
 }
 
-.container {
+.container { 
     display: flex;
+    overflow: hidden;
     flex-direction: row; /* Align items vertically */
-    gap: 20px; /* Space between Calendar and TaskList */
-    border-radius: 25px;
-    padding: 20px;
+    border-radius: 20px;
+    /* padding: 20px; */
+    height: 80%;
     width: 100%; /* Adjust as necessary */
 }
 
 .calendar {
     flex: 2;
+
 }
 
 .task-list{
     flex: 1;
 }
 
+.task-list > div {
+    background-color: white;
+    border-radius: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.calendar {
+    height: 100%;
+}
+
 .calendar, .task-list {
     /* background-color: rgb(255, 255, 255); */
-    padding: 30px;
-    border-radius: 5px;
+    width: 70%;
+    border-radius: 20px;    
+    overflow: hidden;
     /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); */
-    max-width: 48;
+
 }
 
 .task-list {
-    max-height: 60vh;
     overflow-y: auto;
+}
+
+.hr {
+    background-color: white;
+    border: 1px dashed #aeaeae;
+    /* border-spacing: 2px; */
+    margin-top: 1%;
+    margin-bottom: 1%;
+    /* height: calc(100% - 20px); */
 }
 
 .task-list::-webkit-scrollbar {

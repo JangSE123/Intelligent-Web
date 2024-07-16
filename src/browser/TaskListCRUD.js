@@ -3,7 +3,7 @@ import styles from './TaskListCRUD.module.css';
 import axios from 'axios';
 
 function TaskListCRUD({ tasks, setTasks, selectedDate }) {
-    const [isEditing, setIsEditing] = useState(false);
+    const [isEditing, setIsEditing] = useState(true);
     const [currentTask, setCurrentTask] = useState(null);
     const [newActValue, setNewActValue] = useState('');
 
@@ -28,7 +28,7 @@ function TaskListCRUD({ tasks, setTasks, selectedDate }) {
                 setTasks(tasks.map(task =>
                     task.id === currentTask.id ? { ...task, name: task.name.split(' - ')[0] + ' - ' + newActValue } : task
                 ));
-                setIsEditing(false);
+                setIsEditing(true);
                 setCurrentTask(null);
                 setNewActValue('');
             } catch (error) {
@@ -38,7 +38,7 @@ function TaskListCRUD({ tasks, setTasks, selectedDate }) {
     };
 
     const handleCancelEdit = () => {
-        setIsEditing(false);
+        setIsEditing(true);
         setCurrentTask(null);
         setNewActValue('');
     };
@@ -57,12 +57,12 @@ function TaskListCRUD({ tasks, setTasks, selectedDate }) {
                                 className={task.status ? styles.green : styles.red}
                                 style={{ cursor: 'pointer' }}
                             ></div>
-                            <span
+                            <div
                                 className={task.status ? styles.strikethrough : ''}
                                 onClick={() => handleEditClick(task)}
                             >
                                 {task.name}
-                            </span>
+                            </div>
                         </div>
                     ))}
                 </div>
