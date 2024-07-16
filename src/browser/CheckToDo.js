@@ -128,11 +128,20 @@ function CheckToDo({userData, setUserData}) {
           withCredentials: true,
         }
       );
-      setFileContent(atob(response.data.content));
+
+      // Base64로 인코딩된 파일 내용을 디코딩
+      const binaryString = atob(response.data.content);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      const decodedContent = new TextDecoder('utf-8').decode(bytes);
+      setFileContent(decodedContent);
     } catch (error) {
       console.error("Error fetching file content:", error);
     }
   };
+
 
   const goUpDirectory = () => {
     const newPath = path.split("/").slice(0, -1).join("/");
