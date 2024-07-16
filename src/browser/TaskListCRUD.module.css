@@ -2,7 +2,7 @@
 .container {
     width: 100%;
     max-width: 480px;
-    margin: 0 auto;
+    margin-left: 10px;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 30px;
@@ -10,6 +10,7 @@
     overflow-y: auto; /* 수직 스크롤 허용 */
     max-height: 500px; /* 최대 높이 설정 */
     scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .container::-webkit-scrollbar {
@@ -18,12 +19,11 @@
 
 .edtContainer {
     width: 100%;
-    max-width: 800px;
     margin: 0 auto;
     margin-top: 10px;
     padding: 15px;
     border: 1px solid #ccc;
-    border-radius: 30px;
+    border-radius: 20px;
     background-color: white;
     overflow-y: auto; /* Added to allow scrolling if content overflows */
     height: auto; /* Set a maximum height to limit container size */
