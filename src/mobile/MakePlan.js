@@ -14,7 +14,7 @@ export default function MakePlan(props) {
     const setUserData = props.setUserData;
 
     const chatEndRef = useRef(null);
-    console.log("MakePlan.js userData: ", userData);
+    console.log("Chat.js userData: ", userData);
     const questions = [
         "공부할 기간을 선택해주세요",
         "공부할 언어를 선택해주세요",
@@ -22,7 +22,7 @@ export default function MakePlan(props) {
     ];
 
     const options = {
-        1: ["5일", "7일", "10일", "14일", "18일", "21일"],
+        1: ["1일", "7일", "10일", "14일", "18일", "21일"],
         2: ["Python", "Java", "C", "JavaScript", "HTML", "CSS"],
         3: ["초급자", "중급자", "전문가"]
     };
@@ -72,11 +72,11 @@ export default function MakePlan(props) {
                     'Content-Type': 'application/json'
                 }
             });
-            
+
             const result = response.data.choices[0].message.content;
             console.log("ChatGPT Response: ", result);
             setGptResponse(result);
-            
+
             try {
                 const parsedData = JSON.parse(result);
                 // Ensure parsedData has expected structure
@@ -84,7 +84,7 @@ export default function MakePlan(props) {
                     throw new Error('Parsed data does not contain expected fields');
                 }
                 setParsedResponse(parsedData);
-                
+
                 // Save plan data
                 await axios.post('http://localhost:5001/api/savePlan', {
                     login: userData.login, // Assuming userData.login is accessible here
@@ -94,10 +94,10 @@ export default function MakePlan(props) {
                 }, {
                     withCredentials: true // 쿠키를 전송할 수 있도록 설정
                 })
-                .then(response => {
-                    console.log('Plan saved successfully:', response.data);
-                    savePlanData(userData.login, parsedData); // savePlanData 함수 호출
-                });
+                    .then(response => {
+                        console.log('Plan saved successfully:', response.data);
+                        savePlanData(userData.login, parsedData); // savePlanData 함수 호출
+                    });
             } catch (error) {
                 console.error('Error parsing or handling parsed data:', error);
             }
@@ -108,10 +108,10 @@ export default function MakePlan(props) {
             chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
         }
     };
-    
+
     const savePlanData = async (login, parsedData) => {
         const { title, start_date, days } = parsedData;
-    
+
         try {
             const response = await axios.post('http://localhost:5001/api/savePlan', {
                 login: login,
@@ -119,7 +119,7 @@ export default function MakePlan(props) {
                 start_date: start_date,
                 days: days
             });
-    
+
             console.log('Plan saved successfully:', response.data);
         } catch (error) {
             if (error.response) {
@@ -134,7 +134,7 @@ export default function MakePlan(props) {
             }
         }
     };
-    
+
     useEffect(() => {
         chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
         if (step > questions.length) {
@@ -149,7 +149,7 @@ export default function MakePlan(props) {
                 <div className={styles.bubblesContainer}>
                     <div className={styles.bubbleContainer}>
                         <div className={styles.questionBubble}>
-                            안녕하세요 프로그래밍 공부 Plan을 짜주는  <span className={styles.planCrafter}>"PlanCrafter"</span> 입니다.<br/>
+                            안녕하세요 프로그래밍 공부 Plan을 짜주는  <span className={styles.planCrafter}>"PlanCrafter"</span> 입니다.<br />
                             여러분의 목표에 맞춰 맞춤형 학습 계획을 세워드립니다. 함께 성공적인 학습 여정을 시작해 보세요!
                         </div>
                     </div>
@@ -182,7 +182,7 @@ export default function MakePlan(props) {
                                     ))}
                                 </ul>
                             </div>
-                            <div className={styles.questionBubble}>답변 생성이 완료 되었습니다.<br/>Calendar에서 지금 바로 확인하세요.</div>
+                            <div className={styles.questionBubble}>답변 생성이 완료 되었습니다.<br />Calendar에서 지금 바로 확인하세요.</div>
                         </div>
                     )}
                     {step <= questions.length && (
