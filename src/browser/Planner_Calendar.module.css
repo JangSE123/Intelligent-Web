@@ -1,17 +1,8 @@
-@font-face {
-    font-family: 'Freesentation-9Black';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-9Black.woff2') format('woff2');
-    font-weight: 900;
-    font-style: normal;
-}
-body{
-    font-family: 'Freesentation-9Black';
-}
 .main {
     position: relative;
     width: 100%;
     height: calc(100vh - 110px); /* 헤더 높이만큼 조정 */
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
     top: 110px; /* 헤더 높이만큼 내림 */
@@ -25,14 +16,6 @@ body{
     scroll-snap-align: start;
 }
 
-/* Image container */
-.image {
-    width: 100%;
-    height: calc(100vh - 110px);
-    background: url('./a.jpg') center/cover no-repeat; /* Replace with your image path */
-    transition: height 0.5s ease-in-out;
-}
-
 /* Content container */
 .content {
     padding: 20px;
@@ -41,31 +24,4 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-/* Next sections */
-.nextSection {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f9f9f9;
-    padding: 20px;
-    height: calc(100vh - 150px);
-    padding-bottom: 0px;
-    transition: background-color 0.3s ease-in-out;
-}
-
-.nextSection:nth-child(even) {
-    background-color: #efefef;
-}
-
-/* Additional styles */
-h1, h2 {
-    font-size: 2rem;
-    color: #333;
-}
-
-h2 {
-    font-size: 1.5rem;
-    color: #666;
 }
