@@ -52,6 +52,7 @@ function CalendarContent({ userData, setUserData }) {
                         setSelectedDate={setSelectedDate}
                     />
                 </div>
+                <hr className={styles.hr}/>
                 <div className={styles["task-list"]}>
                     <TaskListCRUD tasks={tasks} setTasks={setTasks} selectedDate={selectedDate} />
                 </div>
