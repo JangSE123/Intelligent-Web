@@ -66,8 +66,7 @@ function TaskListCRUD({ tasks, setTasks, selectedDate }) {
                         </div>
                     ))}
                 </div>
-            </div>
-            {isEditing && (
+                {isEditing && (
                 <div className={styles.edtContainer}>
                     <input
                         type="text"
@@ -80,6 +79,8 @@ function TaskListCRUD({ tasks, setTasks, selectedDate }) {
                 </div>
             )}
         </div>
+            </div>
+            
     );
 }
 

@@ -1,6 +1,3 @@
-
-
-/* TaskList.module.css */
 .calendarContainer {
   display: flex;
   justify-content: left;
@@ -20,7 +17,6 @@
   width: 100vw;
   height: 90vh;
   padding: 20px;
-  background-color: #33853530;
   border-radius: 10px;
 }
 
