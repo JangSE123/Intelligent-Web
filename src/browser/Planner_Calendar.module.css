@@ -28,7 +28,6 @@ body{
 /* Content container */
 .content {
     padding: 20px;
-    background-color: #33853530;
     height: calc(100vh - 150px); /* Full viewport height */
     display: flex;
     justify-content: center;

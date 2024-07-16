@@ -33,9 +33,9 @@ function MobileApp(props) {
                     <Routes>
                         <Route path="/" element={<MobileLogin userData={userData} setUserData={setUserData} user={user} setUser={setUser} accessToken={accessToken} setAccessToken={setAccessToken} />} />
                         <Route path="/github" element={<MobileGitHub userData={userData} setUserData={setUserData} />} />
-                        <Route path="/planner" element={<MakePlan />} />
+                        <Route path="/planner" element={<MakePlan userData={userData} setUserData={setUserData}/>} />
                         <Route path="/help" element={<HelpPage />} />
-                        <Route path="/MobileTaskList" element={<MobileTaskList />} />
+                        <Route path="/MobileTaskList" element={<MobileTaskList userData={userData} setUserData={setUserData}/>} />
                         <Route path="/mypage" element={<MobileMyPage userData={userData} setUserData={setUserData} />} /> 
                     </Routes>
                 </div>

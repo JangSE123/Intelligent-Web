@@ -6,7 +6,6 @@
     border-radius: 30px;
     background-color: white;
     overflow-y: auto; /* 수직 스크롤 허용 */
-
 }
 
 .container::-webkit-scrollbar {

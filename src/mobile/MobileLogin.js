@@ -40,19 +40,6 @@ function MobileLogin({ userData, setUserData }) {
             });
     };
 
-    useEffect(() => {
-        const fetchTasks = async () => {
-            try {
-                const response = await axios.get('http://localhost:5001/api/tasks', { withCredentials: true });
-                setTasks(response.data);
-            } catch (error) {
-                console.error('Error fetching tasks:', error);
-            }
-        };
-
-        fetchTasks();
-    }, []);
-
     const handleLogin = () => {
         window.location.href = "http://localhost:5001/login/github";
     };
@@ -61,6 +48,7 @@ function MobileLogin({ userData, setUserData }) {
         setUserData(null);
         sessionStorage.removeItem("github_user_login");
         sessionStorage.removeItem("github_user_avatar_url");
+        setTasks([]); // Clear tasks when logging out
     };
 
     return (
@@ -90,9 +78,11 @@ function MobileLogin({ userData, setUserData }) {
                     </>
                 )}
             </div>
-            <div className={styles.MobileTasklist}>
-                <MobileTaskList tasks={tasks} setTasks={setTasks} selectedDate={selectedDate} />
-            </div>
+            {userData && ( // Conditionally render MobileTaskList only when userData is not null
+                <div className={styles.MobileTasklist}>
+                    <MobileTaskList tasks={tasks} setTasks={setTasks} selectedDate={selectedDate} />
+                </div>
+            )}
         </div>
     );
 }

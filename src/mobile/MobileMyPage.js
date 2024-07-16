@@ -4,10 +4,41 @@ import MobileNickname from './MobileNickname'; // Import the MobileNickname comp
 import styles from './MobileMyPage.module.css'; // Import the CSS module
 
 export default function MobileMyPage({ userData, setUserData }) {
-  const [activeTab, setActiveTab] = useState('tab1'); // State to manage active tab
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
-  const [progress, setProgress] = useState(Array(10).fill(0)); // State to manage progress bar for each achievement
-  const [AchievementStatus, setAchieveStatus] = useState(1); // State to manage achievement status
+  const [activeTab, setActiveTab] = useState('tab1');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [ActStatusCount, setActStatusCount] = useState(0);
+  const [PlanStatusCount, setPlanStatusCount] = useState(0);
+
+  useEffect(() => {
+  const fetchUserTasks = async () => {
+    try {
+      const response = await axios.get('http://localhost:5001/plans', {
+        params: {
+          login: userData.login
+        },
+        withCredentials: true
+      });
+
+      console.log("Fetched user tasks response:", response.data);
+
+      if (response.data && response.data.length > 0) {
+        const { ActStatusCount, PlanStatusCount } = response.data[0];
+
+        console.log("ActStatusCount:", ActStatusCount);
+        console.log("PlanStatusCount:", PlanStatusCount);
+
+        setActStatusCount(ActStatusCount);
+        setPlanStatusCount(PlanStatusCount);
+      }
+    } catch (error) {
+      console.error('Error fetching user tasks:', error);
+    }
+  };
+
+  fetchUserTasks();
+}, [userData]);
+
+
 
   useEffect(() => {
     const fetchSessionUserData = async () => {
@@ -36,58 +67,48 @@ export default function MobileMyPage({ userData, setUserData }) {
     }
   };
 
+  const selectMonth = contributions => {
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth();
+    const shownMonths = 4;
 
-  useEffect(() => {
-    if (activeTab === 'tab1') {
-      const intervals = progress.map((_, index) => {
-        return setInterval(() => {
-          setProgress(prevProgress => {
-            const newProgress = [...prevProgress];
-            if (newProgress[index] < 100) {
-              newProgress[index] += 10;
-              // Update AchievementStatus based on progress index
-            } else {
-              clearInterval(intervals[index]);
-            }
-            return newProgress;
-          });
-        }, 1000);
-      });
+    return contributions.filter(activity => {
+      const date = new Date(activity.date);
+      const monthOfDay = date.getMonth();
 
-      return () => intervals.forEach(interval => clearInterval(interval));
-    }
-  }, [activeTab, progress]);
-
-  useEffect(() => {
-    progress.forEach((value, index) => {
-      const achievementImg = document.getElementById(`achievementImg-${index}`);
-      if (achievementImg) {
-        if (value === 100) {
-          achievementImg.classList.remove(styles.grayScale);
-        } else {
-          achievementImg.classList.add(styles.grayScale);
-        }
-      }
+      return (
+        date.getFullYear() === currentYear &&
+        monthOfDay > currentMonth - shownMonths &&
+        monthOfDay <= currentMonth
+      );
     });
-  }, [progress]);
+  };
 
   if (!userData) {
     return <p>Loading...</p>;
   }
 
   const achievementImages = [
-    "https://img.icons8.com/ios-filled/50/000000/star--v1.png",
-    "https://img.icons8.com/ios-filled/50/000000/medal.png",
-    "https://img.icons8.com/ios-filled/50/000000/medal-second-place.png",
-    "https://img.icons8.com/ios-filled/50/000000/trophy.png",
-    "https://img.icons8.com/ios-filled/50/000000/certificate.png",
-    "https://img.icons8.com/ios-filled/50/000000/cup.png",
-    "https://img.icons8.com/ios-filled/50/000000/badge.png",
-    "https://img.icons8.com/ios-filled/50/000000/crown.png",
-    "https://img.icons8.com/ios-filled/50/000000/like.png",
-    "https://img.icons8.com/ios-filled/50/000000/prize.png"
+    "https://img.icons8.com/?size=40&id=eECaGPY9nVTa&format=png&color=000000",
+    "https://img.icons8.com/?size=40&id=BYrLfXd7xnkT&format=png&color=000000",
+    "https://img.icons8.com/?size=40&id=8r7zilMrBUpy&format=png&color=000000",
+    "https://img.icons8.com/?size=40&id=Bz1KNLgkXDQO&format=png&color=000000",
+    "https://img.icons8.com/?size=40&id=118292&format=png&color=000000",
+    "https://img.icons8.com/?size=40&id=WRJDm02u5wNH&format=png&color=000000",
+    "https://img.icons8.com/?size=40&id=b4tUwopVU4z2&format=png&color=000000"
   ];
 
+  const achievementNames = [
+    "총 Activity 진행 수 5번",
+    "총 Activity 진행 수 10번",
+    "총 Activity 진행 수 30번",
+    "총 Activity 진행 수 50번",
+    "총 Activity 진행 수 100번",
+    "총 Plan 진행 수 5번",
+    "총 Plan 진행 수 10번"
+  ];
+
+  const achievementTargets = [5, 10, 30, 50, 100, 5, 10];
   return (
     <div className={styles.MyPageMain}>
       <div className={styles.MyPageProfile}>
@@ -96,6 +117,9 @@ export default function MobileMyPage({ userData, setUserData }) {
           <p>{userData.nickname} <span style={{ fontSize: '0.7em', color: "gray" }}>@{userData.login}</span></p>
           <button onClick={() => setIsModalOpen(true)}>Edit</button>
         </div>
+      </div>
+      <div className={styles.MyInfo}>
+        
       </div>
 
       <div className={styles.MyAchievement}>
@@ -113,24 +137,42 @@ export default function MobileMyPage({ userData, setUserData }) {
                 <div className={styles.achievementGrid}>
                   {achievementImages.map((imgSrc, index) => (
                     <div key={index} className={styles.achievementItem}>
-                      <img id={`achievementImg-${index}`} src={imgSrc} alt={`Achievement ${index + 1}`} className={styles.grayScale} />
-                      <p>{AchievementStatus} / {5 * (index + 1)}</p>
+                      <img
+                        id={`achievementImg-${index}`}
+                        src={imgSrc}
+                        alt={`Achievement ${index + 1}`}
+                        className={
+                          (index < 5 && ActStatusCount >= achievementTargets[index]) || (index >= 5 && PlanStatusCount >= achievementTargets[index])
+                            ? ''
+                            : styles.grayScale
+                        }
+                      />
+                      <p>
+                        {index < 5 ? ActStatusCount : PlanStatusCount} / {achievementTargets[index]}
+                      </p>
                       <div className={styles.progressBarContainer}>
-                        <div id={`progressBar-${index}`} className={styles.progressBar} style={{ width: `${((AchievementStatus / ((index + 1) * 5)) * 100)}%` }}></div>
+                        <div
+                          id={`progressBar-${index}`}
+                          className={styles.progressBar}
+                          style={{
+                            width: `${(index < 5 ? ActStatusCount : PlanStatusCount) / achievementTargets[index] * 100
+                              }%`
+                          }}
+                        ></div>
                       </div>
+                      <p>{achievementNames[index]}</p>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
           )}
-          {activeTab === 'tab2' && <div>Content for Tab 2</div>}
+          {activeTab === 'tab2' && <div>기능 추가중..</div>}
         </div>
       </div>
-          
+
       <div className={styles.s}></div>
 
-      {/* Include MobileNickname */}
       <MobileNickname
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

@@ -1,15 +1,18 @@
 .chatContainer {
-    display: flex;
-    position: fixed;
-    flex-direction: column;
-    background-color: white;
-    width: 90vw;
-    height: 80vh;
-    margin-left: 5vw;
-    margin-top: 15vh;
-    justify-content: space-between;
-    border: 1px solid black;
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  background-color: white;
+  overflow: hidden;
+  width: 90vw;
+  height: 80vh;
+  margin-left: 5vw;
+  margin-top: 15vh;
+  justify-content: space-between;
+  border-radius: 15px !important; /* 우선순위를 높이기 위해 !important 사용 */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
+
 
 .bubblesContainer {
     display: flex;
