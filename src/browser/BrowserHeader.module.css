@@ -85,6 +85,16 @@
     font-size: 1.2rem;
     margin-top: 15px;
     text-align: center;
+    -webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .2s ease-in-out;
+	transition: .2s ease-in-out;
+}
+
+.sub:hover {
+    color: #fff;
+    -webkit-transform: scale(1.3);
+	transform: scale(1.3);
 }
 
 .topbar:hover {
