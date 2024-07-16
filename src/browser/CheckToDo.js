@@ -167,7 +167,9 @@ function CheckToDo({userData, setUserData}) {
       console.log(responseData); // 전체 응답 데이터 확인
       console.log(responseData.answer); // "True" 또는 "False" 출력
       console.log(responseData.feedback); // 피드백 문자열 출력
-      if (responseData.answer === true) {
+      const isMatch = responseData.answer.toLowerCase() === 'true';
+
+      if (isMatch) {
         Swal.fire({
           icon: 'success',
           title: '일치합니다!',
