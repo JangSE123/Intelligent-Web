@@ -20,7 +20,7 @@ function MobileTaskList({ tasks, setTasks, selectedDate }) {
                 <span>{dayName}</span>
                 <span className={styles.date}>{formattedDate}</span>
             </div>
-            <div id="tasks">
+            <div className={styles.tasks}>
                 {tasks.map((task) => (
                     <div key={task.id} className={styles.task}>
                         <div

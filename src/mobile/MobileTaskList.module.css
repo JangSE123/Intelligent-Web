@@ -6,7 +6,7 @@
     border: 1px solid #ccc;
     border-radius: 30px;
     background-color: #ffffff85;
-    
+    margin-bottom: 50px;
 }
 
 .header {
@@ -25,7 +25,8 @@
 }
 
 .task {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 10fr;
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid #ccc;
@@ -34,10 +35,6 @@
 
 .task:last-child {
     border-bottom: none;
-}
-
-.task span {
-    margin-left: 10px;
 }
 
 .green {

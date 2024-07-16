@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 function MobileHeader({ userData, isMenuOpen, toggleMenu }) {
     return (
         <header className={styles.header}>
-            <p>Code Garden</p>
+            <p>Coding Mate</p>
             <div className={`${styles.burger} ${isMenuOpen ? styles.open : ''}`} onClick={toggleMenu}>
                 <div></div>
                 <div></div>
