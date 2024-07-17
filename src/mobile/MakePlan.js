@@ -22,7 +22,7 @@ export default function MakePlan(props) {
     ];
 
     const options = {
-        1: ["1일", "7일", "10일", "14일", "18일", "21일"],
+        1: [ "7일", "10일", "14일", "18일", "21일"],
         2: ["Python", "Java", "C", "JavaScript", "HTML", "CSS"],
         3: ["초급자", "중급자", "전문가"]
     };
